@@ -1,0 +1,53 @@
+﻿@using leaseEase.Domain.Models.Off
+@model IEnumerable<leaseEase.Domain.Models.Off.Office>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home";
+}
+@using System.Web.Optimization
+
+<!-- Search -->
+<!-- Search Up -->
+<div class="search-up">
+    <p class="se-t1">Search</p>
+    <p class="se-t2">through our most convenient and fitting options for office lease.</p>
+</div>
+<!-- Search Up -->
+<!-- Offices -->
+<div class="office-list">
+    @foreach (Office office in Model!)
+    {
+        <!-- Office card!!! -->
+        <a href="@Url.Action("Details", "Office", new { id = office.Id })">
+            <div class="office-card">
+                <div style="background-image: url('/Content/images/office1.png');" class="office-image"></div>
+                <div class="office-inf">
+                    <p class="office-name">@Html.DisplayFor(modelItem => office.Name)</p>
+                    <div class="price-rating">
+                        <p class="office-price">$@Html.DisplayFor(modelItem => office.Price)</p>
+                        <p class="office-mo">/mo</p>
+                        <div class="rating" data-rating="@Html.DisplayFor(modelItem => office.Rating)">
+                            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                        </div>
+                    </div>
+                    <p class="office-desc">@Html.DisplayFor(modelItem => office.Description)</p>
+                    <div class="office-extra">
+                        <img src="~/Content/images/max-persons.svg" alt="" class="extra-img" width="18" />
+                        <p class="extra">max @Html.DisplayFor(modelItem => office.TeamSize) persons</p>
+                    </div>
+                    <div class="office-extra">
+                        <img src="~/Content/images/Location.svg" alt="" class="extra-img" width="18" />
+                        <p class="extra">@Html.DisplayFor(modelItem => office.Location)</p>
+                    </div>
+                    <div class="office-extra">
+                        <img src="~/Content/images/office-type.svg" alt="" class="extra-img" width="18" />
+                        <p class="extra">@Html.DisplayFor(modelItem => office.Type.Name)</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <!-- Office card!!! -->
+    }
+</div>
+<!-- Offices -->
+<!-- Search -->

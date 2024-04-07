@@ -1,0 +1,721 @@
+@font-face {
+    font-family: "KulimParkRegular";
+    src: url("/fonts/KulimPark-Regular.ttf")
+}
+@font-face {
+    font-family: "KulimParkBold";
+    src: url("/fonts/KulimPark-Bold.ttf")
+}
+@font-face {
+    font-family: "KulimParkSemiBold";
+    src: url("/fonts/KulimPark-SemiBold.ttf")
+}
+body{
+    margin: 0px;
+}
+p{
+    font-family: KulimParkRegular;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+}
+a{
+    font-family: KulimParkRegular;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    text-decoration: none;
+}
+body{
+    background-color: #F6F6FF;
+}
+/*# -----------------------------------------------HEADER-------------------------------------------- */
+
+.logo-title {
+    color: #333168;
+    font-size: 30px;
+    font-family: KulimParkRegular;
+    margin-left: 19px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.logo-dark {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.login {
+    cursor: pointer;
+    color: #333168;
+    font-size: 20px;
+    font-family: KulimParkSemiBold;
+    vertical-align: central;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.login:hover {
+    text-decoration: underline;
+}
+
+.signup {
+    cursor: pointer;
+    color: #333168;
+    margin-left: 19px;
+    font-size: 20px;
+    font-family: KulimParkSemiBold;
+    background-color: rgba(0,0,0,0);
+    border-radius: 37px;
+    border-style: solid;
+    border-color: #333168;
+    width: 138px;
+    height: 46px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 19px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.signup:hover{
+    background-color: #333168;
+    color: white;
+}
+.nav-content {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 109px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.autori-buttons {
+    display: flex;
+    height: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.logo {
+    cursor: pointer;
+    display: flex;
+    height: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+/*# ----------------------------------------------------HEADER ---------------------------------------------*/
+
+/*#-----------------------------------------------------Index -----------------------------------------------*/
+.ind-t3 {
+    font-size: 55px;
+    font-family: KulimParkSemiBold;
+    color: #333168;
+    line-height: 1.1;
+    margin-top: 60px;
+    text-align: center;
+}
+/*# Perfect ws */
+.bg-home {
+    position: relative;
+    padding-top: 80px;
+    height: 474px;
+    background-image: url('/Content/images/backgroundIndex1.png');
+    background-size: cover;
+    background-position: center;
+}
+.texts-ind1 {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    height: auto;
+}
+.index-container-1 {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    flex-grow: 1;
+    flex-direction: column;
+    height: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.ind-t1 {
+    font-size: 50px;
+    font-family: KulimParkBold;
+    color: white;
+}
+
+.ind-t2 {
+    font-size: 30px;
+    font-family: KulimParkSemiBold;
+    color: white;
+    max-width: 513px;
+    line-height: 1.1;
+    margin-top: 30px;
+}
+
+.ind-search {
+    margin-top: 30px;
+    flex-direction: row;
+    max-width: 679px;
+    height: auto;
+    padding: 20px;
+    background-color: rgb(255,255,255,0.3);
+    border-radius: 20px;
+    margin-left: auto;
+}
+
+.categories-row {
+    display: flex;
+    flex-direction: row;
+    column-gap: 11px;
+    justify-content: space-between;
+}
+.search-cat {
+    height: 16px;
+    padding: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: rgb(255,255,255,0.5);
+    border-radius: 40px;
+    font-family: KulimParkSemiBold;
+    color: #333168;
+    font-size: 14px;
+    width: auto;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+.search-cat:hover{
+    background-color: #333168;
+    color: white;
+}
+.search-box {
+    display: flex;
+    flex-direction: row;
+    column-gap: 11px;
+    justify-content: space-between;
+    padding: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 60px;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
+    margin-top: 18px;
+}
+.search-image {
+    margin-top: auto;
+    margin-bottom: auto;
+    cursor: pointer;
+}
+.input-search{
+    font-family: KulimParkSemiBold;
+    font-size: 18px;
+    color: white;
+    background-color: rgb(255,255,255,0);
+    border-style: none;
+    width: 100%;
+    padding: 0;
+}
+.input-search::placeholder{
+    color: white;
+}
+.input-search:focus{
+    border-style: none;
+    outline: none;
+}
+/*# Perfect ws */
+
+/*# Popular on LeaseEase */
+.popular-offices{
+    background-color: #CDCDEE;
+    margin-top: 60px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+.popular-column{
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    row-gap: 60px;
+}
+.popular-row{
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    justify-content: space-between;
+}
+/*# Office Card !!!! */
+.office-card {
+    display: flex;
+    flex-direction: row;
+    background-color: #F6F6FF;
+    border-radius: 20px;
+    width: 560px;
+    height: 230px;
+    box-shadow: 0px 0px 40px 0px #33316820;
+    transition: box-shadow 0.3s;
+    cursor: pointer;
+}
+.office-card:hover{
+    box-shadow: 0px 0px 60px 0px #6E45C780;
+}
+.office-image{
+    max-width: 260px;
+    width: 100%;
+    height: 230px;
+    border-radius: 20px 0 0 20px;
+    background-size: cover; 
+    background-position: center;
+}
+.office-inf{
+    display: flex;
+    flex-direction: column;
+    margin-top: 18px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.office-name{
+    font-size: 24px;
+    color: #333168;
+    font-family: KulimParkSemiBold;
+    line-height: 1.08;
+}
+.price-rating{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+.office-price{
+    font-size: 24px;
+    color: #333168;
+    font-family: KulimParkBold;
+    line-height: 1.08;
+}
+.office-mo{
+    font-size: 16px;
+    color: #333168;
+    font-family: KulimParkSemiBold;
+    margin-top: auto;
+}
+.rating {
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+    position: relative;
+  }
+
+.star {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url("/Content/images/Star.svg");
+    background-size: cover;
+    position: relative;
+}
+    .star.half {
+        background-image: url("/Content/images/Star-half.svg");
+    }
+    .star.filled {
+        background-image: url("/Content/images/Star-filled.svg");
+    }
+.office-desc{
+    font-size: 16px;
+    color: #333168;
+    font-family: KulimParkBold;
+    margin-top: 10px;
+    line-height: 1.02;
+}
+.office-extra{
+    display: flex;
+    flex-direction: row;
+    margin-top: 6px;
+}
+.extra{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+    font-size: 14px;
+    color: #333168;
+    font-family: KulimParkSemiBold;
+    line-height: 1.02;
+}
+/*# Office Card !!!! */
+
+/*# Popular on LeaseEase */
+
+/*# Office types */
+.office-types-arrows{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1290px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 60px;
+}
+.arr{
+    cursor: pointer;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.office-types-row{
+    width: 1200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    column-gap: 20px;
+}
+.type-card{
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    width: 560px;
+    height: 350px;
+    box-shadow: 0px 0px 40px 0px #33316820;
+    transition: box-shadow 0.3s;
+    cursor: pointer;
+    background-size: cover; 
+    background-position: center;
+}
+.type-card:hover{
+    box-shadow: 0px 0px 60px 0px #6E45C780;
+}
+.type-info{
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 0 20px 20px;
+    height: 145px;
+    background-color: #FFFFFF80;
+    margin-top: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 15px;
+}
+.type-name{
+    color: #333168;
+    font-family: KulimParkBold;
+    font-size: 36px;
+    line-height: 1.05;
+}
+.type-desc{
+    margin-top: 5px;
+    color: #333168;
+    font-family: KulimParkBold;
+    font-size: 19px;
+    line-height: 1.05;
+}
+/*# Office types */
+
+/*# Become landlord */
+.become-landlord {
+    margin-top: 60px;
+    background-image: url("/Content/images/backgroundIndex2.png");
+    background-size: cover;
+    background-position: center;
+}
+.shadow-group{
+    display: flex;
+    flex-direction: column;
+    padding-top: 140px;
+    height: 500px;
+    background-color: rgb(0,0,0,0.3);
+}
+.ind-t4 {
+    margin-top: 30px;
+    font-size: 50px;
+    font-family: KulimParkBold;
+    color: white;
+    text-align: center;
+}
+.ind-t5 {
+    text-align: center;
+    font-size: 30px;
+    font-family: KulimParkSemiBold;
+    color: white;
+    line-height: 1.1;
+    margin-top: 20px;
+}
+.bec-landlord {
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    font-family: KulimParkSemiBold;
+    background-color: rgba(0,0,0,0);
+    border-radius: 37px;
+    border-style: solid;
+    border-color: white;
+    width: 138px;
+    height: 46px;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s, color 0.3s;
+}
+.bec-landlord:hover{
+    background-color: white;
+    color:#333168;
+}
+.logo-light{
+    margin-left: auto;
+    margin-right: auto;
+}
+/*# Become landlord */
+
+/*# FACI */
+.faci-arrows{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1290px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 60px;
+}
+.faci-row{
+    width: 1200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    column-gap: 15px;
+}
+.faci-card{
+    display: flex;
+    flex-direction: row;
+    border-radius: 20px;
+    width: 280px;
+    height: 277px;
+    box-shadow: 0px 0px 40px 0px #33316820;
+    transition: box-shadow 0.3s;
+    cursor: pointer;
+    background-size: cover; 
+    background-position: center;
+}
+.faci-card:hover{
+    box-shadow: 0px 0px 60px 0px #6E45C780;
+}
+.faci-info{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    border-radius: 0 0 20px 20px;
+    height: 94px;
+    background-color: #FFFFFF80;
+    margin-top: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 12px;
+}
+.faci-name{
+    text-align: center;
+    color: #333168;
+    font-family: KulimParkBold;
+    font-size: 30px;
+    line-height: 1.05;
+}
+/*# FACI*/
+
+/*# Why leaseEase */
+.why-leaseease{
+    max-width: 1120px;
+    padding: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    background-color: #CDCDEE;
+    padding-bottom: 30px;
+    margin-top: 60px;
+    box-shadow: 0px 0px 40px 0px #33316820;
+}
+.why-txt{
+    color: #333168;
+    font-size: 29px;
+    text-align: center;
+    font-family: KulimParkBold;
+}
+/*# Why leaseEase */
+
+.space{
+    padding: 15px;
+}
+
+/*# FAQ */
+.faq{
+    display: flex;
+    flex-direction: column;
+    max-width: 1130px;
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-top: 23px;
+    padding-bottom: 20px; 
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    background-color: white;
+    margin-top: 30px;
+    box-shadow: 0px 0px 40px 0px #33316820;
+    min-height: 37px;
+    cursor: pointer;
+}
+.faq-q-box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.faq-q{
+    font-size: 29px;
+    font-family: KulimParkSemiBold;
+    color: #333168;
+}
+.faq-arr-closed{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.faq-arr-opened{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.faq-ans{
+    font-size: 25px;
+    font-family: KulimParkRegular;
+    color: #333168;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+/*# FAQ */
+
+/*----------------------------------------------# Index -------------------------------------------------*/
+
+
+/*------------------------------------------------Search-------------------------------------------------*/
+
+/*Search Up*/
+.search-up {
+    position: relative;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    padding-top: 140px;
+    height: 310px;
+    background-image: url('/Content/images/backgroundSearch1.png');
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+}
+.se-t1 {
+    width: 585px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 55px;
+    font-family: KulimParkSemiBold;
+    color: white;
+    text-align: center;
+}
+.se-t2 {
+    width: 585px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 32px;
+    font-family: KulimParkSemiBold;
+    color: white;
+    text-align: center;
+}
+/*Search Up*/
+
+/*Offices*/
+.office-list {
+    margin-top: 60px;
+    width: 1200px;
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    flex-wrap: wrap;
+    row-gap: 60px;
+}
+/*Offices*/
+
+/*-------------------------------------Search----------------------------------------------*/
+
+
+/*# -----------------------------------Footer---------------------------------------------- */
+.footerg {
+    margin-top: 150px;
+    background-color: #CDCDEE;
+    height: 250px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.links-footer {
+    display: flex;
+    flex-direction: row;
+    max-width: 410px;
+    width: 100%;
+    justify-content: space-between;
+    column-gap: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.link-footer {
+    cursor: pointer;
+    color: #333168;
+    font-size: 18px;
+    line-height: 1.4;
+    text-decoration: none;
+    font-family: KulimParkRegular
+}
+
+    .link-footer:hover {
+        text-decoration: underline;
+    }
+
+.links-group {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.social {
+    display: flex;
+    flex-direction: row;
+    max-width: 170px;
+    justify-content: space-between;
+    column-gap: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+/*# -------------------------------------------Footer----------------------------------------- */
