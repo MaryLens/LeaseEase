@@ -1,28 +1,32 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
-using leaseEase.BL.DBModel.Off;
 using leaseEase.DAL;
 using leaseEase.Domain.Models.Off;
+using leaseEase.Domain.Models.helpers;
+using leaseEase.BL.Repos;
+using System.Threading.Tasks;
 
 
 namespace leaseEase.Web.Controllers
 {
     public class HomeController : Controller
     {
-
-        public List<Office> Offices { get; set; }
-        public HomeController()
+        private readonly ILeaseEaseRepository _repo;
+        public HomeController(ILeaseEaseRepository repo)
         {
-            using (leaseEaseContext db = new leaseEaseContext())
-            {
-                OfficeService os = new OfficeService();
-                Office office = os.Add("o1","some description",db);
-            }
+                _repo = repo;
         }
         // GET: Home
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var model = new IndexViewModel
+            {
+                TypesOfOffice = await _repo.GetAllTypesAsync(),
+                Facilities = await _repo.GetAllFacilitiessAsync()
+            };
+
+            return View(model);
         }
 
         public ActionResult Search()

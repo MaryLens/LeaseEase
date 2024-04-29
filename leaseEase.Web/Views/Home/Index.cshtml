@@ -1,4 +1,6 @@
-﻿@{
+﻿@using leaseEase.Domain.Models.Off
+@model dynamic
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home";
 }
@@ -21,8 +23,8 @@
             </div>
             <div class="search-box">
                 <input class="input-search" placeholder="Enter the location you need" />
-                <a class="search-image" href="@Url.Action("Search", "Home")" class="link-footer"><img src='~/Content/images/Searchind.svg' alt="" class="search-image" height="21" /></a>
-</div>
+                <a class="search-image link-footer" href="@Url.Action("Search", "Home")"><img src='~/Content/images/Searchind.svg' alt="" class="search-image" height="21" /></a>
+            </div>
         </div>
     </div>
 </section>
@@ -157,27 +159,24 @@
 <!-- Office types -->
 <h1 class="ind-t3">Find out about our office types</h1>
 <div class="office-types-arrows">
-    <img src="~/Content/images/arr-left.svg" alt="" class="arr" width="16" />
+    <img src="~/Content/images/arr-left.svg" alt="" class="arr" width="16" onclick="showPreviousT()"/>
     <div class="office-types-row">
-        <!--TYPE CARD-->
-        <div class="type-card" style="background-image: url('/Content/images/openPlan.png')">
-            <div class="type-info">
-                <p class="type-name">Open Plan:</p>
-                <p class="type-desc">An office layout where there are no walls or partitions between workspaces. Open plan facilitates easy communication and collaboration among employees.</p>
+        @foreach (TypesOfOffice officetype in Model.TypesOfOffice)
+        {
+            <div class="type-row">
+                <!--TYPE CARD-->
+                <div class="type-card" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(officetype.Image)')">
+                    <div class="type-info">
+                        <p class="type-name">@Html.DisplayFor(modelItem => officetype.Name):</p>
+                        <p class="type-desc">@Html.DisplayFor(modelItem => officetype.Description)</p>
+                    </div>
+                </div>
+                <!--TYPE CARD-->
+                </div>
+                }
             </div>
+            <img src="~/Content/images/arr-right.svg" alt="" class="arr" width="16" onclick="showNextT()" />
         </div>
-        <!--TYPE CARD-->
-        <!--TYPE CARD-->
-        <div class="type-card" style="background-image: url('/Content/images/cubicle-style.png')">
-            <div class="type-info">
-                <p class="type-name">Cubicle Style:</p>
-                <p class="type-desc">In this type of office, each worker is provided with their own cubicle or room for work, offering greater privacy and concentration.</p>
-            </div>
-        </div>
-        <!--TYPE CARD-->
-    </div>
-    <img src="~/Content/images/arr-right.svg" alt="" class="arr" width="16" />
-</div>
 <!-- Office types -->
 <!-- Become Landlord -->
 <div class="become-landlord">
@@ -192,38 +191,22 @@
 <!-- Facilities -->
 <h1 class="ind-t3">Find out about our facilities</h1>
 <div class="faci-arrows">
-    <img src="~/Content/images/arr-left.svg" alt="" class="arr" width="16" />
-    <div class="faci-row">
-        <!--FACI CARD-->
-        <div class="faci-card" style="background-image: url('/Content/images/faci1.png')">
-            <div class="faci-info">
-                <p class="faci-name">High-speed internet access</p>
+    <img src="~/Content/images/arr-left.svg" alt="" class="arr" width="16" onclick="showPreviousF()" />
+    <div class="facility-list" id="facilitiesContainer">
+        @foreach (Facility facility in Model.Facilities)
+        {
+            <div class="faci-row">
+                <!--FACI CARD-->
+                <div class="faci-card" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(facility.Image)')">
+                    <div class="faci-info">
+                        <p class="faci-name">@Html.DisplayFor(modelItem => facility.Name)</p>
+                    </div>
+                </div>
+                <!--FACI CARD-->
             </div>
-        </div>
-        <!--FACI CARD-->
-        <!--FACI CARD-->
-        <div class="faci-card" style="background-image: url('/Content/images/faci2.png')">
-            <div class="faci-info">
-                <p class="faci-name">Fully equipped kitchenette</p>
-            </div>
-        </div>
-        <!--FACI CARD-->
-        <!--FACI CARD-->
-        <div class="faci-card" style="background-image: url('/Content/images/faci3.png')">
-            <div class="faci-info">
-                <p class="faci-name">Conference room facilities</p>
-            </div>
-        </div>
-        <!--FACI CARD-->
-        <!--FACI CARD-->
-        <div class="faci-card" style="background-image: url('/Content/images/faci4.png')">
-            <div class="faci-info">
-                <p class="faci-name">On-site parking</p>
-            </div>
-        </div>
-        <!--FACI CARD-->
+        }
     </div>
-    <img src="~/Content/images/arr-right.svg" alt="" class="arr" width="16" />
+    <img src="~/Content/images/arr-right.svg" alt="" class="arr" width="16" onclick="showNextF()" />
 </div>
 <!-- Facilities -->
 <!-- Why LeaseEase -->

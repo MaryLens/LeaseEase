@@ -142,12 +142,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\images\247 security surveillance.png" />
     <Content Include="Content\images\arr-left.svg" />
     <Content Include="Content\images\arr-right.svg" />
     <Content Include="Content\images\backgroundIndex1.png" />
     <Content Include="Content\images\backgroundIndex2.png" />
     <Content Include="Content\images\backgroundSearch1.png" />
-    <Content Include="Content\images\cubicle-style.png" />
+    <Content Include="Content\images\Bicycle storage facilities.png" />
+    <Content Include="Content\images\close.svg" />
+    <Content Include="Content\images\Conference room facilities.png" />
+    <Content Include="Content\images\Coworking Space.png" />
+    <Content Include="Content\images\Cubicle Style.png" />
+    <Content Include="Content\images\Disabled-accessible amenities.png" />
     <Content Include="Content\images\faci1.png" />
     <Content Include="Content\images\faci2.png" />
     <Content Include="Content\images\faci3.png" />
@@ -155,19 +161,32 @@
     <Content Include="Content\images\faq-arr-closed.svg" />
     <Content Include="Content\images\faq-arr-opened.svg" />
     <Content Include="Content\images\fb.svg" />
+    <Content Include="Content\images\Fitness center or gym access.png" />
+    <Content Include="Content\images\Fully equipped kitchenette.png" />
+    <Content Include="Content\images\High-speed internet access.png" />
     <Content Include="Content\images\insta.svg" />
     <Content Include="Content\images\Location.svg" />
     <Content Include="Content\images\logo-l.svg" />
     <Content Include="Content\images\logo.svg" />
+    <Content Include="Content\images\Lounge areas.png" />
     <Content Include="Content\images\max-persons.svg" />
+    <Content Include="Content\images\Modern ergonomic furniture.png" />
     <Content Include="Content\images\office-type.svg" />
-    <Content Include="Content\images\office1.png" />
-    <Content Include="Content\images\openPlan.png" />
+    <Content Include="Content\images\On-site coffee bar.png" />
+    <Content Include="Content\images\On-site parking.png" />
+    <Content Include="Content\images\Open Plan.png" />
+    <Content Include="Content\images\Outdoor terrace.png" />
+    <Content Include="Content\images\Podcast Studios.png" />
+    <Content Include="Content\images\Printing and scanning facilities.png" />
+    <Content Include="Content\images\Receptionist services.png" />
+    <Content Include="Content\images\Regular cleaning.png" />
     <Content Include="Content\images\Searchind.svg" />
+    <Content Include="Content\images\Shared Offices.png" />
     <Content Include="Content\images\Star-filled.svg" />
     <Content Include="Content\images\Star-half.svg" />
     <Content Include="Content\images\Star.svg" />
     <Content Include="Content\images\twitt.svg" />
+    <Content Include="Content\images\Virtual Office.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\js\app.js" />
@@ -175,12 +194,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\CustomControllerActivator.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OfficeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\User\UActionLogin.cs" />
+    <Compile Include="Models\User\UActionSignup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +221,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_OfficeCard.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Login\Signup.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -207,7 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\CustomControllerActivator\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\leaseEase.BL\leaseEase.BL.csproj">

@@ -1,0 +1,35 @@
+﻿@model  leaseEase.Web.Models.User.UActionLogin
+<!--Login-->
+<div class="popup">
+    <div class="logo-ligin-signup">
+        <img src='~/Content/images/logo.svg' alt="" class="logo-dark" height="47" />
+        <p class="logo-title-popup">LeaseEase</p>
+    </div>
+    @using (Html.BeginForm("LogIn", "Login", FormMethod.Post, new { @id = "LoginForm" }))
+    {
+        <div class="login-column" id="login-column">
+            <p class="login-signup-texts">Log In</p>
+            <div class="login-container">
+                @Html.TextBoxFor(e => e.Credential, new
+           {
+               type = "email",
+               placeholder = "Email",
+               autocomplete = "nope",
+               @class = "login-input"
+           })
+                @Html.TextBoxFor(e => e.Password, new
+           {
+               type = "password",
+               placeholder = "Password",
+               autocomplete = "new-password",
+               @class = "login-input"
+           })
+                <button type="submit" class="login-button">Login</button>
+                <p class="forgotpw">Forgot Password?</p>
+            </div>
+            <a href="@Url.Action("Signup", "Login")" class="switch-login">Don't have an account? Sign Up</a>
+        </div>
+    }
+
+</div>
+<!--Login-->

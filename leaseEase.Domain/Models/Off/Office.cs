@@ -57,7 +57,6 @@ namespace leaseEase.Domain.Models.Off
         public Facility[] Facilities { get; set; }
         [Required]
         [Display(Name = "MinimalRentalPeriod")]
-        [DataType(DataType.Text)]
         public MinimalRentalPeriod MinimalRentalPeriod { get; set; }
         [Display(Name = "UnavaliableDates")]
         public DateTime[] unavaliableDates { get; set; }

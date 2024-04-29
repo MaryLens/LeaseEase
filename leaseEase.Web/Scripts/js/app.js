@@ -92,4 +92,72 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+//show next/prev facilities
+var currentFaciIndex = 0;
+var totalFacilities = document.querySelectorAll('.faci-row').length;
+var facilityPerPage = 4;
+
+document.addEventListener("DOMContentLoaded", function () {
+    showPageF(currentFaciIndex);
+});
+
+function showNextF() {
+    currentFaciIndex = (currentFaciIndex + facilityPerPage) % totalFacilities;
+    showPageF(currentFaciIndex);
+}
+
+function showPreviousF() {
+    currentFaciIndex = (currentFaciIndex - facilityPerPage + totalFacilities) % totalFacilities;
+    showPageF(currentFaciIndex);
+}
+
+function showPageF(index) {
+    var facilities = document.querySelectorAll('.faci-row');
+    for (var i = 0; i < totalFacilities; i++) {
+        var displayIndex = (index + i) % totalFacilities;
+        if (i < facilityPerPage) {
+            facilities[displayIndex].style.display = 'block';
+        } else {
+            facilities[displayIndex].style.display = 'none';
+        }
+    }
+}
+//show next/prev facilities
+
+//show next/prev types
+var currentTypeIndex = 0;
+var totalTypes = document.querySelectorAll('.type-row').length;
+var typePerPage = 2;
+
+document.addEventListener("DOMContentLoaded", function () {
+    showPageT(currentTypeIndex);
+});
+
+function showNextT() {
+    currentTypeIndex = (currentTypeIndex + typePerPage) % totalTypes;
+    showPageT(currentTypeIndex);
+}
+
+function showPreviousT() {
+    currentTypeIndex = (currentTypeIndex - typePerPage + totalTypes) % totalTypes;
+    showPageT(currentTypeIndex);
+}
+
+function showPageT(index) {
+    var types = document.querySelectorAll('.type-row');
+    for (var i = 0; i < totalTypes; i++) {
+        var displayIndex = (index + i) % totalTypes;
+        if (i < typePerPage) {
+            types[displayIndex].style.display = 'block';
+        } else {
+            types[displayIndex].style.display = 'none';
+        }
+    }
+}
+//show next/prev types
+
 //INDEX
+
+

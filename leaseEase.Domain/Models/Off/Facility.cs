@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace leaseEase.Domain.Enum.Off
+namespace leaseEase.Domain.Models.Off
 {
     public class Facility
     {

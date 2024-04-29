@@ -48,7 +48,8 @@ body{
     color: #333168;
     font-size: 20px;
     font-family: KulimParkSemiBold;
-    vertical-align: central;
+}
+.login-cont {
     margin-top: auto;
     margin-bottom: auto;
 }
@@ -106,6 +107,140 @@ body{
 }
 /*# ----------------------------------------------------HEADER ---------------------------------------------*/
 
+/*# ----------------------------------------------------Signup login ---------------------------------------------*/
+
+.popup {
+    display:flex;
+    flex-direction:column;
+    width: 400px;
+    background-color: #F6F6FF;
+    padding: 25px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 40px 0px #33316820;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.login-column {
+    display: flex;
+    flex-direction: column;
+}
+.signup-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-ligin-signup {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+.logo-title-popup {
+    color: #333168;
+    font-size: 30px;
+    font-family: KulimParkRegular;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.login-signup-texts {
+        color: #333168;
+        font-size: 30px;
+        font-family: KulimParkSemiBold;
+        margin-top: 40px;
+        margin-left: auto;
+        margin-right: auto;
+}
+.login-container{
+        display: flex;
+        flex-direction: column;
+        width: 260px;
+        margin-top: 40px;
+        margin-left: auto;
+        margin-right: auto;
+        row-gap: 12px;
+}
+.login-button {
+    cursor: pointer;
+    color: #333168;
+    font-size: 18px;
+    font-family: KulimParkSemiBold;
+    background-color: #CDCDEE;
+    border-radius: 37px;
+    border-style: none;
+    width: 260px;
+    padding-left: 0;
+    padding-right: 0;
+    height: 36px;
+    transition: background-color 0.3s, color 0.3s;
+}
+    .login-button:hover {
+        color: #fff;
+        background-color: #333168;
+    }
+.login-input {
+    font-family: KulimParkRegular;
+    font-size: 16px;
+    color: #333168;
+    background-color: rgb(255,255,255,0);
+    border-style: solid;
+    width: 243px;
+    padding-left: 16px;
+    padding-right: 0px;
+    border-color: #333168;
+    border-radius: 37px;
+    border-width: 1px;
+    height: 36px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+    .login-input:focus {
+        border-color: #333168 !important;
+        border-width: 1px !important;
+    }
+.login-input::placeholder {
+    color: #8C8CBE;
+}
+.forgotpw {
+    color: #8C8CBE;
+    font-size: 14px;
+    font-family: KulimParkRegular;
+    margin-left: auto;
+    cursor:pointer;
+}
+.forgotpw:hover{
+    text-decoration: underline;
+}
+.switch-login {
+    color: #8C8CBE;
+    font-size: 14px;
+    font-family: KulimParkRegular;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    margin-top: 142px;
+    margin-bottom: 10px;
+}
+    .switch-login:hover {
+        text-decoration: underline;
+    }
+
+.switch-signup {
+    color: #8C8CBE;
+    font-size: 14px;
+    font-family: KulimParkRegular;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    margin-top: 120px;
+    margin-bottom: 10px;
+}
+
+    .switch-signup:hover {
+        text-decoration: underline;
+    }
+/*# ----------------------------------------------------Signup login ---------------------------------------------*/
 /*#-----------------------------------------------------Index -----------------------------------------------*/
 .ind-t3 {
     font-size: 55px;
@@ -488,7 +623,7 @@ body{
     padding-right: 20px;
     margin-top: 60px;
 }
-.faci-row{
+.facility-list{
     width: 1200px;
     display: flex;
     flex-direction: row;
