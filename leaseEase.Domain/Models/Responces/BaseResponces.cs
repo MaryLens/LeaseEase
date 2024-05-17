@@ -9,5 +9,6 @@ namespace leaseEase.Domain.Models.Responces
     {
         public bool Status { get; set; }
         public string StatusMessage { get; set; }
+        public User.User CurrentUser { get; set; }
     }
 }

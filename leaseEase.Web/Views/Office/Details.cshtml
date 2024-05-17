@@ -1,8 +1,10 @@
-﻿@model leaseEase.Domain.Models.Office.Office
+﻿@model leaseEase.Domain.Models.Off.Office
 @{
     ViewBag.Title = "Office Details";
 }
 
 <div>
-    <p>@Html.DisplayFor(model=>model.Name)</p>
+    <h1 class="ind-t3">@Html.DisplayFor(model => model.Name)</h1>
+    <div class="details-photo" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(Model.Image)');">
+    </div>
 </div>

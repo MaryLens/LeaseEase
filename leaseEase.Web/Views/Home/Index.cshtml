@@ -32,128 +32,43 @@
 <!-- Popular on LeaseEase -->
 <h1 class="ind-t3">Popular on LeaseEase:</h1>
 <div class="popular-offices">
-    <div class="popular-column">
-        <div class="popular-row">
-
+    <!-- Offices -->
+    <div class="office-list">
+        @foreach (Office office in Model.Office)
+        {
             <!-- Office card!!! -->
-            <div class="office-card">
-                <div style="background-image: url('/Content/images/office1.png');" class="office-image"></div>
-                <div class="office-inf">
-                    <p class="office-name">Lorem Ipsum</p>
-                    <div class="price-rating">
-                        <p class="office-price">$10</p>
-                        <p class="office-mo">/mo</p>
-                        <div class="rating" data-rating="3.5">
-                            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+            <a href="@Url.Action("Details", "Office", new { id = office.Id })">
+                <div class="office-card">
+                    <div style="background-image: url('data:image/png;base64,@Convert.ToBase64String(office.Image)');" class="office-image"></div>
+                    <div class="office-inf">
+                        <p class="office-name">@Html.DisplayFor(modelItem => office.Name)</p>
+                        <div class="price-rating">
+                            <p class="office-price">$@Html.DisplayFor(modelItem => office.Price)</p>
+                            <p class="office-mo">/mo</p>
+                            <div class="rating" data-rating="@Html.DisplayFor(modelItem => office.Rating)">
+                                <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                            </div>
+                        </div>
+                        <p class="office-desc">@Html.DisplayFor(modelItem => office.Description)</p>
+                        <div class="office-extra">
+                            <img src="~/Content/images/max-persons.svg" alt="" class="extra-img" width="18" />
+                            <p class="extra">max @Html.DisplayFor(modelItem => office.TeamSize) persons</p>
+                        </div>
+                        <div class="office-extra">
+                            <img src="~/Content/images/Location.svg" alt="" class="extra-img" width="18" />
+                            <p class="extra">@Html.DisplayFor(modelItem => office.Location)</p>
+                        </div>
+                        <div class="office-extra">
+                            <img src="~/Content/images/office-type.svg" alt="" class="extra-img" width="18" />
+                            <p class="extra">@Html.DisplayFor(modelItem => office.Type.Name)</p>
                         </div>
                     </div>
-                    <p class="office-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
-                    <div class="office-extra">
-                        <img src="~/Content/images/max-persons.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">max 25 persons</p>
-                    </div>
-                    <div class="office-extra">
-                        <img src="~/Content/images/Location.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">Chisinau</p>
-                    </div>
-                    <div class="office-extra">
-                        <img src="~/Content/images/office-type.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">Cubicle Style</p>
-                    </div>
                 </div>
-            </div>
+            </a>
             <!-- Office card!!! -->
-            <!-- Office card!!! -->
-            <div class="office-card">
-                <div style="background-image: url('/Content/images/office1.png');" class="office-image"></div>
-                <div class="office-inf">
-                    <p class="office-name">Lorem Ipsum</p>
-                    <div class="price-rating">
-                        <p class="office-price">$10</p>
-                        <p class="office-mo">/mo</p>
-                        <div class="rating" data-rating="4.5">
-                            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-                        </div>
-                    </div>
-                    <p class="office-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
-                    <div class="office-extra">
-                        <img src="~/Content/images/max-persons.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">max 25 persons</p>
-                    </div>
-                    <div class="office-extra">
-                        <img src="~/Content/images/Location.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">Chisinau</p>
-                    </div>
-                    <div class="office-extra">
-                        <img src="~/Content/images/office-type.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">Cubicle Style</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Office card!!! -->
-
-        </div>
-        <div class="popular-row">
-
-            <!-- Office card!!! -->
-            <div class="office-card">
-                <div style="background-image: url('/Content/images/office1.png');" class="office-image"></div>
-                <div class="office-inf">
-                    <p class="office-name">Lorem Ipsum</p>
-                    <div class="price-rating">
-                        <p class="office-price">$10</p>
-                        <p class="office-mo">/mo</p>
-                        <div class="rating" data-rating="3.20685">
-                            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-                        </div>
-                    </div>
-                    <p class="office-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
-                    <div class="office-extra">
-                        <img src="~/Content/images/max-persons.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">max 25 persons</p>
-                    </div>
-                    <div class="office-extra">
-                        <img src="~/Content/images/Location.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">Chisinau</p>
-                    </div>
-                    <div class="office-extra">
-                        <img src="~/Content/images/office-type.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">Cubicle Style</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Office card!!! -->
-            <!-- Office card!!! -->
-            <div class="office-card">
-                <div style="background-image: url('/Content/images/office1.png');" class="office-image"></div>
-                <div class="office-inf">
-                    <p class="office-name">Lorem Ipsum</p>
-                    <div class="price-rating">
-                        <p class="office-price">$10</p>
-                        <p class="office-mo">/mo</p>
-                        <div class="rating" data-rating="3.9">
-                            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-                        </div>
-                    </div>
-                    <p class="office-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod</p>
-                    <div class="office-extra">
-                        <img src="~/Content/images/max-persons.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">max 25 persons</p>
-                    </div>
-                    <div class="office-extra">
-                        <img src="~/Content/images/Location.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">Chisinau</p>
-                    </div>
-                    <div class="office-extra">
-                        <img src="~/Content/images/office-type.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">Cubicle Style</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Office card!!! -->
-
-        </div>
+        }
     </div>
+    <!-- Offices -->
 </div>
 <!-- Popular on LeaseEase -->
 <!-- Office types -->

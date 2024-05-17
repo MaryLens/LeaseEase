@@ -28,5 +28,9 @@ namespace leaseEase.BL.BaseBL
         {
             return CheckUserCredential(ulData, repo);
         }
+        public UCookieData GenCoockieAlgo(User dataUser)
+        {
+            return UserCoockieGenerationAlg(dataUser);
+        }
     }
 }

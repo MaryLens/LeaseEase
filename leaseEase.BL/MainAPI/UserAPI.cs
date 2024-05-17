@@ -15,7 +15,7 @@ namespace leaseEase.BL.MainAPI
         internal BaseResponces CheckUserCredential(UserLoginData data, ILeaseEaseRepository repo)
         {
             var user = repo.GetUserByEmailAsync(data.Credential); 
-            return user != null? new BaseResponces { Status = true } : new BaseResponces { Status = false, StatusMessage = "We didn’t find an account with those login credentials" };
+            return user != null? new BaseResponces { Status = true, CurrentUser = user.Result} : new BaseResponces { Status = false, StatusMessage = "We didn’t find an account with those login credentials" };
         }
         internal BaseResponces GenerateUserSession(UserLoginData data, ILeaseEaseRepository repo)
         {
@@ -32,6 +32,14 @@ namespace leaseEase.BL.MainAPI
             }
             var user = repo.AddUserAsync(data);
             return new BaseResponces { Status = true };
+        }
+        internal UCookieData UserCoockieGenerationAlg(User user)
+        {
+            return new UCookieData
+            {
+                MaxAge = 1709044385,
+                Coockie = "MY UNIQUE ID FOR THIS SESSION"
+            };
         }
     }
 }

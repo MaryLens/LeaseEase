@@ -667,9 +667,20 @@ body{
     line-height: 1.05;
 }
 /*# FACI*/
-
+.details-photo {
+    max-width: 1000px;
+    height: 500px;
+    padding: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    margin-top: 60px;
+    background-size: cover; /* –аст€гивает изображение, чтобы оно покрывало всю доступную область */
+    background-repeat: no-repeat; /* ѕредотвращает повторение изображени€ */
+    background-position: center center; /* ¬ыравнивает изображение по центру */
+}
 /*# Why leaseEase */
-.why-leaseease{
+.why-leaseease {
     max-width: 1120px;
     padding: 40px;
     margin-left: auto;

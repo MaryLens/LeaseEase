@@ -1,0 +1,90 @@
+﻿@model leaseEase.Domain.Models.helpers.newOfficeModel
+@using (Html.BeginForm("CreateNew", "Office", FormMethod.Post, new { @id = "officeForm", enctype = "multipart/form-data" }))
+{
+    <div class="login-column" id="login-column">
+        <p class="login-signup-texts">New office</p>
+        <div class="login-container">
+            @Html.TextBoxFor(e => e.Office.Name, new
+       {
+           type = "text",
+           placeholder = "Name",
+           autocomplete = "nope",
+           @class = "login-input"
+       })
+            @Html.TextBoxFor(e => e.Office.Description, new
+       {
+           type = "text",
+           placeholder = "Description",
+           autocomplete = "nope",
+           @class = "login-input"
+       })
+            @{
+                var types = Model.TypesOfOffice;
+            }
+            @Html.DropDownListFor(e => e.Office.TypeId,
+                new SelectList(types, "Id", "Name"),
+                "Select a type",
+                new { @class = "login-input" })
+
+            @Html.TextBoxFor(e => e.Office.Price, new
+       {
+           type = "number",
+           placeholder = "Price",
+           autocomplete = "nope",
+           @class = "login-input"
+       })
+            @Html.TextBoxFor(e => e.Office.Location, new
+       {
+           type = "text",
+           placeholder = "Location",
+           autocomplete = "nope",
+           @class = "login-input"
+       })
+            @Html.TextBoxFor(e => e.Office.TeamSize, new
+       {
+           type = "number",
+           placeholder = "TeamSize",
+           autocomplete = "nope",
+           @class = "login-input"
+       })
+            @Html.TextBoxFor(e => e.Office.Rooms, new
+            {
+            type = "number",
+            placeholder = "Rooms",
+            autocomplete = "nope",
+            @class = "login-input"
+            })
+            @Html.TextBoxFor(e => e.Office.Size, new
+            {
+            type = "number",
+            placeholder = "Size",
+            autocomplete = "nope",
+            @class = "login-input"
+            })
+            @{
+                var faci = Model.Facilities;
+            }
+
+            @Html.DropDownListFor(e => e.Office.Facilities,
+                new SelectList(faci, "Id", "Name"),
+                "Facilities",
+                new
+                     {
+                    @class = "login-input",
+                    multiple = "multiple"
+                })
+
+            @Html.DropDownListFor(e => e.Office.MinimalRentalPeriod,
+            new SelectList(Enum.GetValues(typeof(leaseEase.Domain.Enum.Off.MinimalRentalPeriod))),
+            "Minimal Rental period",
+            new { @class = "login-input" })
+
+            @Html.TextBoxFor(e => e.Office.ImageFile, new { type = "file", @class = "login-input", onchange = "previewImage(event)" })
+            <img id="preview" src="#" alt="Preview" style="display: none; max-width: 100px; max-height: 100px;">
+
+
+            <button type="submit" class="login-button">Create</button>
+        </div>
+    </div>
+}
+

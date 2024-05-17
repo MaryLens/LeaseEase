@@ -20,18 +20,21 @@ namespace leaseEase.Web.Controllers
         // GET: Home
         public async Task<ActionResult> Index()
         {
+            List <Office> office = await _repo.GetAllOfficesAsync();
+            List<Office> finalOffice = office.OrderByDescending(o => o.Views).Take(4).ToList();
             var model = new IndexViewModel
             {
                 TypesOfOffice = await _repo.GetAllTypesAsync(),
-                Facilities = await _repo.GetAllFacilitiessAsync()
+                Facilities = await _repo.GetAllFacilitiessAsync(),
+                Office = finalOffice
             };
 
             return View(model);
         }
 
-        public ActionResult Search()
+        public async Task<ActionResult> Search()
         {
-            return View();
+            return View(await _repo.GetAllOfficesAsync());
         }
     }
 }

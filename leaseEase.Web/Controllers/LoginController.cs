@@ -45,15 +45,22 @@ namespace leaseEase.Web.Controllers
         [HttpPost]
         public ActionResult LogIn(UActionLogin data)
         {
-            var ulData = new UserLoginData {
+            var ulData = new UserLoginData
+            {
                 Credential = data.Credential,
                 Password = data.Password,
                 LastLogin = DateTime.Now,
                 UserIp = base.Request.UserHostAddress
             };
             BaseResponces resp = _session.ValidaeUserCredentialAction(ulData, _repo);
-            if(resp.Status) {
-                BaseResponces auth = _session.GenerateUserSessionActionFlow(ulData,_repo);
+            if (resp.Status)
+            {
+                UCookieData cData = _session.GenCoockieAlgo(resp.CurrentUser);
+
+                if (cData != null)
+                {
+                }
+                BaseResponces auth = _session.GenerateUserSessionActionFlow(ulData, _repo);
             }
             return null;
         }

@@ -79,6 +79,7 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -90,6 +91,8 @@
     <Compile Include="BaseBL\SessionBL.cs" />
     <Compile Include="BusinessLogic.cs" />
     <Compile Include="Interfaces\ISession.cs" />
+    <Compile Include="MainAPI\AdminAPI.cs" />
+    <Compile Include="MainAPI\CreatorAPI.cs" />
     <Compile Include="MainAPI\UserAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repos\ILeaseEaseRepository.cs" />

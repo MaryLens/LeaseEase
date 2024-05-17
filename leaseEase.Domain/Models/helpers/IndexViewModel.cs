@@ -11,5 +11,6 @@ namespace leaseEase.Domain.Models.helpers
     {
         public List<Facility> Facilities { get; set; }
         public List<TypesOfOffice> TypesOfOffice { get; set; }
+        public List<Office> Office { get; set; }
     }
 }

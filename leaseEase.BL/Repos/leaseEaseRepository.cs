@@ -27,11 +27,17 @@ namespace leaseEase.BL.Repos
         }
         public async Task<List<Office>> GetAllOfficesAsync()
         {
-            return await _context.Offices.ToListAsync();
+            List<Office> offices = await _context.Offices.ToListAsync();
+            foreach (Office office in offices) {
+                office.Type = await GetTypeByIdAsync(office.TypeId);
+            }
+            return offices;
         }
         public async Task<Office> GetOfficeByIdAsync(int officeId)
         {
-            return await _context.Offices.FirstOrDefaultAsync(m => m.Id == officeId);
+            Office office = await _context.Offices.FirstOrDefaultAsync(m => m.Id == officeId);
+            office.Type = await GetTypeByIdAsync(office.TypeId);
+            return office;
         }
         public async Task RemoveOfficeAsync(int officeId)
         {
