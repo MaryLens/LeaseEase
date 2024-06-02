@@ -5,7 +5,7 @@
         <img src='~/Content/images/logo.svg' alt="" class="logo-dark" height="47" />
         <p class="logo-title-popup">LeaseEase</p>
     </div>
-    @using (Html.BeginForm("LogIn", "Login", FormMethod.Post, new { @id = "RegisterForm" }))
+    @using (Html.BeginForm("Signup", "Login", FormMethod.Post, new { @id = "RegisterForm" }))
     {
         <div class="signup-column" id="signup-column">
             <p class="login-signup-texts">Sign Up</p>
@@ -26,7 +26,7 @@
            })
                 @Html.TextBoxFor(e => e.Password, new
            {
-               type = "password",
+               type = "text",
                placeholder = "Password",
                autocomplete = "new-password",
                @class = "login-input"

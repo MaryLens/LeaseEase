@@ -21,7 +21,7 @@ namespace leaseEase.BL.BaseBL
 
         public BaseResponces RegisterUserActionFlow(UserRegisterData urData, ILeaseEaseRepository repo)
         {
-            return RegisterUserAccount(urData, repo);
+            return Task.Run(()=>RegisterUserAccountAsync(urData, repo)).Result;
         }
 
         BaseResponces ISession.ValidaeUserCredentialAction(UserLoginData ulData, ILeaseEaseRepository repo)

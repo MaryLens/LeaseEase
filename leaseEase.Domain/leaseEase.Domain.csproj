@@ -92,8 +92,10 @@
     <Compile Include="Enum\User\Roles.cs" />
     <Compile Include="Models\helpers\IndexViewModel.cs" />
     <Compile Include="Models\helpers\newOfficeModel.cs" />
+    <Compile Include="Models\helpers\officeDetailsModel.cs" />
     <Compile Include="Models\Off\Facility.cs" />
     <Compile Include="Models\Off\Office.cs" />
+    <Compile Include="Models\Off\Review.cs" />
     <Compile Include="Models\Off\TypesOfOffice.cs" />
     <Compile Include="Models\Responces\BaseResponces.cs" />
     <Compile Include="Models\User\PwManager.cs" />

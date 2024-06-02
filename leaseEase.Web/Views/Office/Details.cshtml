@@ -1,10 +1,37 @@
-﻿@model leaseEase.Domain.Models.Off.Office
+﻿@model leaseEase.Domain.Models.helpers.officeDetailsModel
 @{
     ViewBag.Title = "Office Details";
 }
 
 <div>
-    <h1 class="ind-t3">@Html.DisplayFor(model => model.Name)</h1>
-    <div class="details-photo" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(Model.Image)');">
+    <h1 class="ind-t3">@Html.DisplayFor(model => model.Office.Name)</h1>
+    <div class="details-photo" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(Model.Office.Image)');">
     </div>
 </div>
+
+@using (Html.BeginForm("NewReview", "Office", FormMethod.Post, new { @id = "reviewForm", enctype = "multipart/form-data" }))
+{
+    <div class="login-column" id="login-column">
+        <p class="login-signup-texts">Add your review</p>
+        <div class="login-container">
+            @Html.HiddenFor(e => e.Review.OfficeId, new { type = "number", Value = Model.Office.Id, @style = "display:none;" })
+
+            @Html.TextBoxFor(e => e.Review.Text, new
+       {
+           type = "text",
+           placeholder = "Review",
+           autocomplete = "nope",
+           @class = "login-input"
+       })
+            @Html.TextBoxFor(e => e.Review.Rating, new
+       {
+           type = "number",
+           placeholder = "Rating",
+           autocomplete = "nope",
+           @class = "login-input"
+       })
+
+            <button type="submit" class="login-button">Save</button>
+        </div>
+    </div>
+}

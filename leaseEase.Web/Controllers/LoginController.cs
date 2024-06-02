@@ -39,7 +39,7 @@ namespace leaseEase.Web.Controllers
                 UserIp = base.Request.UserHostAddress
             };
             BaseResponces resp = _session.RegisterUserActionFlow(urData, _repo);
-            return null;
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

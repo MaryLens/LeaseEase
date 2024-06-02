@@ -4,6 +4,7 @@ using System.Linq;
 using leaseEase.Domain.Models.Off;
 using leaseEase.Domain.Models.User;
 using System;
+using System.Reflection.Emit;
 
 namespace leaseEase.DAL
 {
@@ -13,11 +14,19 @@ namespace leaseEase.DAL
         public DbSet<Office> Offices { get; set; }
         public DbSet<TypesOfOffice> TypesOfOffice { get; set; }
         public DbSet<Facility> Facilities { get; set; }
+        public DbSet<Review> Reviews { get; set; }
 
         public leaseEaseContext() : base("Host=localhost;Port=5432;Database=leaseEase;Username=postgres;Password=passForPGA")
         {
             Database.SetInitializer(new DropCreateDatabaseAlways<leaseEaseContext>());
             setDB(this);
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Office>()
+                .HasMany(o => o.Reviews)
+                .WithRequired(r => r.Office)
+                .HasForeignKey(r => r.OfficeId);
         }
 
         private void setDB(leaseEaseContext db)

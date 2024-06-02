@@ -29,5 +29,12 @@ namespace leaseEase.BL.Repos
         Task<User> GetUserByEmailAndPwAsync(string email, string password);
         Task<User> GetUserByIdAsync(int typeId);
         Task<User> AddUserAsync(UserRegisterData userData);
+
+        //reviews
+        Task<List<Review>> GetAllReviewsAsync();
+        Task<Review> GetReviewByIdAsync(int reviewId);
+        Task<List<Review>> GetReviewsByOfficeAsync(int officeId);
+        Task<Review> AddReviewAsync(Review review);
+        Task RemoveReviewAsync(int reviewId);
     }
 }

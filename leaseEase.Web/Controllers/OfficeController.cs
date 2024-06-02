@@ -19,9 +19,20 @@ namespace leaseEase.Web.Controllers
         // GET: Home
         public async Task<ActionResult> Details(int id)
         {
-            Offices = await _repo.GetAllOfficesAsync();
-            Office office = Offices.Find(p => p.Id == id);
-            return office == null ? NotFound() : View(office);
+            Office office = await _repo.GetOfficeByIdAsync(id);
+            officeDetailsModel model = new officeDetailsModel {
+                Office = office,
+                Review = new Review()
+
+        };
+            return office == null ? NotFound() : View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> NewReview(officeDetailsModel model)
+        {
+            await _repo.AddReviewAsync(model.Review);
+            return RedirectToAction("Details", new { id = model.Review.OfficeId });
         }
 
         public ActionResult NotFound()

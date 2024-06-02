@@ -22,7 +22,7 @@ namespace leaseEase.Domain.Models.Off
         [Display(Name = "Description")]
         [DataType(DataType.Text)]
         public string Description { get; set; }
-
+        [NotMapped]
         public TypesOfOffice Type { get; set; }
 
         [Display(Name = "Type")]
@@ -70,5 +70,6 @@ namespace leaseEase.Domain.Models.Off
         [DefaultValue(0)]
         public double Rating { get; set; }
         public int Views { get; set; }
+        public List<Review> Reviews { get; set; } = new List<Review>();
     }
 }
