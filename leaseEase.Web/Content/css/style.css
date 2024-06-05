@@ -35,7 +35,7 @@ body{
     font-family: KulimParkRegular;
     margin-left: 19px;
     margin-top: auto;
-    margin-bottom: auto;
+    margin-bottom: 8px;
 }
 
 .logo-dark {
@@ -105,6 +105,23 @@ body{
     margin-top: auto;
     margin-bottom: auto;
 }
+
+.db-link-cont {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.db-link {
+    cursor: pointer;
+    color: #333168;
+    font-size: 18px;
+    line-height: 1.4;
+    text-decoration: none;
+    font-family: KulimParkRegular
+}
+
+    .db-link:hover {
+        text-decoration: underline;
+    }
 /*# ----------------------------------------------------HEADER ---------------------------------------------*/
 
 /*# ----------------------------------------------------Signup login ---------------------------------------------*/
@@ -411,6 +428,7 @@ body{
     background-position: center;
 }
 .office-inf{
+    width: 260px;
     display: flex;
     flex-direction: column;
     margin-top: 18px;
@@ -428,6 +446,25 @@ body{
     display: flex;
     flex-direction: row;
     margin-top: 10px;
+}
+.off-name-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+.edit-link {
+    margin-top: auto;
+    margin-bottom:auto;
+    width: 18px;
+    height:18px
+}
+.off-actions {
+    width: 47px;
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;
+    margin-bottom: auto;
+    justify-content: space-between;
 }
 .office-price{
     font-size: 24px;
@@ -464,7 +501,10 @@ body{
     .star.filled {
         background-image: url("/Content/images/Star-filled.svg");
     }
-.office-desc{
+.office-desc {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 54px;
     font-size: 16px;
     color: #333168;
     font-family: KulimParkBold;
@@ -865,3 +905,202 @@ body{
     margin-bottom: auto;
 }
 /*# -------------------------------------------Footer----------------------------------------- */
+
+
+/*# -------------------------------------------New office----------------------------------------- */
+.new-office-container {
+    display: flex;
+    flex-direction: column;
+    width: 1200px;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    row-gap: 20px;
+}
+.new-off-dd {
+    font-family: KulimParkRegular;
+    font-size: 18px;
+    color: #333168;
+    background-color: rgb(255,255,255,0);
+    border-style: solid;
+    width: 1200px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-color: #333168;
+    border-radius: 37px;
+    border-width: 1px;
+    height: 40px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.new-off-input {
+    font-family: KulimParkRegular;
+    font-size: 18px;
+    color: #333168;
+    background-color: rgb(255,255,255,0);
+    border-style: solid;
+    width: 1170px;
+    padding-left: 15px;
+    padding-right:15px;
+    border-color: #333168;
+    border-radius: 37px;
+    border-width: 1px;
+    height: 40px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.new-off-title-input {
+    font-family: KulimParkRegular;
+    font-size: 18px;
+    color: #333168;
+    background-color: rgb(255,255,255,0);
+    border-style: solid;
+    width: 650px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-color: #333168;
+    border-radius: 37px;
+    border-width: 1px;
+    height: 40px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.new-off-multi-input {
+    font-family: KulimParkRegular;
+    font-size: 18px;
+    color: #333168;
+    background-color: rgb(255,255,255,0);
+    border-style: solid;
+    width: 650px;
+    padding: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-color: #333168;
+    border-radius: 15px;
+    border-width: 1px;
+    height: 240px;
+    resize: none;
+}
+.alert-office {
+    color: #C81717;
+    font-size: 18px;
+    font-family: KulimParkSemiBold;
+}
+.faci-container {
+    margin-top: 20px;
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    flex-wrap: wrap;
+    row-gap: 20px;
+}
+
+.faci-item {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+}
+
+.faci-item-text {
+    color: #333168;
+    font-size: 16px;
+    font-family: KulimParkSemiBold;
+}
+
+.Image-texts-new-off {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    min-height: 300px; 
+    column-gap: 20px;
+}
+
+.texts-new-off {
+    width: 680px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 20px;
+}
+
+.image-alert-column {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 20px;
+}
+
+.image-upload-wrapper {
+    cursor: pointer;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border: 2px dashed #333168;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.image-upload-label {
+    cursor: pointer;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: KulimParkSemiBold;
+    color: #333168;
+}
+
+.image-upload-text {
+    cursor: pointer;
+    font-family: KulimParkSemiBold;
+    color: #333168;
+    font-size: 18px;
+}
+
+.new-off-button {
+    cursor: pointer;
+    color: #333168;
+    font-size: 20px;
+    font-family: KulimParkSemiBold;
+    background-color: #CDCDEE;
+    border-radius: 37px;
+    border-style: none;
+    width: 260px;
+    padding-left: 0;
+    padding-right: 0;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 0.3s, color 0.3s;
+}
+    .new-off-button:hover {
+        color: #fff;
+        background-color: #333168;
+    }
+.new-off-texts {
+    color: #333168;
+    font-size: 30px;
+    font-family: KulimParkSemiBold;
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.faci-text {
+    color: #333168;
+    font-size: 22px;
+    font-family: KulimParkSemiBold;
+}
+/*# -------------------------------------------New office----------------------------------------- */

@@ -10,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace leaseEase.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILeaseEaseRepository _repo;
+
         public HomeController(ILeaseEaseRepository repo)
         {
                 _repo = repo;

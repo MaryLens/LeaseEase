@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace leaseEase.BL.BaseBL
 {
@@ -31,6 +32,14 @@ namespace leaseEase.BL.BaseBL
         public UCookieData GenCoockieAlgo(User dataUser)
         {
             return UserCoockieGenerationAlg(dataUser);
+        }
+        public HttpCookie CookieGenerate(string Email)
+        {
+            return CookieGenByUName(Email);
+        }
+        public UserMinData GetUserByCookie(string cookie)
+        {
+            return GetUserByCookieApi(cookie);
         }
     }
 }

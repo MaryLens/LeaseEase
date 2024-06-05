@@ -1,90 +1,151 @@
 ﻿@model leaseEase.Domain.Models.helpers.newOfficeModel
 @using (Html.BeginForm("CreateNew", "Office", FormMethod.Post, new { @id = "officeForm", enctype = "multipart/form-data" }))
 {
-    <div class="login-column" id="login-column">
-        <p class="login-signup-texts">New office</p>
-        <div class="login-container">
-            @Html.TextBoxFor(e => e.Office.Name, new
-       {
-           type = "text",
-           placeholder = "Name",
-           autocomplete = "nope",
-           @class = "login-input"
-       })
-            @Html.TextBoxFor(e => e.Office.Description, new
-       {
-           type = "text",
-           placeholder = "Description",
-           autocomplete = "nope",
-           @class = "login-input"
-       })
-            @{
-                var types = Model.TypesOfOffice;
-            }
-            @Html.DropDownListFor(e => e.Office.TypeId,
-                new SelectList(types, "Id", "Name"),
-                "Select a type",
-                new { @class = "login-input" })
-
-            @Html.TextBoxFor(e => e.Office.Price, new
-       {
-           type = "number",
-           placeholder = "Price",
-           autocomplete = "nope",
-           @class = "login-input"
-       })
-            @Html.TextBoxFor(e => e.Office.Location, new
-       {
-           type = "text",
-           placeholder = "Location",
-           autocomplete = "nope",
-           @class = "login-input"
-       })
-            @Html.TextBoxFor(e => e.Office.TeamSize, new
-       {
-           type = "number",
-           placeholder = "TeamSize",
-           autocomplete = "nope",
-           @class = "login-input"
-       })
-            @Html.TextBoxFor(e => e.Office.Rooms, new
-            {
-            type = "number",
-            placeholder = "Rooms",
-            autocomplete = "nope",
-            @class = "login-input"
-            })
-            @Html.TextBoxFor(e => e.Office.Size, new
-            {
-            type = "number",
-            placeholder = "Size",
-            autocomplete = "nope",
-            @class = "login-input"
-            })
-            @{
-                var faci = Model.Facilities;
-            }
-
-            @Html.DropDownListFor(e => e.Office.Facilities,
-                new SelectList(faci, "Id", "Name"),
-                "Facilities",
-                new
-                     {
-                    @class = "login-input",
-                    multiple = "multiple"
-                })
-
-            @Html.DropDownListFor(e => e.Office.MinimalRentalPeriod,
-            new SelectList(Enum.GetValues(typeof(leaseEase.Domain.Enum.Off.MinimalRentalPeriod))),
-            "Minimal Rental period",
-            new { @class = "login-input" })
-
-            @Html.TextBoxFor(e => e.Office.ImageFile, new { type = "file", @class = "login-input", onchange = "previewImage(event)" })
-            <img id="preview" src="#" alt="Preview" style="display: none; max-width: 100px; max-height: 100px;">
+    <div class="login-column" id="new-office-column">
+        <p class="new-off-texts">New office</p>
+        <div class="new-office-container">
+            <div class="Image-texts-new-off">
+                <div class="image-alert-column">
+                    <span class="alert-office" id="error-message-img" style="display: none;">Main image is required.</span>
+                    <div class="image-upload-wrapper" id="image-upload-wrapper">
+                        <label for="image-upload" class="image-upload-label">
+                            <span class="image-upload-text" id="image-upload-text">Add main image</span>
+                            @Html.TextBoxFor(e => e.Office.ImageFile, new
+                            {
+                               type = "file",
+                               id = "image-upload",
+                               onchange = "previewImage(event)",
+                               style = "display:none;"
+                            })
+                        </label>
+                    </div>
 
 
-            <button type="submit" class="login-button">Create</button>
-        </div>
+                </div>
+
+                <div class="texts-new-off">
+                    <span class="alert-office" id="error-message-title" style="display: none;">Title is required.</span>
+                    @Html.TextBoxFor(e => e.Office.Name, new
+               {
+                   type = "text",
+                   placeholder = "Name",
+                   autocomplete = "nope",
+                   @class = "new-off-title-input"
+               })
+                    <span class="alert-office" id="error-message-desc" style="display: none;">Description is required.</span>
+                    @Html.TextAreaFor(e => e.Office.Description, new
+               {
+                   type = "text",
+                   placeholder = "Description",
+                   autocomplete = "nope",
+                   @class = "new-off-multi-input"
+               })
+                </div>
+            </div>
+                @{
+                    var types = Model.TypesOfOffice;
+                }
+                <span class="alert-office" id="error-message-type" style="display: none;">Office type is required.</span>
+                @Html.DropDownListFor(e => e.Office.TypeId,
+                    new SelectList(types, "Id", "Name"), "Select type",
+                    new
+                         {
+
+                        placeholder = "Select type",
+                        @class = "new-off-dd"
+                         })
+
+
+                <span class="alert-office" id="error-message-price" style="display: none;">Price is required and must be a positive number.</span>
+                @Html.TextBoxFor(e => e.Office.Price, new
+           {
+               type = "text",
+               placeholder = "Price $/month",
+               autocomplete = "nope",
+               @class = "new-off-input",
+               min = "1",
+               pattern = "\\d*",
+               inputmode = "numeric",
+               @oninput = "this.value=this.value.replace(/[^0-9]/g,'');",
+               value = ""
+           })
+                <span class="alert-office" id="error-message-loc" style="display: none;">Location is required.</span>
+                @Html.TextBoxFor(e => e.Office.Location, new
+           {
+               type = "text",
+               placeholder = "Location",
+               autocomplete = "nope",
+               @class = "new-off-input"
+           })
+                <span class="alert-office" id="error-message-team" style="display: none;">Team size is required and must be a positive number.</span>
+                @Html.TextBoxFor(e => e.Office.TeamSize, new
+           {
+               type = "text",
+               placeholder = "TeamSize",
+               autocomplete = "nope",
+               @class = "new-off-input",
+               min = "1",
+               pattern = "\\d*",
+               inputmode = "numeric",
+               @oninput = "this.value=this.value.replace(/[^0-9]/g,'');",
+               value = ""
+           })
+                <span class="alert-office" id="error-message-rooms" style="display: none;">Rooms number is required and must be a positive number.</span>
+                @Html.TextBoxFor(e => e.Office.Rooms, new
+           {
+               type = "text",
+               placeholder = "Rooms",
+               autocomplete = "nope",
+               @class = "new-off-input",
+               min = "1",
+               pattern = "\\d*",
+               inputmode = "numeric",
+               @oninput = "this.value=this.value.replace(/[^0-9]/g,'');",
+               value = ""
+           })
+                <span class="alert-office" id="error-message-size" style="display: none;">Office size is required and must be a positive number.</span>
+                @Html.TextBoxFor(e => e.Office.Size, new
+           {
+               type = "text",
+               placeholder = "Area sqm",
+               autocomplete = "nope",
+               @class = "new-off-input",
+               min = "1",
+               pattern = "\\d*",
+               inputmode = "numeric",
+               @oninput = "this.value=this.value.replace(/[^0-9]/g,'');",
+               value = ""
+           })
+                <span class="alert-office" id="error-message-min" style="display: none;">Minimal rental period is required.</span>
+                @Html.DropDownListFor(e => e.Office.MinimalRentalPeriod,
+         new SelectList(
+             new[] { new { Value = "", Text = "Select minimal rental period" } }
+             .Concat(Enum.GetValues(typeof(leaseEase.Domain.Enum.Off.MinimalRentalPeriod))
+             .Cast<leaseEase.Domain.Enum.Off.MinimalRentalPeriod>()
+             .Select(x => new { Value = x.ToString(), Text = x.ToString() })),
+             "Value", "Text"),
+         new { @class = "new-off-dd" })
+                @{
+                    var faci = Model.Facilities;
+                }
+
+                <div>
+                    <div class="faci-text">Select Facilities:</div>
+                    <div class="faci-container">
+                        @{
+                            foreach (var amenity in Model.Facilities)
+                            {
+                                <div class="faci-item">
+                                    <input type="checkbox" id="amenity_@amenity.Id" name="SelectedAmenityIds" value="@amenity.Id" />
+                                    <label class="faci-item-text"for="amenity_@amenity.Id">@amenity.Name</label>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+
+                <button type="button" class="new-off-button" onclick="validateAndSubmit()">Create</button>
+            </div>
     </div>
 }
 

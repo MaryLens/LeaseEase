@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace leaseEase.BL.Interfaces
 {
@@ -16,5 +17,7 @@ namespace leaseEase.BL.Interfaces
         BaseResponces RegisterUserActionFlow(UserRegisterData urData, ILeaseEaseRepository repo);
         BaseResponces ValidaeUserCredentialAction(UserLoginData ulData, ILeaseEaseRepository repo);
         UCookieData GenCoockieAlgo(User dataUser);
+        HttpCookie CookieGenerate(string Email);
+        UserMinData GetUserByCookie(string cookie);
     }
 }

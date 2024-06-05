@@ -5,22 +5,23 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
-namespace leaseEase.Domain.Models.User
+namespace leaseEase.Domain.Models.Off
 {
-    public class UDbSession
+    public class OfficeImg
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
-        public string Email { get; set; }
+        [NotMapped]
+        public Office Office { get; set; }
 
-        [Required]
-        public string CookieString { get; set; }
+        [Display(Name = "Office")]
+        public int OfficeId { get; set; }
 
-        [Required]
-        public DateTime Lifetime { get; set; }
+        [Display(Name = "Image")]
+        public byte[] Image { get; set; }
     }
 }

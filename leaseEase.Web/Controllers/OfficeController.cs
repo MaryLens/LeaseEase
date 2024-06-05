@@ -4,11 +4,12 @@ using leaseEase.Domain.Models.Off;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace leaseEase.Web.Controllers
 {
-    public class OfficeController : Controller
+    public class OfficeController : BaseController
     {
         private readonly ILeaseEaseRepository _repo;
         public List<Office> Offices { get; set; }
@@ -45,6 +46,7 @@ namespace leaseEase.Web.Controllers
             {
                 TypesOfOffice = await _repo.GetAllTypesAsync(),
                 Facilities = await _repo.GetAllFacilitiessAsync(),
+                SelectedAmenityIds = new List<int>(),
                 Office = new Office()
             };
             return View(model);
@@ -54,13 +56,100 @@ namespace leaseEase.Web.Controllers
         {
             if (model.Office.ImageFile != null && model.Office.ImageFile.ContentLength > 0)
             {
-                using (var binaryReader = new BinaryReader(model.Office.ImageFile.InputStream))
+                model.Office.Image = ConvertToBytes(model.Office.ImageFile);
+            }
+            if (model.SelectedAmenityIds != null)
+            {
+                foreach (int id in model.SelectedAmenityIds)
                 {
-                    byte[] fileData = binaryReader.ReadBytes(model.Office.ImageFile.ContentLength);
-                    model.Office.Image = fileData;
+                    model.Office.Facilities.Add(await _repo.GetFacilityByIdAsync(id));
+                }
+            }
+            if(model.additionalImages != null)
+            {
+                foreach (var image in model.additionalImages)
+                {
+                    if (image != null && image.ContentLength > 0)
+                    {
+                        OfficeImg officeImage = new OfficeImg
+                        {
+                            Image = ConvertToBytes(image),
+                            Office = model.Office
+                        };
+                        await _repo.AddOffImageAsync(officeImage);
+                        model.Office.Images.Add(officeImage);
+                    }
                 }
             }
             await _repo.AddOfficeAsync(model.Office);
+            return RedirectToAction("Details", new { id = model.Office.Id });
+        }
+
+        private byte[] ConvertToBytes(HttpPostedFileBase file)
+        {
+            byte[] data = null;
+            using (var binaryReader = new BinaryReader(file.InputStream))
+            {
+                data = binaryReader.ReadBytes(file.ContentLength);
+            }
+            return data;
+        }
+
+        public async Task<ActionResult> LandlordDb()
+        {
+            return View(await _repo.GetAllOfficesAsync());
+        }
+
+        public async Task<ActionResult> Edit(int id)
+        {
+            var office = await _repo.GetOfficeByIdAsync(id);
+
+            List<int> faci = new List<int>();
+            foreach(Facility facility in office.Facilities)
+            {
+                faci.Add(facility.Id);
+            }
+            var model = new newOfficeModel()
+            {
+                TypesOfOffice = await _repo.GetAllTypesAsync(),
+                Facilities = await _repo.GetAllFacilitiessAsync(),
+                Office = office,
+                SelectedAmenityIds = faci
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(newOfficeModel model)
+        {
+            if (model.Office.ImageFile != null && model.Office.ImageFile.ContentLength > 0)
+            {
+                model.Office.Image = ConvertToBytes(model.Office.ImageFile);
+            }
+            if (model.SelectedAmenityIds != null)
+            {
+                foreach (int id in model.SelectedAmenityIds)
+                {
+                    model.Office.Facilities.Add(await _repo.GetFacilityByIdAsync(id));
+                }
+            }
+            if (model.additionalImages != null)
+            {
+                foreach (var image in model.additionalImages)
+                {
+                    if (image != null && image.ContentLength > 0)
+                    {
+                        OfficeImg officeImage = new OfficeImg
+                        {
+                            Image = ConvertToBytes(image),
+                            Office = model.Office
+                        };
+                        await _repo.AddOffImageAsync(officeImage);
+                        model.Office.Images.Add(officeImage);
+                    }
+                }
+            }
+            await _repo.UpdateOfficeAsync(model.Office);
             return RedirectToAction("Details", new { id = model.Office.Id });
         }
     }

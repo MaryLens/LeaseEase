@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="BaseBL\SessionBL.cs" />
     <Compile Include="BusinessLogic.cs" />
+    <Compile Include="Helpers\CookieGeneration.cs" />
     <Compile Include="Interfaces\ISession.cs" />
     <Compile Include="MainAPI\AdminAPI.cs" />
     <Compile Include="MainAPI\CreatorAPI.cs" />

@@ -8,7 +8,19 @@
     <div class="details-photo" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(Model.Office.Image)');">
     </div>
 </div>
-
+<div>
+    <h3>Office Amenities</h3>
+    <div class="amenities-container">
+        @{
+            foreach (var amenity in Model.Office.Facilities)
+            {
+                    <div class="amenity-item">
+                        <div>@amenity.Name</div>
+                    </div>
+            }
+        }
+    </div>
+</div>
 @using (Html.BeginForm("NewReview", "Office", FormMethod.Post, new { @id = "reviewForm", enctype = "multipart/form-data" }))
 {
     <div class="login-column" id="login-column">

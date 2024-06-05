@@ -5,11 +5,12 @@ using leaseEase.Domain.Models.Responces;
 using leaseEase.Domain.Models.User;
 using leaseEase.Web.Models.User;
 using System;
+using System.Web;
 using System.Web.Mvc;
 
 namespace leaseEase.Web.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         private readonly ISession _session;
         private readonly ILeaseEaseRepository _repo;
@@ -39,6 +40,12 @@ namespace leaseEase.Web.Controllers
                 UserIp = base.Request.UserHostAddress
             };
             BaseResponces resp = _session.RegisterUserActionFlow(urData, _repo);
+            if (resp.Status)
+            {
+                HttpCookie cookie = _session.CookieGenerate(urData.Email);
+                ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+                return RedirectToAction("Index", "Home");
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -61,6 +68,9 @@ namespace leaseEase.Web.Controllers
                 {
                 }
                 BaseResponces auth = _session.GenerateUserSessionActionFlow(ulData, _repo);
+                HttpCookie cookie = _session.CookieGenerate(ulData.Credential);
+                ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+                return RedirectToAction("Index", "Home");
             }
             return null;
         }

@@ -21,5 +21,6 @@ namespace leaseEase.Domain.Models.User
         public DateTime Created { get; set; }
         public string UserIp { get; set; }
         public Roles Role { get; set; }
+        public bool Blocked { get; set; } = false;
     }
 }

@@ -7,12 +7,15 @@
                 <img src='~/Content/images/logo.svg' alt="" class="logo-dark" height="47" />
                 <p class="logo-title">LeaseEase</p>
             </div>
-        </a >
-        <div class="autori-buttons">
-            <a class="login-cont" href="@Url.Action("Index", "Login")"><p class="login">Log In</p></a>
-            <a href="@Url.Action("Signup", "Login")"><button type="button" class="signup">Sign Up</button></a>
-        </div>
-    </div>
+        </a>
+        <a href="@Url.Action("LandlordDb", "Office")"class="db-link-cont">
+            <p class="db-link">Dashboard</p>
+        </a>
+            <div class="autori-buttons">
+                <a class="login-cont" href="@Url.Action("Index", "Login")"><p class="login">Log In</p></a>
+                <a href="@Url.Action("Signup", "Login")"><button type="button" class="signup">Sign Up</button></a>
+            </div>
+</div>
 
 </nav>
 <!--HEADER-->

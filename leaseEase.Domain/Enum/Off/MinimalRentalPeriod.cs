@@ -8,7 +8,8 @@ namespace leaseEase.Domain.Enum.Off
 {
     public enum MinimalRentalPeriod
     {
-        MONTHLY = 0,
-        YEARLY = 1
+        Monthly = 1,
+        Yearly = 2,
+        NoPreference = 3
     }
 }

@@ -36,5 +36,10 @@ namespace leaseEase.BL.Repos
         Task<List<Review>> GetReviewsByOfficeAsync(int officeId);
         Task<Review> AddReviewAsync(Review review);
         Task RemoveReviewAsync(int reviewId);
+
+        //Office images
+        Task<OfficeImg> AddOffImageAsync(OfficeImg image);
+        Task RemoveOffImageAsync(int imageId);
+        Task<OfficeImg> GetOffImageByIdAsync(int imageId);
     }
 }

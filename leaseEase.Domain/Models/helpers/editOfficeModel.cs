@@ -8,13 +8,13 @@ using System.Web;
 
 namespace leaseEase.Domain.Models.helpers
 {
-    public class newOfficeModel
+    public class editOfficeModel
     {
+        public int officeId { get; set; } 
         public List<int> SelectedAmenityIds { get; set; }
         public List<Facility> Facilities { get; set; }
         public List<TypesOfOffice> TypesOfOffice { get; set; }
         public Office Office { get; set; }
-        public List<HttpPostedFileBase> additionalImages {  get; set; }
-
+        public List<HttpPostedFileBase> additionalImages { get; set; }
     }
 }

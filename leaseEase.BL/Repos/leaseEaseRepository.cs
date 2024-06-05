@@ -27,7 +27,7 @@ namespace leaseEase.BL.Repos
         }
         public async Task<List<Office>> GetAllOfficesAsync()
         {
-            List<Office> offices = await _context.Offices.Include(o => o.Reviews).ToListAsync();
+            List<Office> offices = await _context.Offices.Include(o => o.Reviews).Include(o => o.Facilities).Include(o=>o.Images).ToListAsync();
             foreach (Office office in offices) {
                 office.Type = await GetTypeByIdAsync(office.TypeId);
             }
@@ -35,7 +35,7 @@ namespace leaseEase.BL.Repos
         }
         public async Task<Office> GetOfficeByIdAsync(int officeId)
         {
-            Office office = await _context.Offices.Include(o=>o.Reviews).FirstOrDefaultAsync(m => m.Id == officeId);
+            Office office = await _context.Offices.Include(o=>o.Reviews).Include(o=>o.Facilities).FirstOrDefaultAsync(m => m.Id == officeId);
             if (office == null)
             {
                 return null; 
@@ -48,21 +48,21 @@ namespace leaseEase.BL.Repos
             var office = await _context.Offices.FirstOrDefaultAsync(p => p.Id == officeId);
             if (office != null)
             {
-                foreach(Review review in office.Reviews)
-                {
-                        await RemoveReviewAsync(review.Id);
-
-                }
                 _context.Offices.Remove(office);
                 await _context.SaveChangesAsync();
             }
         }
         public async Task<Office> UpdateOfficeAsync(Office office)
         {
-            _context.Set<Office>().Attach(office);
-           _context.Entry(office).State = EntityState.Modified;
+            var existingOffice = await _context.Set<Office>().FindAsync(office.Id);
+            if (existingOffice == null)
+            {
+                throw new InvalidOperationException("Office not found in the database.");
+            }
+
+            _context.Entry(existingOffice).CurrentValues.SetValues(office);
             await _context.SaveChangesAsync();
-            return office;
+            return existingOffice;
         }
 
         //facility and type
@@ -155,5 +155,33 @@ namespace leaseEase.BL.Repos
                 await _context.SaveChangesAsync();
             }
         }
+
+        //Office image
+        public async Task<OfficeImg> AddOffImageAsync(OfficeImg image)
+        {
+            _context.OfficeImages.Add(image);
+            await _context.SaveChangesAsync();
+            return image;
+        }
+        public async Task<OfficeImg> GetOffImageByIdAsync(int imageId)
+        {
+            OfficeImg img = await _context.OfficeImages.FirstOrDefaultAsync(m => m.Id == imageId);
+            return img;
+        }
+        public async Task RemoveOffImageAsync(int imageId)
+        {
+            OfficeImg image = await _context.OfficeImages.FirstOrDefaultAsync(p => p.Id == imageId);
+            if (image != null)
+            {
+                image.Office = await GetOfficeByIdAsync(image.OfficeId);
+                Office office = image.Office;
+                office.Images.Remove(image);
+                _context.OfficeImages.Remove(image);
+                await UpdateOfficeAsync(office);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+
     }
 }

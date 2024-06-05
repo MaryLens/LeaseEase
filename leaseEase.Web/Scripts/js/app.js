@@ -160,24 +160,235 @@ function showPageT(index) {
 
 //INDEX
 
+
+//new office
 function previewImage(event) {
-    var preview = document.getElementById('preview');
+    var previewWrapper = document.getElementById('image-upload-wrapper');
+    var previewText = document.getElementById('image-upload-text');
     var file = event.target.files[0];
     var reader = new FileReader();
 
     reader.onloadend = function () {
-        preview.src = reader.result;
-        preview.style.display = 'block';
+        previewWrapper.style.backgroundImage = 'url(' + reader.result + ')';
+        previewText.style.display = 'none';
     }
 
     if (file) {
         reader.readAsDataURL(file);
     } else {
-        preview.src = '';
-        preview.style.display = 'none';
+        previewWrapper.style.backgroundImage = 'none';
+        previewText.style.display = 'block';
     }
 }
 
+function validateAndSubmit() {
+    //title
+    var titleInput = document.querySelector('input[name="Office.Name"]');
+    var errorMessageTitle = document.getElementById('error-message-title');
+    //description
+    var descInput = document.querySelector('textarea[name="Office.Description"]');
+    var errorMessageDesc = document.getElementById('error-message-desc');
+    //type
+    var typeInput = document.querySelector('select[name="Office.TypeId"]');
+    var errorMessageType = document.getElementById('error-message-type');
+    //price
+    var priceInput = document.querySelector('input[name="Office.Price"]');
+    var errorMessagePrice = document.getElementById('error-message-price');
+    //location
+    var locInput = document.querySelector('input[name="Office.Location"]');
+    var errorMessageLoc = document.getElementById('error-message-loc');
+    //team size
+    var teamSizeInput = document.querySelector('input[name="Office.TeamSize"]');
+    var errorMessageTeam = document.getElementById('error-message-team');
+    //rooms
+    var roomsInput = document.querySelector('input[name="Office.Rooms"]');
+    var errorMessageRooms = document.getElementById('error-message-rooms');
+    //size
+    var sizeInput = document.querySelector('input[name="Office.Size"]');
+    var errorMessageSize = document.getElementById('error-message-size');
+    //minimal period
+    var minInput = document.querySelector('select[name="Office.MinimalRentalPeriod"]');
+    var errorMessageMin = document.getElementById('error-message-min');
+    //image
+    var imgInput = document.querySelector('input[name="Office.ImageFile"]');
+    var errorMessageImg = document.getElementById('error-message-img');
+
+    if (titleInput.value == "") {
+        //title
+        titleInput.style.borderColor = 'red';
+        errorMessageTitle.style.display = 'block';
+    } else if (descInput.value == "") {
+        //prev normal
+        titleInput.style.borderColor = '';
+        errorMessageTitle.style.display = 'none';
+
+        //description
+        descInput.style.borderColor = 'red';
+        errorMessageDesc.style.display = 'block';
+    } else if (typeInput.value === null || typeInput.value === "") {
+        //prev normal
+        titleInput.style.borderColor = '';
+        errorMessageTitle.style.display = 'none';
+        descInput.style.borderColor = '';
+        errorMessageDesc.style.display = 'none';
+
+        //type
+        typeInput.style.borderColor = 'red';
+        errorMessageType.style.display = 'block';
+    } else if (priceInput.value == null || priceInput.value <= 0) {
+        //prev normal
+        titleInput.style.borderColor = '';
+        errorMessageTitle.style.display = 'none';
+        descInput.style.borderColor = '';
+        errorMessageDesc.style.display = 'none';
+        typeInput.style.borderColor = '';
+        errorMessageType.style.display = 'none';
+
+        //price
+        priceInput.style.borderColor = 'red';
+        errorMessagePrice.style.display = 'block';
+    } else if (locInput.value == "") {
+        //prev normal
+        titleInput.style.borderColor = '';
+        errorMessageTitle.style.display = 'none';
+        descInput.style.borderColor = '';
+        errorMessageDesc.style.display = 'none';
+        typeInput.style.borderColor = '';
+        errorMessageType.style.display = 'none';
+        priceInput.style.borderColor = '';
+        errorMessagePrice.style.display = 'none';
+
+        //location
+        locInput.style.borderColor = 'red';
+        errorMessageLoc.style.display = 'block';
+    } else if (teamSizeInput.value == null || teamSizeInput.value <= 0) {
+        //prev normal
+        titleInput.style.borderColor = '';
+        errorMessageTitle.style.display = 'none';
+        descInput.style.borderColor = '';
+        errorMessageDesc.style.display = 'none';
+        typeInput.style.borderColor = '';
+        errorMessageType.style.display = 'none';
+        priceInput.style.borderColor = '';
+        errorMessagePrice.style.display = 'none';
+        locInput.style.borderColor = '';
+        errorMessageLoc.style.display = 'none';
+
+        //team Size
+        teamSizeInput.style.borderColor = 'red';
+        errorMessageTeam.style.display = 'block';
+    } else if (roomsInput.value == null || roomsInput.value <= 0) {
+        //prev normal
+        titleInput.style.borderColor = '';
+        errorMessageTitle.style.display = 'none';
+        descInput.style.borderColor = '';
+        errorMessageDesc.style.display = 'none';
+        typeInput.style.borderColor = '';
+        errorMessageType.style.display = 'none';
+        priceInput.style.borderColor = '';
+        errorMessagePrice.style.display = 'none';
+        locInput.style.borderColor = '';
+        errorMessageLoc.style.display = 'none';
+        teamSizeInput.style.borderColor = '';
+        errorMessageTeam.style.display = 'none';
+
+        //rooms
+        roomsInput.style.borderColor = 'red';
+        errorMessageRooms.style.display = 'block';
+    } else if (sizeInput.value == null || sizeInput.value <= 0) {
+        //prev normal
+        titleInput.style.borderColor = '';
+        errorMessageTitle.style.display = 'none';
+        descInput.style.borderColor = '';
+        errorMessageDesc.style.display = 'none';
+        typeInput.style.borderColor = '';
+        errorMessageType.style.display = 'none';
+        priceInput.style.borderColor = '';
+        errorMessagePrice.style.display = 'none';
+        locInput.style.borderColor = '';
+        errorMessageLoc.style.display = 'none';
+        teamSizeInput.style.borderColor = '';
+        errorMessageTeam.style.display = 'none';
+        roomsInput.style.borderColor = '';
+        errorMessageRooms.style.display = 'none';
+
+        //size
+        sizeInput.style.borderColor = 'red';
+        errorMessageSize.style.display = 'block';
+    } else if (minInput.value === null || minInput.value === "") {
+        //prev normal
+        titleInput.style.borderColor = '';
+        errorMessageTitle.style.display = 'none';
+        descInput.style.borderColor = '';
+        errorMessageDesc.style.display = 'none';
+        typeInput.style.borderColor = '';
+        errorMessageType.style.display = 'none';
+        priceInput.style.borderColor = '';
+        errorMessagePrice.style.display = 'none';
+        locInput.style.borderColor = '';
+        errorMessageLoc.style.display = 'none';
+        teamSizeInput.style.borderColor = '';
+        errorMessageTeam.style.display = 'none';
+        roomsInput.style.borderColor = '';
+        errorMessageRooms.style.display = 'none';
+        sizeInput.style.borderColor = '';
+        errorMessageSize.style.display = 'none';
+
+        //min period
+        minInput.style.borderColor = 'red';
+        errorMessageMin.style.display = 'block';
+    } else if (imgInput.value == null || imgInput.value <= 0) {
+        //prev normal
+        titleInput.style.borderColor = '';
+        errorMessageTitle.style.display = 'none';
+        descInput.style.borderColor = '';
+        errorMessageDesc.style.display = 'none';
+        typeInput.style.borderColor = '';
+        errorMessageType.style.display = 'none';
+        priceInput.style.borderColor = '';
+        errorMessagePrice.style.display = 'none';
+        locInput.style.borderColor = '';
+        errorMessageLoc.style.display = 'none';
+        teamSizeInput.style.borderColor = '';
+        errorMessageTeam.style.display = 'none';
+        roomsInput.style.borderColor = '';
+        errorMessageRooms.style.display = 'none';
+        sizeInput.style.borderColor = '';
+        errorMessageSize.style.display = 'none';
+        minInput.style.borderColor = '';
+        errorMessageMin.style.display = 'none';
+
+        //image
+        imgInput.style.borderColor = 'red';
+        errorMessageImg.style.display = 'block';
+    } else {
+        //prev normal
+        titleInput.style.borderColor = '';
+        errorMessageTitle.style.display = 'none';
+        descInput.style.borderColor = '';
+        errorMessageDesc.style.display = 'none';
+        typeInput.style.borderColor = '';
+        errorMessageType.style.display = 'none';
+        priceInput.style.borderColor = '';
+        errorMessagePrice.style.display = 'none';
+        locInput.style.borderColor = '';
+        errorMessageLoc.style.display = 'none';
+        teamSizeInput.style.borderColor = '';
+        errorMessageTeam.style.display = 'none';
+        roomsInput.style.borderColor = '';
+        errorMessageRooms.style.display = 'none';
+        sizeInput.style.borderColor = '';
+        errorMessageSize.style.display = 'none';
+        minInput.style.borderColor = '';
+        errorMessageMin.style.display = 'none';
+        imgInput.style.borderColor = '';
+        errorMessageImg.style.display = 'none';
+
+        document.forms[0].submit();
+    }
+}
+
+//new office
 
 
 

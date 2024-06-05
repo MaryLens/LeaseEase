@@ -90,18 +90,23 @@
   <ItemGroup>
     <Compile Include="Enum\Off\MinimalRentalPeriod.cs" />
     <Compile Include="Enum\User\Roles.cs" />
+    <Compile Include="Models\helpers\editOfficeModel.cs" />
     <Compile Include="Models\helpers\IndexViewModel.cs" />
     <Compile Include="Models\helpers\newOfficeModel.cs" />
     <Compile Include="Models\helpers\officeDetailsModel.cs" />
     <Compile Include="Models\Off\Facility.cs" />
     <Compile Include="Models\Off\Office.cs" />
+    <Compile Include="Models\Off\OfficeImg.cs" />
     <Compile Include="Models\Off\Review.cs" />
+    <Compile Include="Models\Off\ReviewImg.cs" />
     <Compile Include="Models\Off\TypesOfOffice.cs" />
     <Compile Include="Models\Responces\BaseResponces.cs" />
     <Compile Include="Models\User\PwManager.cs" />
     <Compile Include="Models\User\UCookieData.cs" />
+    <Compile Include="Models\User\UDBSession.cs" />
     <Compile Include="Models\User\User.cs" />
     <Compile Include="Models\User\UserLoginData.cs" />
+    <Compile Include="Models\User\UserMinData.cs" />
     <Compile Include="Models\User\UserRegisterData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
