@@ -83,6 +83,8 @@ namespace leaseEase.Domain.Models.Off
         [DefaultValue(0)]
         public double Rating { get; set; }
         public int Views { get; set; }
+
         public List<Review> Reviews { get; set; } = new List<Review>();
+        public List<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }

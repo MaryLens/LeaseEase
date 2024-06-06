@@ -27,7 +27,7 @@ namespace leaseEase.BL.Repos
         }
         public async Task<List<Office>> GetAllOfficesAsync()
         {
-            List<Office> offices = await _context.Offices.Include(o => o.Reviews).Include(o => o.Facilities).Include(o=>o.Images).ToListAsync();
+            List<Office> offices = await _context.Offices.Include(o => o.Reviews).Include(o => o.Bookings).Include(o => o.Facilities).Include(o=>o.Images).ToListAsync();
             foreach (Office office in offices) {
                 office.Type = await GetTypeByIdAsync(office.TypeId);
             }
@@ -35,7 +35,7 @@ namespace leaseEase.BL.Repos
         }
         public async Task<Office> GetOfficeByIdAsync(int officeId)
         {
-            Office office = await _context.Offices.Include(o=>o.Reviews).Include(o=>o.Facilities).FirstOrDefaultAsync(m => m.Id == officeId);
+            Office office = await _context.Offices.Include(o=>o.Reviews).Include(o => o.Reviews).Include(o=>o.Facilities).Include(o => o.Images).FirstOrDefaultAsync(m => m.Id == officeId);
             if (office == null)
             {
                 return null; 
@@ -61,6 +61,7 @@ namespace leaseEase.BL.Repos
             }
 
             _context.Entry(existingOffice).CurrentValues.SetValues(office);
+            existingOffice.Facilities = office.Facilities;
             await _context.SaveChangesAsync();
             return existingOffice;
         }
@@ -177,6 +178,40 @@ namespace leaseEase.BL.Repos
                 Office office = image.Office;
                 office.Images.Remove(image);
                 _context.OfficeImages.Remove(image);
+                await UpdateOfficeAsync(office);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        //bookings
+        public async Task<List<Booking>> GetAllBookinsAsync()
+        {
+            List<Booking> bookings = await _context.Bookings.ToListAsync();
+            return bookings;
+        }
+        public async Task<Booking> AddBookingAsync(Booking booking)
+        {
+            _context.Bookings.Add(booking);
+            Office office = await GetOfficeByIdAsync(booking.OfficeId);
+            office.Bookings.Add(booking);
+            await UpdateOfficeAsync(office);
+            await _context.SaveChangesAsync();
+            return booking;
+        }
+        public async Task<Booking> GetBookingByIdAsync(int bookingId)
+        {
+            Booking booking = await _context.Bookings.FirstOrDefaultAsync(m => m.Id == bookingId);
+            return booking;
+        }
+        public async Task RemoveBookingAsync(int bookingId)
+        {
+            Booking booking = await _context.Bookings.FirstOrDefaultAsync(p => p.Id == bookingId);
+            if (booking != null)
+            {
+                booking.Office = await GetOfficeByIdAsync(booking.OfficeId);
+                Office office = booking.Office;
+                office.Bookings.Remove(booking);
+                _context.Bookings.Remove(booking);
                 await UpdateOfficeAsync(office);
                 await _context.SaveChangesAsync();
             }

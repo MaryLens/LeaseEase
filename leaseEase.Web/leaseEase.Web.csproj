@@ -229,6 +229,7 @@
     <Content Include="Views\Office\CreateNew.cshtml" />
     <Content Include="Views\Office\LandlordDb.cshtml" />
     <Content Include="Views\Office\Edit.cshtml" />
+    <Content Include="Views\Office\NewBooking.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

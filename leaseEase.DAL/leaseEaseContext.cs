@@ -15,6 +15,7 @@ namespace leaseEase.DAL
         public DbSet<TypesOfOffice> TypesOfOffice { get; set; }
         public DbSet<Facility> Facilities { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
         public DbSet<OfficeImg> OfficeImages { get; set; }
 
         public leaseEaseContext() : base("Host=localhost;Port=5432;Database=leaseEase;Username=postgres;Password=passForPGA")
@@ -28,6 +29,11 @@ namespace leaseEase.DAL
                 .HasMany(o => o.Reviews)
                 .WithRequired(r => r.Office)
                 .HasForeignKey(r => r.OfficeId)
+                .WillCascadeOnDelete(true);
+            modelBuilder.Entity<Office>()
+                .HasMany(o => o.Bookings)
+                .WithRequired(b => b.Office)
+                .HasForeignKey(b => b.OfficeId)
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Office>()

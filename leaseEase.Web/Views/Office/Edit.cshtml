@@ -1,22 +1,24 @@
-﻿@model leaseEase.Domain.Models.helpers.newOfficeModel
+﻿@using leaseEase.Domain.Enum.Off
+@model leaseEase.Domain.Models.helpers.newOfficeModel
 @using (Html.BeginForm("Edit", "Office", FormMethod.Post, new { @id = "officeForm", enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(e => e.Office.Id, new { type = "number", Value = Model.Office.Id, @style = "display:none;" })
+    @Html.HiddenFor(e => e.Office.Image)
     <div class="login-column" id="new-office-column">
         <p class="new-off-texts">Edit office</p>
         <div class="new-office-container">
             <div class="Image-texts-new-off">
                 <div class="image-alert-column">
                     <span class="alert-office" id="error-message-img" style="display: none;">Main image is required.</span>
-                    <div class="image-upload-wrapper" id="image-upload-wrapper">
+                    <div class="image-upload-wrapper" id="image-upload-wrapper" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(Model.Office.Image)');">
                         <label for="image-upload" class="image-upload-label">
                             <span class="image-upload-text" id="image-upload-text">Add main image</span>
                             @Html.TextBoxFor(e => e.Office.ImageFile, new
                             {
-                               type = "file",
-                               id = "image-upload",
-                               onchange = "previewImage(event)",
-                               style = "display:none;"
+                                type = "file",
+                                id = "image-upload",
+                                onchange = "previewImage(event)",
+                                style = "display:none;"
                             })
                         </label>
                     </div>
@@ -123,29 +125,30 @@
          new[] { new { Value = "", Text = "Select minimal rental period" } }
          .Concat(Enum.GetValues(typeof(leaseEase.Domain.Enum.Off.MinimalRentalPeriod))
          .Cast<leaseEase.Domain.Enum.Off.MinimalRentalPeriod>()
-         .Select(x => new { Value = x.ToString(), Text = x.ToString() })),
+         .Select(x => new { Value = x.ToString(), Text = x.GetDescription() })),
          "Value", "Text"),
      new { @class = "new-off-dd" })
             @{
                 var faci = Model.Facilities;
             }
 
-            <div>
-                <div class="faci-text">Select Facilities:</div>
-                <div class="faci-container">
-                    @{
-                        foreach (var amenity in Model.Facilities)
-                        {
-                            <div class="faci-item">
-                                <input type="checkbox" id="amenity_@amenity.Id" name="SelectedAmenityIds" value="@amenity.Id" />
-                                <label class="faci-item-text" for="amenity_@amenity.Id">@amenity.Name</label>
-                            </div>
-                        }
+
+            <div class="faci-text">Select Facilities:</div>
+            <div class="faci-container">
+
+                @{
+                    foreach (var amenity in Model.Facilities)
+                    {
+                        var isChecked = Model.Office.Facilities.Any(f => f.Id == amenity.Id) ? "checked" : "";
+                        <div class="faci-item">
+                            <input type="checkbox" id="amenity_@amenity.Id" name="SelectedAmenityIds" value="@amenity.Id" @isChecked />
+                            <label class="faci-item-text" for="amenity_@amenity.Id">@amenity.Name</label>
+                        </div>
                     }
-                </div>
+                }
             </div>
 
-            <button type="button" class="new-off-button" onclick="validateAndSubmit()">Save</button>
+            <button type="button" class="new-off-button" onclick="validateAndSubmitEditOff()">Save</button>
         </div>
     </div>
 }

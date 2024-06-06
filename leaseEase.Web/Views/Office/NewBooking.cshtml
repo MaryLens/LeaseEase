@@ -1,0 +1,106 @@
+﻿@using leaseEase.Domain.Enum.Off 
+@model leaseEase.Domain.Models.helpers.newBookingViewModel
+@{
+    ViewBag.Title = "New Booking";
+}
+
+<div>
+    <h1 class="ind-t3">@Html.DisplayFor(model => model.Office.Name)</h1>
+    <div class="details-photo" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(Model.Office.Image)');">
+    </div>
+</div>
+<div>
+    <h3>Views: @Html.DisplayFor(model => model.Office.Views)</h3>
+</div>
+@using (Html.BeginForm("NewBooking", "Office", FormMethod.Post, new { @id = "reviewForm", enctype = "multipart/form-data" }))
+{
+    <div class="login-column" id="login-column">
+        <p class="login-signup-texts">Book this office!</p>
+        <div class="login-container">
+            @Html.HiddenFor(e => e.Booking.OfficeId, new { type = "number", Value = Model.Office.Id, @style = "display:none;" })
+
+            @Html.TextBoxFor(e => e.Booking.DateStart, new
+       {
+           type = "date",
+           placeholder = "Date",
+           autocomplete = "nope",
+           @class = "login-input",
+           id = "dateStart",
+           Value = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"),
+           min = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")
+       })
+            @Html.TextBoxFor(e => e.Booking.DateEnd, new
+       {
+           type = "date",
+           placeholder = "Date",
+           autocomplete = "nope",
+           @class = "login-input",
+           id = "dateEnd",
+           Value = DateTime.Now.AddDays(Model.Office.MinimalRentalPeriod.GetDay() + 1).ToString("yyyy-MM-dd")
+       })
+            <script>
+                var minimalRentalPeriod = @(Model.Office.MinimalRentalPeriod.GetDay());
+                document.getElementById('dateStart').addEventListener('change', function() {
+                    var dateStart = new Date(this.value);
+                    var minDateEnd = new Date(dateStart);
+                    minDateEnd.setDate(minDateEnd.getDate() + minimalRentalPeriod);
+                    var dateEndInput = document.getElementById('dateEnd');
+                    dateEndInput.min = minDateEnd.toISOString().split('T')[0];
+                    if (new Date(dateEndInput.value) < minDateEnd) {
+                        dateEndInput.value = minDateEnd.toISOString().split('T')[0];
+                    }
+                });
+
+                window.onload = function() {
+                    var dateStart = new Date(document.getElementById('dateStart').value);
+                    var minDateEnd = new Date(dateStart);
+                    minDateEnd.setDate(minDateEnd.getDate() + minimalRentalPeriod);
+                    document.getElementById('dateEnd').min = minDateEnd.toISOString().split('T')[0];
+                };
+            </script>
+
+            @Html.TextBoxFor(e => e.Booking.days, new
+       {
+           type = "text",
+           placeholder = "Days",
+           autocomplete = "off",
+           @class = "login-input",
+           pattern = "\\d*",
+           inputmode = "numeric",
+           @oninput = "this.value=this.value.replace(/[^0-9]/g,'');",
+           id = "days",
+           disabled = "disabled"
+       })
+            @Html.TextBoxFor(e => e.Booking.summ, new
+       {
+           type = "text",
+           placeholder = "Summ",
+           autocomplete = "off",
+           @class = "login-input",
+           pattern = "\\d*",
+           inputmode = "numeric",
+           @oninput = "this.value=this.value.replace(/[^0-9]/g,'');",
+           id = "summ",
+           disabled = "disabled"
+       })
+            <script>
+                function updateDays() {
+                    var startDate = new Date(document.getElementById("dateStart").value);
+                    var endDate = new Date(document.getElementById("dateEnd").value);
+
+                    var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+                    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+                    document.getElementById("days").value = diffDays;
+                    document.getElementById("summ").value = diffDays*@(Model.Office.Price);
+                }
+
+                document.getElementById("dateStart").addEventListener("change", updateDays);
+                document.getElementById("dateEnd").addEventListener("change", updateDays);
+                updateDays();
+            </script>
+            <button type="submit" class="login-button">Book</button>
+        </div>
+    </div>
+}
+

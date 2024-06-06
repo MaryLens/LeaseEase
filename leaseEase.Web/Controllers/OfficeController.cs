@@ -20,7 +20,10 @@ namespace leaseEase.Web.Controllers
         // GET: Home
         public async Task<ActionResult> Details(int id)
         {
+
             Office office = await _repo.GetOfficeByIdAsync(id);
+            office.Views += 1;
+            await _repo.UpdateOfficeAsync(office);
             officeDetailsModel model = new officeDetailsModel {
                 Office = office,
                 Review = new Review()
@@ -85,15 +88,6 @@ namespace leaseEase.Web.Controllers
             return RedirectToAction("Details", new { id = model.Office.Id });
         }
 
-        private byte[] ConvertToBytes(HttpPostedFileBase file)
-        {
-            byte[] data = null;
-            using (var binaryReader = new BinaryReader(file.InputStream))
-            {
-                data = binaryReader.ReadBytes(file.ContentLength);
-            }
-            return data;
-        }
 
         public async Task<ActionResult> LandlordDb()
         {
@@ -103,12 +97,7 @@ namespace leaseEase.Web.Controllers
         public async Task<ActionResult> Edit(int id)
         {
             var office = await _repo.GetOfficeByIdAsync(id);
-
             List<int> faci = new List<int>();
-            foreach(Facility facility in office.Facilities)
-            {
-                faci.Add(facility.Id);
-            }
             var model = new newOfficeModel()
             {
                 TypesOfOffice = await _repo.GetAllTypesAsync(),
@@ -126,13 +115,20 @@ namespace leaseEase.Web.Controllers
             {
                 model.Office.Image = ConvertToBytes(model.Office.ImageFile);
             }
+
+            model.Office.Facilities.Clear();
             if (model.SelectedAmenityIds != null)
             {
                 foreach (int id in model.SelectedAmenityIds)
                 {
-                    model.Office.Facilities.Add(await _repo.GetFacilityByIdAsync(id));
+                    var facility = await _repo.GetFacilityByIdAsync(id);
+                    if (facility != null)
+                    {
+                        model.Office.Facilities.Add(facility);
+                    }
                 }
             }
+
             if (model.additionalImages != null)
             {
                 foreach (var image in model.additionalImages)
@@ -149,8 +145,41 @@ namespace leaseEase.Web.Controllers
                     }
                 }
             }
+
             await _repo.UpdateOfficeAsync(model.Office);
             return RedirectToAction("Details", new { id = model.Office.Id });
         }
+
+        private byte[] ConvertToBytes(HttpPostedFileBase file)
+        {
+            byte[] data = null;
+            using (var binaryReader = new BinaryReader(file.InputStream))
+            {
+                data = binaryReader.ReadBytes(file.ContentLength);
+            }
+            return data;
+        }
+
+        public async Task<ActionResult> NewBooking(int id)
+        {
+            Office office = await _repo.GetOfficeByIdAsync(id);
+            newBookingViewModel model = new newBookingViewModel
+            {
+                Office = office,
+                Booking = new Booking()
+
+            };
+            return office == null ? NotFound() : View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> NewBooking(newBookingViewModel model)
+        {
+            model.Booking.statusBooking = Domain.Enum.Off.statusBooking.NEW;
+            await _repo.AddBookingAsync(model.Booking);
+            return RedirectToAction("Details", new { id = model.Booking.OfficeId });
+        }
+
+
     }
 }

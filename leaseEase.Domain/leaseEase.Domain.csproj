@@ -89,11 +89,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enum\Off\MinimalRentalPeriod.cs" />
+    <Compile Include="Enum\Off\statusBooking.cs" />
     <Compile Include="Enum\User\Roles.cs" />
-    <Compile Include="Models\helpers\editOfficeModel.cs" />
     <Compile Include="Models\helpers\IndexViewModel.cs" />
+    <Compile Include="Models\helpers\newBookingViewModel.cs" />
     <Compile Include="Models\helpers\newOfficeModel.cs" />
     <Compile Include="Models\helpers\officeDetailsModel.cs" />
+    <Compile Include="Models\Off\Booking.cs" />
     <Compile Include="Models\Off\Facility.cs" />
     <Compile Include="Models\Off\Office.cs" />
     <Compile Include="Models\Off\OfficeImg.cs" />

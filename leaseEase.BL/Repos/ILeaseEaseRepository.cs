@@ -41,5 +41,12 @@ namespace leaseEase.BL.Repos
         Task<OfficeImg> AddOffImageAsync(OfficeImg image);
         Task RemoveOffImageAsync(int imageId);
         Task<OfficeImg> GetOffImageByIdAsync(int imageId);
+
+        //bookings
+        
+        Task<List<Booking>> GetAllBookinsAsync();
+        Task<Booking> AddBookingAsync(Booking booking);
+        Task<Booking> GetBookingByIdAsync(int bookingId);
+        Task RemoveBookingAsync(int bookingId);
     }
 }

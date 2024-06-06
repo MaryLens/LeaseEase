@@ -9,18 +9,23 @@
     </div>
 </div>
 <div>
+    <h3>Views: @Html.DisplayFor(model => model.Office.Views)</h3>
     <h3>Office Amenities</h3>
     <div class="amenities-container">
         @{
             foreach (var amenity in Model.Office.Facilities)
             {
-                    <div class="amenity-item">
-                        <div>@amenity.Name</div>
-                    </div>
+                <div class="amenity-item">
+                    <div>@amenity.Name</div>
+                </div>
             }
         }
     </div>
 </div>
+
+<a href="@Url.Action("NewBooking", "Office", new { id = Model.Office.Id })"><button type="button" class="signup">Book Now</button></a>
+
+
 @using (Html.BeginForm("NewReview", "Office", FormMethod.Post, new { @id = "reviewForm", enctype = "multipart/form-data" }))
 {
     <div class="login-column" id="login-column">
