@@ -180,6 +180,18 @@ namespace leaseEase.Web.Controllers
             return RedirectToAction("Details", new { id = model.Booking.OfficeId });
         }
 
+        [HttpPost]
+        public async Task<ActionResult> DeleteOff(int id)
+        {
+            var office = await _repo.GetOfficeByIdAsync(id);
+            if (office != null)
+            {
+                await _repo.RemoveOfficeAsync(office.Id);
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+
 
     }
 }

@@ -69,7 +69,7 @@
            inputmode = "numeric",
            @oninput = "this.value=this.value.replace(/[^0-9]/g,'');",
            id = "days",
-           disabled = "disabled"
+           @readonly = "readonly"
        })
             @Html.TextBoxFor(e => e.Booking.summ, new
        {
@@ -81,7 +81,7 @@
            inputmode = "numeric",
            @oninput = "this.value=this.value.replace(/[^0-9]/g,'');",
            id = "summ",
-           disabled = "disabled"
+           @readonly = "readonly"
        })
             <script>
                 function updateDays() {

@@ -600,6 +600,121 @@ function validateAndSubmitEditOff() {
 }
 
 //new office
+//delete office
+$(document).ready(function () {
+    $('.delete-link').on('click', function () {
+        var officeId = $(this).data('id');
+
+        if (confirm('Are you sure you want to delete this office?')) {
+            $.ajax({
+                type: 'POST',
+                url: '/Office/DeleteOff',
+                data: { id: officeId },
+                success: function (response) {
+                    if (response.success) {
+                        alert('Office is deleted successfully');
+                        location.reload();
+                    } else {
+                        alert('An error occured while deleting this office');
+                    }
+                },
+                error: function () {
+                    alert('Error while deleting office');
+                }
+            });
+        }
+    });
+});
+
+$(document).ready(function () {
+    $('#locationFilter').on('keyup', function () {
+        applyFilters();
+    });
+    $('#priceFilter').on('input', function () {
+        applyFilters();
+    });
+    $('#sortFilter').on('change', function () {
+        applyFilters();
+    });
+    $('.typeFilter').on('change', function () {
+        applyFilters();
+    });
+
+    $('.faciFilter').on('change', function () {
+        applyFilters();
+    });
+});
+
+function applyFilters() {
+    var locationFilter = $('#locationFilter').val();
+    var priceFilter = +$('#priceFilter').val();
+    var sortFilter = $('#sortFilter').val();
+    var typeFilters = $('.typeFilter:checked').map(function () {
+        return $(this).val();
+    }).get();
+    var faciFilters = $('.faciFilter:checked').map(function () {
+        return $(this).val();
+    }).get();
+
+    $.ajax({
+        url: '/Home/Search',
+        type: 'GET',
+        traditional: true,
+        data: $.param({
+            locationFilter: locationFilter,
+            priceFilter: priceFilter,
+            sortFilter: sortFilter,
+            typeFilters: typeFilters,
+            faciFilters: faciFilters
+        }, true),
+        success: function (data) {
+            $('.office-list').html(data);
+        },
+        error: function () {
+            alert('Something went wrong.');
+        }
+    });
+}
+$(document).ready(function () {
+    $('.search-cat').on('click', function () {
+        selectedTypeId = $(this).data('type-id');
+        $('.search-cat').removeClass('selected');
+        $(this).addClass('selected');
+    });
+    $('#searchLink').on('click', function (e) {
+        e.preventDefault(); 
+        var searchValue = $('#searchInput').val();
+        var url = '/Home/Search' + '?locationFilter=' + encodeURIComponent(searchValue);
+        if (selectedTypeId) {
+            url += '&typeFilters=' + selectedTypeId;
+        }
+        window.location.href = url; 
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const locationFilter = urlParams.get('locationFilter');
+    const typeFilters = urlParams.get('typeFilters');
+    if (locationFilter) {
+        document.getElementById('locationFilter').value = locationFilter;
+    }
+    if (typeFilters) {
+        const checkbox = document.getElementById(`type-${typeFilters}`);
+        if (checkbox) {
+            checkbox.checked = true;
+        }
+    }
+
+});
+
+
+
+
+
+
+
+
+//delete office
 
 
 

@@ -22,7 +22,7 @@
                             <a class ="edit-link"href="@Url.Action("Edit", "Office", new { id = office.Id })">
                                 <img src="~/Content/images/Edit.svg" alt="" class="extra-img" width="18" />
                                 </a>
-                                <img src="~/Content/images/Delete.svg" alt="" class="extra-img" width="18" />
+                                <img src="~/Content/images/Delete.svg" alt="" class="extra-img delete-link" width="18" data-id="@office.Id" />
                         </div>
                     </div>
                         <div class="price-rating">

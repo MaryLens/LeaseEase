@@ -95,6 +95,7 @@
     <Compile Include="Models\helpers\newBookingViewModel.cs" />
     <Compile Include="Models\helpers\newOfficeModel.cs" />
     <Compile Include="Models\helpers\officeDetailsModel.cs" />
+    <Compile Include="Models\helpers\SearchViewModel.cs" />
     <Compile Include="Models\Off\Booking.cs" />
     <Compile Include="Models\Off\Facility.cs" />
     <Compile Include="Models\Off\Office.cs" />

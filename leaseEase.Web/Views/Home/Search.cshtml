@@ -1,5 +1,6 @@
-﻿@using leaseEase.Domain.Models.Off
-@model IEnumerable<leaseEase.Domain.Models.Off.Office>
+﻿@using leaseEase.Domain.Models.helpers
+@using leaseEase.Domain.Models.Off
+@model leaseEase.Domain.Models.helpers.SearchViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home";
@@ -13,41 +14,37 @@
     <p class="se-t2">through our most convenient and fitting options for office lease.</p>
 </div>
 <!-- Search Up -->
+
+<input type="text" id="locationFilter" placeholder="Enter location" />
+
+<input type="number" id="priceFilter" placeholder="Max price" />
+
+<select id="sortFilter">
+    <option value="Nosort">Sort by</option>
+    <option value="Popular">Popular</option>
+    <option value="Rating">Rating</option>
+    <option value="NameAsc">Title A-Z</option>
+    <option value="NameDesc">Title Z-A</option>
+    <option value="PriceAsc">Price low to high</option>
+    <option value="PriceDesc">Price high to low</option>
+</select>
+
+@foreach (var type in Model.TypesOfOffice)
+{
+    <label>
+        <input type="checkbox" class="typeFilter" id="type-@type.Id" value="@type.Id" /> @type.Name
+    </label>
+}
+
+@foreach (var faci in Model.Facilities)
+{
+    <label>
+        <input type="checkbox" class="faciFilter" value="@faci.Id" /> @faci.Name
+    </label>
+}
 <!-- Offices -->
 <div class="office-list">
-    @foreach (Office office in Model!)
-    {
-        <!-- Office card!!! -->
-        <a href="@Url.Action("Details", "Office", new { id = office.Id })">
-            <div class="office-card">
-                <div style="background-image: url('data:image/png;base64,@Convert.ToBase64String(office.Image)');" class="office-image"></div>
-                <div class="office-inf">
-                    <p class="office-name">@Html.DisplayFor(modelItem => office.Name)</p>
-                    <div class="price-rating">
-                        <p class="office-price">$@Html.DisplayFor(modelItem => office.Price)</p>
-                        <p class="office-mo">/mo</p>
-                        <div class="rating" data-rating="@Html.DisplayFor(modelItem => office.Rating)">
-                            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-                        </div>
-                    </div>
-                    <p class="office-desc">@Html.DisplayFor(modelItem => office.Description)</p>
-                    <div class="office-extra">
-                        <img src="~/Content/images/max-persons.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">max @Html.DisplayFor(modelItem => office.TeamSize) persons</p>
-                    </div>
-                    <div class="office-extra">
-                        <img src="~/Content/images/Location.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">@Html.DisplayFor(modelItem => office.Location)</p>
-                    </div>
-                    <div class="office-extra">
-                        <img src="~/Content/images/office-type.svg" alt="" class="extra-img" width="18" />
-                        <p class="extra">@Html.DisplayFor(modelItem => office.Type.Name)</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-        <!-- Office card!!! -->
-    }
+    @{ Html.RenderPartial("_OfficeList", Model); }
 </div>
 <!-- Offices -->
 <!-- Search -->

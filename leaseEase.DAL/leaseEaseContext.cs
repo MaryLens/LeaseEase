@@ -20,7 +20,8 @@ namespace leaseEase.DAL
 
         public leaseEaseContext() : base("Host=localhost;Port=5432;Database=leaseEase;Username=postgres;Password=passForPGA")
         {
-            Database.SetInitializer(new DropCreateDatabaseAlways<leaseEaseContext>());
+            // Database.SetInitializer(new DropCreateDatabaseAlways<leaseEaseContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<leaseEaseContext>());
             setDB(this);
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

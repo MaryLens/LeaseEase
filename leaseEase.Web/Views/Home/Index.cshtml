@@ -14,16 +14,16 @@
         </div>
         <div class="ind-search">
             <div class="categories-row">
-                <p class="search-cat">Open Plan</p>
-                <p class="search-cat">Cubicle Style</p>
-                <p class="search-cat">Coworking Space</p>
-                <p class="search-cat">Virtual Office</p>
-                <p class="search-cat">Shared Offices</p>
-                <p class="search-cat">Podcast Studios</p>
+                @foreach (TypesOfOffice type in Model.TypesOfOffice)
+                {
+                <p data-type-id="@type.Id" class="search-cat">@Html.DisplayFor(modelItem => type.Name)</p>
+                }
             </div>
             <div class="search-box">
-                <input class="input-search" placeholder="Enter the location you need" />
-                <a class="search-image link-footer" href="@Url.Action("Search", "Home")"><img src='~/Content/images/Searchind.svg' alt="" class="search-image" height="21" /></a>
+                <input id="searchInput" class="input-search" placeholder="Enter the location you need" />
+                <a id="searchLink" class="search-image link-footer" href="#">
+                    <img src='~/Content/images/Searchind.svg' alt="" class="search-image" height="21" />
+                </a>
             </div>
         </div>
     </div>

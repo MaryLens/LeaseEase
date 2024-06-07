@@ -191,6 +191,7 @@
     <Content Include="Content\images\Virtual Office.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\js\app.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -230,6 +231,7 @@
     <Content Include="Views\Office\LandlordDb.cshtml" />
     <Content Include="Views\Office\Edit.cshtml" />
     <Content Include="Views\Office\NewBooking.cshtml" />
+    <Content Include="Views\Shared\_OfficeList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
