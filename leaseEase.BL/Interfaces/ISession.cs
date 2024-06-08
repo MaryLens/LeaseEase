@@ -13,11 +13,9 @@ namespace leaseEase.BL.Interfaces
 {
     public interface ISession
     {
-        BaseResponces GenerateUserSessionActionFlow(UserLoginData ulData, ILeaseEaseRepository repo);
         BaseResponces RegisterUserActionFlow(UserRegisterData urData, ILeaseEaseRepository repo);
-        BaseResponces ValidaeUserCredentialAction(UserLoginData ulData, ILeaseEaseRepository repo);
-        UCookieData GenCoockieAlgo(User dataUser);
-        HttpCookie CookieGenerate(string Email);
-        UserMinData GetUserByCookie(string cookie);
+        BaseResponces LoginUserActionFlow(UserLoginData ulData, ILeaseEaseRepository repo);
+        HttpCookie CookieGenerate(string Email, ILeaseEaseRepository repo);
+        UserMinData GetUserByCookie(string cookie, ILeaseEaseRepository repo);
     }
 }

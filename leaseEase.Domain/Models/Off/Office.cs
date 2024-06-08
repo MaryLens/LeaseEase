@@ -1,4 +1,5 @@
 ﻿using leaseEase.Domain.Enum.Off;
+using leaseEase.Domain.Models.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -86,5 +87,8 @@ namespace leaseEase.Domain.Models.Off
 
         public List<Review> Reviews { get; set; } = new List<Review>();
         public List<Booking> Bookings { get; set; } = new List<Booking>();
+        [NotMapped]
+        public TobeCreatorData Creator { get; set; }
+        public int CreatorId { get; set; }
     }
 }

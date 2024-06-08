@@ -8,9 +8,8 @@ namespace leaseEase.Domain.Enum.User
 {
     public enum Roles
     {
-        None = 0,
-        User = 1,
-        Landlord = 2,
-        Admin = 3
+        User = 0,
+        Landlord = 1,
+        Admin = 2
     }
 }

@@ -30,6 +30,7 @@ namespace leaseEase.BL.Repos
             List<Office> offices = await _context.Offices.Include(o => o.Reviews).Include(o => o.Bookings).Include(o => o.Facilities).Include(o=>o.Images).ToListAsync();
             foreach (Office office in offices) {
                 office.Type = await GetTypeByIdAsync(office.TypeId);
+                office.Creator = await GetCreatorByIdAsync(office.CreatorId);
             }
             return offices;
         }
@@ -40,6 +41,7 @@ namespace leaseEase.BL.Repos
             {
                 return null; 
             }
+            office.Creator = await GetCreatorByIdAsync(office.CreatorId);
             office.Type = await GetTypeByIdAsync(office.TypeId);
             return office;
         }
@@ -54,16 +56,9 @@ namespace leaseEase.BL.Repos
         }
         public async Task<Office> UpdateOfficeAsync(Office office)
         {
-            var existingOffice = await _context.Set<Office>().FindAsync(office.Id);
-            if (existingOffice == null)
-            {
-                throw new InvalidOperationException("Office not found in the database.");
-            }
-
-            _context.Entry(existingOffice).CurrentValues.SetValues(office);
-            existingOffice.Facilities = office.Facilities;
+            _context.Entry(office).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-            return existingOffice;
+            return office;
         }
 
         //facility and type
@@ -83,44 +78,15 @@ namespace leaseEase.BL.Repos
         {
             return await _context.TypesOfOffice.FirstOrDefaultAsync(m => m.Id == typeId);
         }
-
-        //user
-        public async Task<List<User>> GetAllUsersAsync()
-        {
-            return await _context.Users.ToListAsync();
-        }
-        public async Task<User> GetUserByIdAsync(int typeId)
-        {
-            return await _context.Users.FirstOrDefaultAsync(m => m.Id == typeId);
-        }
-        public async Task<User> GetUserByEmailAsync(string email)
-        {
-
-            return await _context.Users.FirstOrDefaultAsync(m => m.Email == email).ConfigureAwait(false);
-        }
-        public async Task<User> GetUserByEmailAndPwAsync(string email, string password)
-        {
-            return await _context.Users.FirstOrDefaultAsync(m => m.Email == email && m.Password == password);
-        }
-        public async Task<User> AddUserAsync(UserRegisterData userData)
-        {
-            User user = new User { 
-            Name = userData.Name,
-            Email = userData.Email,
-            Password = PwManager.Md5Crypt(userData.Password),
-            LastLogin = userData.LastLogin,
-            UserIp = userData.UserIp,
-            Created = DateTime.Now,
-            Role = Roles.User
-            };
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return user;
-        }
         //reviews
         public async Task<List<Review>> GetAllReviewsAsync()
         {
             List<Review> reviews = await _context.Reviews.ToListAsync();
+            foreach (Review review in reviews)
+            {
+                review.Office = await GetOfficeByIdAsync(review.OfficeId);
+                review.Creator = await GetUserByIdAsync(review.CreatorId);
+            }
             return reviews;
         }
         public async Task<Review> AddReviewAsync(Review review)
@@ -136,11 +102,18 @@ namespace leaseEase.BL.Repos
         public async Task<List<Review>> GetReviewsByOfficeAsync(int officeId)
         {
             List<Review> reviews = await _context.Reviews.Where(r => r.OfficeId == officeId).ToListAsync();
+            foreach(Review review in reviews)
+            {
+                review.Office = await GetOfficeByIdAsync(review.OfficeId);
+                review.Creator = await GetUserByIdAsync(review.CreatorId);
+            }
             return reviews;
         }
         public async Task<Review> GetReviewByIdAsync(int reviewId)
         {
             Review review = await _context.Reviews.FirstOrDefaultAsync(m => m.Id == reviewId);
+            review.Office = await GetOfficeByIdAsync(review.OfficeId);
+            review.Creator = await GetUserByIdAsync(review.CreatorId);
             return review;
         }
         public async Task RemoveReviewAsync(int reviewId)
@@ -187,6 +160,11 @@ namespace leaseEase.BL.Repos
         public async Task<List<Booking>> GetAllBookinsAsync()
         {
             List<Booking> bookings = await _context.Bookings.ToListAsync();
+            foreach (Booking booking in bookings)
+            {
+                booking.Office = await GetOfficeByIdAsync(booking.OfficeId);
+                booking.Creator = await GetUserByIdAsync(booking.CreatorId);
+            }
             return bookings;
         }
         public async Task<Booking> AddBookingAsync(Booking booking)
@@ -201,6 +179,8 @@ namespace leaseEase.BL.Repos
         public async Task<Booking> GetBookingByIdAsync(int bookingId)
         {
             Booking booking = await _context.Bookings.FirstOrDefaultAsync(m => m.Id == bookingId);
+            booking.Office = await GetOfficeByIdAsync(booking.OfficeId);
+            booking.Creator = await GetUserByIdAsync(booking.CreatorId);
             return booking;
         }
         public async Task RemoveBookingAsync(int bookingId)
@@ -217,6 +197,84 @@ namespace leaseEase.BL.Repos
             }
         }
 
+        //////users!!!!!!!!!!!!!!!!!!!!!!!!!
+        //sessions
+        public async Task<UDbSession> GetSessionByEmailAsync(string Email)
+        {
+            UDbSession session = await _context.Sessions.FirstOrDefaultAsync(m => m.Email == Email);
+            return session;
+        }
+        public async Task<UDbSession> GetSessionByCookieAsync(string cookie)
+        {
+            UDbSession session = await _context.Sessions.FirstOrDefaultAsync(m => m.CookieString == cookie);
+            return session;
+        }
+        public async Task<UDbSession> UpdateSessionAsync(UDbSession session)
+        {
+            _context.Entry(session).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return session;
+        }
+        public async Task RemoveSessionAsync(UDbSession session)
+        {
+                _context.Sessions.Remove(session);
+                await _context.SaveChangesAsync();
+        }
+
+
+        public async Task<UDbSession> AddNewSessionAsync(UDbSession session)
+        {
+            _context.Sessions.Add(session);
+            await _context.SaveChangesAsync();
+            return session;
+        }
+
+        //user
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            return await _context.Users.Include(u=>u.MyBookings).Include(u => u.MyReviews).Include(u=>u.creatorData).Include(u=>u.WishList).ToListAsync();
+        }
+        public async Task<User> GetUserByIdAsync(int typeId)
+        {
+            return await _context.Users.Include(u => u.MyBookings).Include(u => u.MyReviews).Include(u => u.creatorData).Include(u => u.WishList).FirstOrDefaultAsync(m => m.Id == typeId);
+        }
+        public async Task<TobeCreatorData> GetCreatorByIdAsync(int typeId)
+        {
+            return await _context.tobeCreatorDatas.Include(u => u.MyOffices).FirstOrDefaultAsync(m => m.Id == typeId);
+        }
+        public async Task<User> GetUserByEmailAsync(string email)
+        {
+
+            return await _context.Users.Include(u => u.MyBookings).Include(u => u.MyReviews).Include(u => u.creatorData).Include(u => u.WishList).FirstOrDefaultAsync(m => m.Email == email).ConfigureAwait(false);
+        }
+        public async Task<User> GetUserByEmailAndPwAsync(string email, string password)
+        {
+            return await _context.Users.Include(u => u.MyBookings).Include(u => u.MyReviews).Include(u => u.creatorData).Include(u => u.WishList).FirstOrDefaultAsync(m => m.Email == email && m.Password == password);
+        }
+        public async Task<User> AddUserAsync(UserRegisterData userData)
+        {
+            User user = new User
+            {
+                Name = userData.Name,
+                Email = userData.Email,
+                Password = PwManager.Md5Crypt(userData.Password),
+                LastLogin = userData.LastLogin,
+                UserIp = userData.UserIp,
+                Created = DateTime.Now,
+                Role = Roles.User
+            };
+            _context.Users.Add(user);
+
+            await _context.SaveChangesAsync();
+            return user;
+        }
+
+        public async Task<User> UpdateUserAsync(User user)
+        {
+            _context.Entry(user).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return user;
+        }
 
     }
 }

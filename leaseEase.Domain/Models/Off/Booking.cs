@@ -30,5 +30,8 @@ namespace leaseEase.Domain.Models.Off
         public DateTime DateEnd { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public statusBooking statusBooking { get; set; }
+        [NotMapped]
+        public leaseEase.Domain.Models.User.User Creator { get; set; }
+        public int CreatorId { get; set; }
     }
 }

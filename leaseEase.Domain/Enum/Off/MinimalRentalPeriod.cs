@@ -24,9 +24,17 @@ namespace leaseEase.Domain.Enum.Off
         [Day(30)]
         onemonth = 4,
 
+        [Description("2 months")]
+        [Day(60)]
+        twomonth = 5,
+
+        [Description("6 months")]
+        [Day(180)]
+        sixmonth = 6,
+
         [Description("No preference")]
         [Day(0)]
-        NoPreference = 5
+        NoPreference = 7
     }
 
     public class DescriptionAttribute : Attribute

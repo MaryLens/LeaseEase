@@ -15,31 +15,23 @@ namespace leaseEase.BL.BaseBL
 {
     public class SessionBL : UserAPI, ISession
     {
-        public BaseResponces GenerateUserSessionActionFlow(UserLoginData ulData, ILeaseEaseRepository repo)
-        {
-            return GenerateUserSession(ulData, repo);
-        }
 
         public BaseResponces RegisterUserActionFlow(UserRegisterData urData, ILeaseEaseRepository repo)
         {
             return Task.Run(()=>RegisterUserAccountAsync(urData, repo)).Result;
         }
 
-        BaseResponces ISession.ValidaeUserCredentialAction(UserLoginData ulData, ILeaseEaseRepository repo)
+        public BaseResponces LoginUserActionFlow(UserLoginData ulData, ILeaseEaseRepository repo)
         {
-            return CheckUserCredential(ulData, repo);
+            return Task.Run(() => UserLogin(ulData, repo)).Result;
         }
-        public UCookieData GenCoockieAlgo(User dataUser)
+        public HttpCookie CookieGenerate(string Email, ILeaseEaseRepository repo)
         {
-            return UserCoockieGenerationAlg(dataUser);
+            return Task.Run(() => CookieGenByEmail(Email, repo)).Result;
         }
-        public HttpCookie CookieGenerate(string Email)
+        public UserMinData GetUserByCookie(string cookie, ILeaseEaseRepository repo)
         {
-            return CookieGenByUName(Email);
-        }
-        public UserMinData GetUserByCookie(string cookie)
-        {
-            return GetUserByCookieApi(cookie);
+            return Task.Run(() => GetUserByCookieApi(cookie, repo)).Result;
         }
     }
 }

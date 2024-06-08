@@ -75,6 +75,12 @@ function toggleTextFAQ5() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    initializeRatings();
+});
+    document.addEventListener('ajaxContentLoaded', function () {
+        initializeRatings();
+    });
+function initializeRatings() {
     const ratings = document.querySelectorAll('.rating');
 
     ratings.forEach(function (rating) {
@@ -84,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const halfStar = ratingValue - fullStarsFirst >= 0.25 && ratingValue - fullStarsFirst <= 0.75;
         const fullStars = fullStarsFirst + (ratingValue - fullStarsFirst > 0.75);
         stars.forEach(function (star, index) {
+            star.classList.remove('filled', 'half'); // Сначала убираем классы
             if (index < fullStars) {
                 star.classList.add('filled');
             } else if (index === fullStars && halfStar) {
@@ -91,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-});
+}
 
 
 //show next/prev facilities
@@ -669,6 +676,7 @@ function applyFilters() {
         }, true),
         success: function (data) {
             $('.office-list').html(data);
+            initializeRatings();
         },
         error: function () {
             alert('Something went wrong.');
@@ -676,6 +684,7 @@ function applyFilters() {
     });
 }
 $(document).ready(function () {
+    var selectedTypeId = null;
     $('.search-cat').on('click', function () {
         selectedTypeId = $(this).data('type-id');
         $('.search-cat').removeClass('selected');
@@ -707,15 +716,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
-
-
-
-
-
+function toggleFilters() {
+    var text = document.getElementById("filters-adv");
+    var arrowc = document.getElementById("filters-closed");
+    var arrowo = document.getElementById("filters-opened");
+    if (text.style.display === "none") {
+        text.style.display = "flex";
+        arrowc.style.display = "none";
+        arrowo.style.display = "block";
+    } else {
+        text.style.display = "none";
+        arrowc.style.display = "block";
+        arrowo.style.display = "none";
+    }
+}
 
 //delete office
 
+//become creator
+function validateAndSubmitBecomeCreator() {
+    //title
+    var locInput = document.querySelector('input[name="Location"]');
+    var errorMessageLoc = document.getElementById('error-message-loc');
+    //description
+    var descInput = document.querySelector('textarea[name="Description"]');
+    var errorMessageDesc = document.getElementById('error-message-desc');
 
+    if (locInput.value == "") {
+        //title
+        locInput.style.borderColor = 'red';
+        errorMessageLoc.style.display = 'block';
+    } else if (descInput.value == "") {
+        //prev normal
+        locInput.style.borderColor = '';
+        errorMessageLoc.style.display = 'none';
+
+        //description
+        descInput.style.borderColor = 'red';
+        errorMessageDesc.style.display = 'block';
+    }  else {
+        //prev normal
+        descInput.style.borderColor = '';
+        errorMessageDesc.style.display = 'none';
+        locInput.style.borderColor = '';
+        errorMessageLoc.style.display = 'none';
+
+        document.forms[0].submit();
+    }
+}
+//beome creator
 
 

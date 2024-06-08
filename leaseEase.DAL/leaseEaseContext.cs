@@ -10,7 +10,9 @@ namespace leaseEase.DAL
 {
     public class leaseEaseContext : DbContext
     {
+        public virtual DbSet<UDbSession> Sessions { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<TobeCreatorData> tobeCreatorDatas { get; set; }
         public DbSet<Office> Offices { get; set; }
         public DbSet<TypesOfOffice> TypesOfOffice { get; set; }
         public DbSet<Facility> Facilities { get; set; }
@@ -20,7 +22,7 @@ namespace leaseEase.DAL
 
         public leaseEaseContext() : base("Host=localhost;Port=5432;Database=leaseEase;Username=postgres;Password=passForPGA")
         {
-            // Database.SetInitializer(new DropCreateDatabaseAlways<leaseEaseContext>());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<leaseEaseContext>());
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<leaseEaseContext>());
             setDB(this);
         }
@@ -52,6 +54,38 @@ namespace leaseEase.DAL
             .WithRequired(i => i.Office)
             .HasForeignKey(i => i.OfficeId)
             .WillCascadeOnDelete(true);
+
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.MyBookings)
+                .WithRequired(o => o.Creator)
+                .HasForeignKey(o => o.CreatorId).WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.MyReviews)
+                .WithRequired(o => o.Creator)
+                .HasForeignKey(o => o.CreatorId).WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<User>()
+                .HasMany(o => o.WishList)
+                .WithMany()
+                .Map(m =>
+                {
+                    m.ToTable("UserWishList");
+                    m.MapLeftKey("UserId");
+                    m.MapRightKey("OfficeId");
+                });
+
+            modelBuilder.Entity<User>()
+                .HasOptional(u => u.creatorData)
+                .WithRequired(cd => cd.User)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<TobeCreatorData>()
+                .HasMany(cd => cd.MyOffices)
+                .WithRequired(o => o.Creator)
+                .HasForeignKey(o => o.CreatorId)
+                .WillCascadeOnDelete(true);
         }
 
         private void setDB(leaseEaseContext db)

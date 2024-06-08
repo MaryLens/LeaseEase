@@ -26,5 +26,8 @@ namespace leaseEase.Domain.Models.Off
         public string Text { get; set; }
         [Display(Name = "Rating")]
         public double Rating { get; set; }
+        [NotMapped]
+        public leaseEase.Domain.Models.User.User Creator { get; set; }
+        public int CreatorId { get; set; }
     }
 }

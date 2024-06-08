@@ -14,37 +14,54 @@
     <p class="se-t2">through our most convenient and fitting options for office lease.</p>
 </div>
 <!-- Search Up -->
+<div class="all-filters">
+    <div class="input-filters">
+        <div class="input-filters-in">
+            <input class="filter-in" type="text" id="locationFilter" placeholder="Enter location" />
 
-<input type="text" id="locationFilter" placeholder="Enter location" />
+            <input class="filter-in" type="number" id="priceFilter" placeholder="Max price" />
 
-<input type="number" id="priceFilter" placeholder="Max price" />
-
-<select id="sortFilter">
-    <option value="Nosort">Sort by</option>
-    <option value="Popular">Popular</option>
-    <option value="Rating">Rating</option>
-    <option value="NameAsc">Title A-Z</option>
-    <option value="NameDesc">Title Z-A</option>
-    <option value="PriceAsc">Price low to high</option>
-    <option value="PriceDesc">Price high to low</option>
-</select>
-
-@foreach (var type in Model.TypesOfOffice)
-{
-    <label>
-        <input type="checkbox" class="typeFilter" id="type-@type.Id" value="@type.Id" /> @type.Name
-    </label>
-}
-
-@foreach (var faci in Model.Facilities)
-{
-    <label>
-        <input type="checkbox" class="faciFilter" value="@faci.Id" /> @faci.Name
-    </label>
-}
-<!-- Offices -->
-<div class="office-list">
-    @{ Html.RenderPartial("_OfficeList", Model); }
-</div>
-<!-- Offices -->
-<!-- Search -->
+            <select class="filter-dd" id="sortFilter">
+                <option value="Nosort">Sort by</option>
+                <option value="Popular">Sort by: Popular</option>
+                <option value="Rating">Sort by: Rating</option>
+                <option value="NameAsc">Sort by: Title A-Z</option>
+                <option value="NameDesc">Sort by: Title Z-A</option>
+                <option value="PriceAsc">Sort by: Price low to high</option>
+                <option value="PriceDesc">Sort by: Price high to low</option>
+            </select>
+        </div>
+     </div>
+    <div class="list-filters">
+        <div class="list-filters-in">
+            <div class="list-filters-in" id="filters-adv">
+                <div class="faci-text">Select Office types you'd like to book:</div>
+                <div class="list-filter-items">
+                    @foreach (var type in Model.TypesOfOffice)
+                    {
+                        <label class="faci-item-text">
+                            <input type="checkbox" class="typeFilter" id="type-@type.Id" value="@type.Id" /> @type.Name
+                        </label>
+                    }
+                </div>
+                <div class="faci-text">Select Facilities you need:</div>
+                <div class="list-filter-items">
+                    @foreach (var faci in Model.Facilities)
+                    {
+                        <label class="faci-item-text">
+                            <input type="checkbox" class="faciFilter" value="@faci.Id" /> @faci.Name
+                        </label>
+                    }
+                </div>
+            </div>
+            <img onclick="toggleFilters()" id="filters-closed" style="display: none;" src="~/Content/images/faq-arr-closed.svg" alt="" class="fil-arr-closed" height="12" />
+            <img onclick="toggleFilters()" id="filters-opened"  src="~/Content/images/faq-arr-opened.svg" alt="" class="fil-arr-opened" height="12" />
+            </div>
+        </div>
+    </div>
+    <!-- Offices -->
+    <div class="office-list">
+        @{ Html.RenderPartial("_OfficeList", Model); }
+    </div>
+    <!-- Offices -->
+    <!-- Search -->

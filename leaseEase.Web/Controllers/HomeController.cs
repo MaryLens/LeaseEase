@@ -14,13 +14,14 @@ namespace leaseEase.Web.Controllers
     {
         private readonly ILeaseEaseRepository _repo;
 
-        public HomeController(ILeaseEaseRepository repo)
+        public HomeController(ILeaseEaseRepository repo) : base(repo)
         {
                 _repo = repo;
         }
         // GET: Home
         public async Task<ActionResult> Index()
         {
+            currentSessionStatus();
             List <Office> office = await _repo.GetAllOfficesAsync();
             List<Office> finalOffice = office.OrderByDescending(o => o.Views).Take(4).ToList();
             var model = new IndexViewModel
@@ -35,6 +36,7 @@ namespace leaseEase.Web.Controllers
 
         public async Task<ActionResult> Search(string locationFilter, decimal? priceFilter, string sortFilter, List<int> typeFilters, List<int> faciFilters)
         {
+            currentSessionStatus();
             var model = new SearchViewModel
             {
                 Offices = await _repo.GetAllOfficesAsync(),

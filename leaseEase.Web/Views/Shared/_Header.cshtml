@@ -1,6 +1,9 @@
 ﻿
  <!--HEADER-->
 <nav id="navbar">
+    @{ 
+        var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+    }
     <div class="nav-content">
         <a href="@Url.Action("Index", "Home")" class="logo">
             <div class="logo">
@@ -8,14 +11,31 @@
                 <p class="logo-title">LeaseEase</p>
             </div>
         </a>
-        <a href="@Url.Action("LandlordDb", "Office")"class="db-link-cont">
+        <a href="@Url.Action("LandlordDb", "Office")" class="db-link-cont">
             <p class="db-link">Dashboard</p>
         </a>
+        @if (user == null)
+        {
             <div class="autori-buttons">
                 <a class="login-cont" href="@Url.Action("Index", "Login")"><p class="login">Log In</p></a>
                 <a href="@Url.Action("Signup", "Login")"><button type="button" class="signup">Sign Up</button></a>
             </div>
-</div>
+        }
+        else
+        {
+            <div class="autori-buttons">
+                <p class="login">@user.Username</p>
+                @if (user.Image != null)
+                {
+                    <img src='data:image/png;base64,@Convert.ToBase64String(user.Image)' alt="" class="logo-dark" height="45" width="45" style="border-radius: 1000px;" />
+                }
+                else
+                {
+                    <img src='~/Content/images/prof-pic.svg' alt="" class="logo-dark" height="45" width="45" style="border-radius: 1000px;" />
+                }
+            </div>
+        }
+    </div>
 
 </nav>
 <!--HEADER-->

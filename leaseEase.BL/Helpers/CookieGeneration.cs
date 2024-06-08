@@ -71,7 +71,6 @@ namespace leaseEase.BL.Helpers
             }
         }
 
-        // Метод для генерации случайного массива байтов
         private static byte[] GenerateRandomBytes(int length)
         {
             using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())

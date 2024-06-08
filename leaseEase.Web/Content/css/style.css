@@ -836,7 +836,88 @@ body{
     text-align: center;
 }
 /*Search Up*/
-
+/*Search Filters*/
+.all-filters {
+    display: flex;
+    flex-direction: column;
+}
+.input-filters {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: #CDCDEE;
+    margin-top: 60px;
+}
+.list-filters {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: #CDCDEE70;
+}
+.input-filters-in {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1200px;
+    margin-left:auto;
+    margin-right: auto;
+}
+.list-filters-in {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.filter-in {
+    height: 56px;
+    width: 351px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-family: KulimParkSemiBold;
+    font-size: 18px;
+    color: #333168;
+    background-color: rgb(255,255,255,0);
+    border-style: solid;
+    padding-left: 25px;
+    padding-right: 0px;
+    border-color: #333168;
+    border-radius: 15px;
+    border-width: 2px;
+}
+.filter-dd {
+    height: 60px;
+    width: 380px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    font-family: KulimParkSemiBold;
+    font-size: 18px;
+    color: #333168;
+    background-color: rgb(255,255,255,0);
+    border-style: solid;
+    padding-left: 25px;
+    padding-right: 0px;
+    border-color: #333168;
+    border-radius: 15px;
+    border-width: 2px;
+}
+.list-filter-items {
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+    flex-wrap: wrap;
+    row-gap: 20px;
+}
+.fil-arr-opened{
+    width:24px;
+    cursor:pointer;
+}
+.fil-arr-closed {
+    width: 24px;
+    cursor: pointer;
+}
+/*Search Filters*/
 /*Offices*/
 .office-list {
     margin-top: 60px;
@@ -1053,6 +1134,20 @@ body{
     width: 100%;
     border: 2px dashed #333168;
     border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.image-upload-wrapper-user {
+    cursor: pointer;
+    position: relative;
+    height: 300px;
+    width: 300px;
+    border: 2px dashed #333168;
+    border-radius: 1000px;
     display: flex;
     align-items: center;
     justify-content: center;

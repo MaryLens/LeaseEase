@@ -23,12 +23,6 @@ namespace leaseEase.BL.Repos
         Task<Facility> GetFacilityByIdAsync(int facilityId);
         Task<TypesOfOffice> GetTypeByIdAsync(int typeId);
 
-        //user
-        Task<List<User>> GetAllUsersAsync();
-        Task<User> GetUserByEmailAsync(string email);
-        Task<User> GetUserByEmailAndPwAsync(string email, string password);
-        Task<User> GetUserByIdAsync(int typeId);
-        Task<User> AddUserAsync(UserRegisterData userData);
 
         //reviews
         Task<List<Review>> GetAllReviewsAsync();
@@ -48,5 +42,26 @@ namespace leaseEase.BL.Repos
         Task<Booking> AddBookingAsync(Booking booking);
         Task<Booking> GetBookingByIdAsync(int bookingId);
         Task RemoveBookingAsync(int bookingId);
+
+
+
+        ////users!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //sessions
+        Task<UDbSession> GetSessionByEmailAsync(string Email);
+        Task<UDbSession> GetSessionByCookieAsync(string cookie);
+        Task<UDbSession> UpdateSessionAsync(UDbSession session);
+        Task RemoveSessionAsync(UDbSession session);
+        Task<UDbSession> AddNewSessionAsync(UDbSession session);
+
+        //user
+        Task<TobeCreatorData> GetCreatorByIdAsync(int typeId);
+        Task<List<User>> GetAllUsersAsync();
+        Task<User> GetUserByEmailAsync(string email);
+        Task<User> GetUserByEmailAndPwAsync(string email, string password);
+        Task<User> GetUserByIdAsync(int typeId);
+        Task<User> AddUserAsync(UserRegisterData userData);
+        Task<User> UpdateUserAsync(User user);
     }
+
+
 }

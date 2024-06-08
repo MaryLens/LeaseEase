@@ -13,17 +13,18 @@ namespace leaseEase.Web.Controllers
     {
         private readonly ISession _session;
         private readonly ILeaseEaseRepository _repo;
-        public BaseController()
+        public BaseController(ILeaseEaseRepository repo)
         {
             var bl = new BusinessLogic();
             _session = bl.GetSessionBL();
+            _repo = repo;
         }
         public void currentSessionStatus()
         {
             HttpCookie currentCookie = Request.Cookies["LEASEEASE"];
             if (currentCookie != null)
             {
-                var profile = _session.GetUserByCookie(currentCookie.Value);
+                var profile = _session.GetUserByCookie(currentCookie.Value, _repo);
                 if (profile != null)
                 {
                     System.Web.HttpContext.Current.Session["SessionStatus"] = "isValid";

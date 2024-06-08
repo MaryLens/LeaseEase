@@ -14,7 +14,7 @@ namespace leaseEase.Web.Controllers
     {
         private readonly ISession _session;
         private readonly ILeaseEaseRepository _repo;
-        public LoginController(ILeaseEaseRepository repo)
+        public LoginController(ILeaseEaseRepository repo): base(repo)
         {
             var bl = new BusinessLogic();
             _session = bl.GetSessionBL();
@@ -22,57 +22,65 @@ namespace leaseEase.Web.Controllers
         }
         public ActionResult Index()
         {
+            currentSessionStatus();
             return View(new UActionLogin());
         }
         public ActionResult Signup()
         {
+            currentSessionStatus();
             return View(new UActionSignup());
         }
         [HttpPost]
         public ActionResult Signup(UActionSignup data)
         {
-            var urData = new UserRegisterData
+            currentSessionStatus();
+            if (ModelState.IsValid)
             {
-                Name = data.Name,
-                Email = data.Email,
-                Password = data.Password,
-                LastLogin = DateTime.Now,
-                UserIp = base.Request.UserHostAddress
-            };
-            BaseResponces resp = _session.RegisterUserActionFlow(urData, _repo);
-            if (resp.Status)
-            {
-                HttpCookie cookie = _session.CookieGenerate(urData.Email);
-                ControllerContext.HttpContext.Response.Cookies.Add(cookie);
-                return RedirectToAction("Index", "Home");
+                var urData = new UserRegisterData
+                {
+                    Name = data.Name,
+                    Email = data.Email,
+                    Password = data.Password,
+                    LastLogin = DateTime.Now,
+                    UserIp = base.Request.UserHostAddress
+                };
+                BaseResponces resp = _session.RegisterUserActionFlow(urData, _repo);
+                if (resp.Status)
+                {
+                    HttpCookie cookie = _session.CookieGenerate(urData.Email,_repo);
+                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+                    currentSessionStatus();
+                    return RedirectToAction("Index", "Home");
+                }
+                return RedirectToAction("Signup", "Login");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Signup", "Login");
         }
 
         [HttpPost]
         public ActionResult LogIn(UActionLogin data)
         {
-            var ulData = new UserLoginData
+            currentSessionStatus();
+            if (ModelState.IsValid)
             {
-                Credential = data.Credential,
-                Password = data.Password,
-                LastLogin = DateTime.Now,
-                UserIp = base.Request.UserHostAddress
-            };
-            BaseResponces resp = _session.ValidaeUserCredentialAction(ulData, _repo);
-            if (resp.Status)
-            {
-                UCookieData cData = _session.GenCoockieAlgo(resp.CurrentUser);
-
-                if (cData != null)
+                var ulData = new UserLoginData
                 {
+                    Credential = data.Credential,
+                    Password = data.Password,
+                    LastLogin = DateTime.Now,
+                    UserIp = base.Request.UserHostAddress
+                };
+                BaseResponces resp = _session.LoginUserActionFlow(ulData, _repo);
+                if (resp.Status)
+                {
+                    HttpCookie cookie = _session.CookieGenerate(ulData.Credential, _repo);
+                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+                    currentSessionStatus();
+                    return RedirectToAction("Index", "Home");
                 }
-                BaseResponces auth = _session.GenerateUserSessionActionFlow(ulData, _repo);
-                HttpCookie cookie = _session.CookieGenerate(ulData.Credential);
-                ControllerContext.HttpContext.Response.Cookies.Add(cookie);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
-            return null;
+            return RedirectToAction("Index", "Login");
         }
     }
 }

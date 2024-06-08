@@ -105,6 +105,7 @@
     <Compile Include="Models\Off\TypesOfOffice.cs" />
     <Compile Include="Models\Responces\BaseResponces.cs" />
     <Compile Include="Models\User\PwManager.cs" />
+    <Compile Include="Models\User\TobeCreatorData.cs" />
     <Compile Include="Models\User\UCookieData.cs" />
     <Compile Include="Models\User\UDBSession.cs" />
     <Compile Include="Models\User\User.cs" />

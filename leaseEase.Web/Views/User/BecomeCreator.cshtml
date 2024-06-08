@@ -1,0 +1,46 @@
+﻿@model leaseEase.Domain.Models.User.TobeCreatorData
+@using (Html.BeginForm("BecomeCreator", "User", FormMethod.Post, new { @id = "becomeCreator", enctype = "multipart/form-data" }))
+{
+    <div class="login-column" id="new-office-column">
+        <p class="new-off-texts">Wanna become a landlord?</p>
+        <p class="new-off-texts">Just complete a few steps to start publishing your offers</p>
+        <div class="new-office-container">
+            <div class="Image-texts-new-off">
+                    <div class="image-upload-wrapper-user" id="image-upload-wrapper">
+                        <label for="image-upload" class="image-upload-label">
+                            <span class="image-upload-text" id="image-upload-text">Add your photo</span>
+                            @Html.TextBoxFor(e => e.ImageFile, new
+                            {
+                                type = "file",
+                                id = "image-upload",
+                                onchange = "previewImage(event)",
+                                style = "display:none;"
+                            })
+                        </label>
+                    </div>
+
+                <div class="texts-new-off">
+                    <span class="alert-office" id="error-message-loc" style="display: none;">Your location is required.</span>
+                    @Html.TextBoxFor(e => e.Location, new
+               {
+                   type = "text",
+                   placeholder = "Enter your location",
+                   autocomplete = "nope",
+                   @class = "new-off-title-input"
+               })
+                    <span class="alert-office" id="error-message-desc" style="display: none;">Your description is required.</span>
+                    @Html.TextAreaFor(e => e.Description, new
+               {
+                   type = "text",
+                   placeholder = "Describe yourself and your offers",
+                   autocomplete = "nope",
+                   @class = "new-off-multi-input"
+               })
+                </div>
+            </div>
+
+            <button type="button" class="new-off-button" onclick="validateAndSubmitBecomeCreator()">Create</button>
+        </div>
+    </div>
+}
+

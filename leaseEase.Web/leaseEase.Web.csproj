@@ -180,6 +180,7 @@
     <Content Include="Content\images\Outdoor terrace.png" />
     <Content Include="Content\images\Podcast Studios.png" />
     <Content Include="Content\images\Printing and scanning facilities.png" />
+    <Content Include="Content\images\prof-pic.svg" />
     <Content Include="Content\images\Receptionist services.png" />
     <Content Include="Content\images\Regular cleaning.png" />
     <Content Include="Content\images\Searchind.svg" />
@@ -199,10 +200,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\CustomControllerActivator.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\OfficeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -232,6 +235,8 @@
     <Content Include="Views\Office\Edit.cshtml" />
     <Content Include="Views\Office\NewBooking.cshtml" />
     <Content Include="Views\Shared\_OfficeList.cshtml" />
+    <Content Include="Views\User\BecomeCreator.cshtml" />
+    <Content Include="Views\Admin\AdminDb.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
