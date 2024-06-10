@@ -141,7 +141,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Start\Heart.svg" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\images\247 security surveillance.png" />
     <Content Include="Content\images\arr-left.svg" />
@@ -243,6 +242,7 @@
     <Content Include="Views\User\MyBookings.cshtml" />
     <Content Include="Views\User\Favourites.cshtml" />
     <Content Include="Views\User\Blocked.cshtml" />
+    <Content Include="Views\User\Chats.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -238,11 +238,11 @@ namespace leaseEase.BL.Repos
         //user
         public async Task<List<User>> GetAllUsersAsync()
         {
-            return await _context.Users.Include(u=>u.MyBookings).Include(u => u.MyReviews).Include(u=>u.creatorData).Include(u=>u.WishList).ToListAsync();
+            return await _context.Users.Include(u=>u.MyBookings).Include(u=>u.Chats).Include(u => u.Messages).Include(u => u.MyReviews).Include(u=>u.creatorData).Include(u=>u.WishList).ToListAsync();
         }
         public async Task<User> GetUserByIdAsync(int typeId)
         {
-            return await _context.Users.Include(u => u.MyBookings).Include(u => u.MyReviews).Include(u => u.creatorData).Include(u => u.WishList).FirstOrDefaultAsync(m => m.Id == typeId);
+            return await _context.Users.Include(u => u.MyBookings).Include(u => u.Chats).Include(u => u.Messages).Include(u => u.MyReviews).Include(u => u.creatorData).Include(u => u.WishList).FirstOrDefaultAsync(m => m.Id == typeId);
         }
         public async Task<TobeCreatorData> GetCreatorByIdAsync(int typeId)
         {
@@ -251,11 +251,11 @@ namespace leaseEase.BL.Repos
         public async Task<User> GetUserByEmailAsync(string email)
         {
 
-            return await _context.Users.Include(u => u.MyBookings).Include(u => u.MyReviews).Include(u => u.creatorData).Include(u => u.WishList).FirstOrDefaultAsync(m => m.Email == email).ConfigureAwait(false);
+            return await _context.Users.Include(u => u.MyBookings).Include(u => u.Chats).Include(u => u.Messages).Include(u => u.MyReviews).Include(u => u.creatorData).Include(u => u.WishList).FirstOrDefaultAsync(m => m.Email == email).ConfigureAwait(false);
         }
         public async Task<User> GetUserByEmailAndPwAsync(string email, string password)
         {
-            return await _context.Users.Include(u => u.MyBookings).Include(u => u.MyReviews).Include(u => u.creatorData).Include(u => u.WishList).FirstOrDefaultAsync(m => m.Email == email && m.Password == password);
+            return await _context.Users.Include(u => u.MyBookings).Include(u => u.Chats).Include(u => u.Messages).Include(u => u.MyReviews).Include(u => u.creatorData).Include(u => u.WishList).FirstOrDefaultAsync(m => m.Email == email && m.Password == password);
         }
         public async Task<User> AddUserAsync(UserRegisterData userData)
         {
@@ -273,6 +273,35 @@ namespace leaseEase.BL.Repos
 
             await _context.SaveChangesAsync();
             return user;
+        }
+        public async Task<Chat> AddNewChat(Chat chat)
+        {
+            _context.Chats.Add(chat);
+            await _context.SaveChangesAsync();
+            return chat;
+        }
+        public async Task<Chat> GetChatById(int id)
+        {
+            Chat chat = await _context.Chats.Include(c=>c.Messages).Include(c=>c.Users).FirstOrDefaultAsync(m => m.Id == id);
+            return chat;
+        }
+        public async Task<Chat> UpdateChatAsync(Chat chat)
+        {
+            _context.Entry(chat).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return chat;
+        }
+        public async Task<Message> AddNewMessage(Message message)
+        {
+            _context.Messages.Add(message);
+            var chat = await GetChatById(message.ChatId);
+            chat.Messages.Add(message);
+            await UpdateChatAsync(chat);
+            var user = await GetUserByIdAsync(message.CreatorId);
+            user.Messages.Add(message);
+            await UpdateUserAsync(user);
+            await _context.SaveChangesAsync();
+            return message;
         }
 
         public async Task<User> UpdateUserAsync(User user)

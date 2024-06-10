@@ -605,6 +605,43 @@ namespace leaseEase.Web.Controllers
             return Json(new { success = false });
         }
         [HttpPost]
+        public async Task<ActionResult> StartChat(int id)
+        {
+            currentSessionStatus();
+            var office = await _repo.GetOfficeByIdAsync(id);
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            User currentUser;
+            if (user == null)
+            {
+                currentUser = null;
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            }
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
+            }
+            if (office != null)
+            {
+                if (user == null)
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+                var chat = new Chat();
+                chat.Users.Add(currentUser);
+                var anotherUser = await _repo.GetUserByIdAsync(office.Creator.UserId);
+                chat.Users.Add(anotherUser);
+                await _repo.AddNewChat(chat);
+                await _repo.UpdateUserAsync(currentUser);
+                return RedirectToAction("Chats", "User", new { chatId = chat.Id });
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+        [HttpPost]
         public async Task<ActionResult> RemoveFromFav(int id)
         {
             currentSessionStatus();

@@ -19,6 +19,8 @@ namespace leaseEase.DAL
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<OfficeImg> OfficeImages { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public leaseEaseContext() : base("Host=localhost;Port=5432;Database=leaseEase;Username=postgres;Password=passForPGA")
         {
@@ -75,6 +77,23 @@ namespace leaseEase.DAL
                     m.MapLeftKey("UserId");
                     m.MapRightKey("OfficeId");
                 });
+            modelBuilder.Entity<User>()
+                    .HasMany(o => o.Chats)
+                    .WithMany(c=>c.Users)
+                    .Map(m =>
+                    {
+                        m.ToTable("UserChats");
+                        m.MapLeftKey("UserId");
+                        m.MapRightKey("ChatId");
+                    });
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Messages)
+                .WithRequired(o => o.Creator)
+                .HasForeignKey(o => o.CreatorId).WillCascadeOnDelete(true);
+            modelBuilder.Entity<Chat    >()
+                .HasMany(u => u.Messages)
+                .WithRequired(o => o.Chat)
+                .HasForeignKey(o => o.ChatId).WillCascadeOnDelete(true);
 
             modelBuilder.Entity<User>()
                 .HasOptional(u => u.creatorData)

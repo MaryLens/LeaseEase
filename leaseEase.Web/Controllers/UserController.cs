@@ -143,6 +143,47 @@ namespace leaseEase.Web.Controllers
             };
             return View(model);
         }
+        public async Task<ActionResult> Chats(int? chatId)
+        {
+            currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            var currentUser = await _repo.GetUserByEmailAsync(user.Email);
+
+            var viewModel = new ChatViewModel
+            {
+                User = currentUser,
+                SelectedChat = chatId.HasValue ? currentUser.Chats.SingleOrDefault(c => c.Id == chatId.Value) : null,
+                SelectedChatId = chatId ?? 0
+            };
+
+            return View(viewModel);
+        }
+        [HttpPost]
+        public async Task<ActionResult> SendMessage(int ChatId, string content)
+        {
+            currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            var currentUser = await _repo.GetUserByEmailAsync(user.Email);
+
+            var message = new Message
+            {
+                ChatId = ChatId,
+                content = content,
+                CreatorId = currentUser.Id
+            };
+
+            await _repo.AddNewMessage(message);
+
+            return RedirectToAction("Chats", new { chatId = ChatId });
+        }
 
         private byte[] ConvertToBytes(HttpPostedFileBase file)
         {

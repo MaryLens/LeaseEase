@@ -764,6 +764,27 @@ $(document).ready(function () {
     });
 });
 $(document).ready(function () {
+    $('.start-chat').on('click', function () {
+        var officeId = $(this).data('id');
+        $.ajax({
+            type: 'POST',
+            url: '/Office/StartChat',
+            data: { id: officeId },
+            success: function (response) {
+                if (response.success) {
+                    alert('Office added to your favourites');
+                    location.reload();
+                } else {
+                    alert('An error occured');
+                }
+            },
+            error: function () {
+                alert('Error');
+            }
+        });
+    });
+});
+$(document).ready(function () {
     $('.remove-fav-link').on('click', function () {
         var officeId = $(this).data('id');
         $.ajax({

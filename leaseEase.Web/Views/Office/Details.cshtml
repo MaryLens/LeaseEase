@@ -21,6 +21,12 @@
             <p>Add to favourites</p>
         </div>
     }
+    @if (user != null)
+    {
+        <div class="start-chat" data-id="@Model.Office.Id">
+            <p>Start chat with creator</p>
+        </div>
+    }
     <div class="details-photo" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(Model.Office.Image)');">
     </div>
 </div>

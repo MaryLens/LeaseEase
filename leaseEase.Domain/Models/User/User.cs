@@ -27,6 +27,8 @@ namespace leaseEase.Domain.Models.User
         public List<Office> WishList { get; set; } = new List<Office>();
         public List<Booking> MyBookings { get; set; } = new List<Booking>();
         public List<Review> MyReviews { get; set; } = new List<Review>();
+        public List<Message> Messages { get; set; } = new List<Message>();
+        public List<Chat> Chats { get; set; } = new List<Chat> { };
         public virtual TobeCreatorData creatorData { get; set; }
 
     }

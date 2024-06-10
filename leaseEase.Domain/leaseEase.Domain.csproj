@@ -92,6 +92,7 @@
     <Compile Include="Enum\Off\statusBooking.cs" />
     <Compile Include="Enum\User\Roles.cs" />
     <Compile Include="Models\helpers\AdminDBViewModel.cs" />
+    <Compile Include="Models\helpers\ChatViewModel.cs" />
     <Compile Include="Models\helpers\FavouritesViewModel.cs" />
     <Compile Include="Models\helpers\IndexViewModel.cs" />
     <Compile Include="Models\helpers\LandloredDBViewModel.cs" />
@@ -108,6 +109,8 @@
     <Compile Include="Models\Off\ReviewImg.cs" />
     <Compile Include="Models\Off\TypesOfOffice.cs" />
     <Compile Include="Models\Responces\BaseResponces.cs" />
+    <Compile Include="Models\User\Chat.cs" />
+    <Compile Include="Models\User\Message.cs" />
     <Compile Include="Models\User\PwManager.cs" />
     <Compile Include="Models\User\TobeCreatorData.cs" />
     <Compile Include="Models\User\UCookieData.cs" />

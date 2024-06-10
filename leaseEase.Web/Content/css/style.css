@@ -490,6 +490,9 @@ body{
     column-gap: 10px;
     cursor: pointer;
 }
+.start-chat {
+    cursor: pointer;
+}
 
     .block-link:hover {
         text-decoration: underline;

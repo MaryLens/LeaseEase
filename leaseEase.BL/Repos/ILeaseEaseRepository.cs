@@ -2,6 +2,7 @@
 using leaseEase.Domain.Models.User;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,6 +62,11 @@ namespace leaseEase.BL.Repos
         Task<User> GetUserByIdAsync(int typeId);
         Task<User> AddUserAsync(UserRegisterData userData);
         Task<User> UpdateUserAsync(User user);
+
+         Task<Chat> AddNewChat(Chat chat);
+        Task<Chat> GetChatById(int id);
+        Task<Chat> UpdateChatAsync(Chat chat);
+        Task<Message> AddNewMessage(Message message);
     }
 
 
