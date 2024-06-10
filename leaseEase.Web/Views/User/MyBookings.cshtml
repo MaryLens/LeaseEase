@@ -1,7 +1,32 @@
-﻿
+﻿@using leaseEase.Domain.Models.Off
+@model leaseEase.Domain.Models.helpers.MyBookingsViewModel
 @{
-    ViewBag.Title = "MyBookings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home";
 }
+@using System.Web.Optimization
 
-<h2>MyBookings</h2>
+<!-- Landlord db -->
+<p class="ind-t3">My bookings</p>
 
+<div class="booking-list" id="booking-list-landlord">
+    @foreach (Booking booking in Model.Bookings)
+    {
+        <!-- Booking card!!! -->
+        <div class="booking-card">
+            <div class="booking-t">@Html.DisplayFor(modelItem => booking.statusBooking)</div>
+            <img src='data:image/png;base64,@Convert.ToBase64String(booking.Office.Image)' alt="" class="logo-dark" height="40" width="50" style="border-radius: 5px;" />
+            <div class="booking-t">@Html.DisplayFor(modelItem => booking.Office.Name)</div>
+            <div class="booking-t">@Html.DisplayFor(modelItem => booking.DateStart) - @Html.DisplayFor(modelItem => booking.DateEnd)</div>
+            <div class="booking-t">price: $@Html.DisplayFor(modelItem => booking.summ)</div>
+                <div class="cancell-link" data-id="@booking.Id">Cancell</div>
+        </div>
+        <!-- Booking card!!! -->
+    }
+    @if (Model.Bookings == null || Model.Bookings.Count == 0)
+    {
+        <div class="ind-t3">No bookings yet</div>
+    }
+</div>
+<!-- Offices -->
+<!-- Landlord db -->

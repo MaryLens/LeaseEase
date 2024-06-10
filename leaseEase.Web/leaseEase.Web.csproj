@@ -141,6 +141,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Start\Heart.svg" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\images\247 security surveillance.png" />
     <Content Include="Content\images\arr-left.svg" />
@@ -165,6 +166,8 @@
     <Content Include="Content\images\fb.svg" />
     <Content Include="Content\images\Fitness center or gym access.png" />
     <Content Include="Content\images\Fully equipped kitchenette.png" />
+    <Content Include="Content\images\Heart-empty.svg" />
+    <Content Include="Content\images\Heart.svg" />
     <Content Include="Content\images\High-speed internet access.png" />
     <Content Include="Content\images\insta.svg" />
     <Content Include="Content\images\Location.svg" />

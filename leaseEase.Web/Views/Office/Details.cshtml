@@ -2,9 +2,25 @@
 @{
     ViewBag.Title = "Office Details";
 }
-
+@{
+    var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+}
 <div>
     <h1 class="ind-t3">@Html.DisplayFor(model => model.Office.Name)</h1>
+    @if (user != null && user.Favourites.Contains(Model.Office))
+    {
+        <div class="remove-fav-link" data-id="@Model.Office.Id">
+            <img src='~/Content/images/Heart.svg' alt="" height="20" />
+            <p>Remove from favourites</p>
+        </div>
+    }
+    else
+    {
+        <div class="add-fav-link" data-id="@Model.Office.Id">
+            <img src='~/Content/images/Heart-empty.svg' alt="" height="20" />
+            <p>Add to favourites</p>
+        </div>
+    }
     <div class="details-photo" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(Model.Office.Image)');">
     </div>
 </div>

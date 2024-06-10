@@ -1,4 +1,5 @@
 ﻿using leaseEase.BL.Repos;
+using leaseEase.Domain.Models.helpers;
 using leaseEase.Domain.Models.User;
 using System;
 using System.Collections.Generic;
@@ -103,8 +104,47 @@ namespace leaseEase.Web.Controllers
                 }
             return View(); 
         }
+        public async Task<ActionResult> MyBookings()
+        {
+            currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            var currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
+            }
+            var bookings = await _repo.GetAllBookinsAsync();
+            MyBookingsViewModel model = new MyBookingsViewModel
+            {
+                Bookings = bookings.Where(b => b.Creator == currentUser).ToList()
+            };
+            return View(model);
+        }
+        public async Task<ActionResult> Favourites()
+        {
+            currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            if (user == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            var currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
+            }
+            FavouritesViewModel model = new FavouritesViewModel
+            {
+                Offices = currentUser.WishList
+            };
+            return View(model);
+        }
 
-            private byte[] ConvertToBytes(HttpPostedFileBase file)
+        private byte[] ConvertToBytes(HttpPostedFileBase file)
         {
             byte[] data = null;
             using (var binaryReader = new BinaryReader(file.InputStream))

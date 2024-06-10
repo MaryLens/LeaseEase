@@ -742,6 +742,48 @@ $(document).ready(function () {
         });
     });
 });
+$(document).ready(function () {
+    $('.add-fav-link').on('click', function () {
+        var officeId = $(this).data('id');
+        $.ajax({
+            type: 'POST',
+            url: '/Office/AddToFav',
+            data: { id: officeId },
+            success: function (response) {
+                if (response.success) {
+                    alert('Office added to your favourites');
+                    location.reload();
+                } else {
+                    alert('An error occured');
+                }
+            },
+            error: function () {
+                alert('Error');
+            }
+        });
+    });
+});
+$(document).ready(function () {
+    $('.remove-fav-link').on('click', function () {
+        var officeId = $(this).data('id');
+        $.ajax({
+            type: 'POST',
+            url: '/Office/RemoveFromFav',
+            data: { id: officeId },
+            success: function (response) {
+                if (response.success) {
+                    alert('Office removed from your favourites');
+                    location.reload();
+                } else {
+                    alert('An error occured');
+                }
+            },
+            error: function () {
+                alert('Error');
+            }
+        });
+    });
+});
 
 $(document).ready(function () {
     $('#locationFilter').on('keyup', function () {

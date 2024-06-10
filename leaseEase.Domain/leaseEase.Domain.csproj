@@ -92,8 +92,10 @@
     <Compile Include="Enum\Off\statusBooking.cs" />
     <Compile Include="Enum\User\Roles.cs" />
     <Compile Include="Models\helpers\AdminDBViewModel.cs" />
+    <Compile Include="Models\helpers\FavouritesViewModel.cs" />
     <Compile Include="Models\helpers\IndexViewModel.cs" />
     <Compile Include="Models\helpers\LandloredDBViewModel.cs" />
+    <Compile Include="Models\helpers\MyBookingsViewModel.cs" />
     <Compile Include="Models\helpers\newBookingViewModel.cs" />
     <Compile Include="Models\helpers\newOfficeModel.cs" />
     <Compile Include="Models\helpers\officeDetailsModel.cs" />

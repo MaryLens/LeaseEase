@@ -478,6 +478,18 @@ body{
     color: #333168;
     cursor: pointer;
 }
+.remove-fav-link{
+    display:flex;
+    flex-direction:row;
+    column-gap:10px;
+    cursor:pointer;
+}
+.add-fav-link {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    cursor: pointer;
+}
 
     .block-link:hover {
         text-decoration: underline;

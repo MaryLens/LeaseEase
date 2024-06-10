@@ -54,7 +54,7 @@ namespace leaseEase.BL.MainAPI
                 {
                     return null;
                 }
-                var uMinData = new UserMinData { Username = user.Name, Role = user.Role, Email = user.Email };
+                var uMinData = new UserMinData { Username = user.Name, Role = user.Role, Email = user.Email, Favourites = user.WishList };
                 if (user.creatorData != null)
                 {
                     uMinData.Image = user.creatorData.Image;
