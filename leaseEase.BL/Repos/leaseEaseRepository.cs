@@ -196,6 +196,12 @@ namespace leaseEase.BL.Repos
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<Booking> UpdateBookingAsync(Booking booking)
+        {
+            _context.Entry(booking).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return booking;
+        }
 
         //////users!!!!!!!!!!!!!!!!!!!!!!!!!
         //sessions

@@ -42,7 +42,7 @@ namespace leaseEase.BL.Repos
         Task<Booking> AddBookingAsync(Booking booking);
         Task<Booking> GetBookingByIdAsync(int bookingId);
         Task RemoveBookingAsync(int bookingId);
-
+        Task<Booking> UpdateBookingAsync(Booking booking);
 
 
         ////users!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

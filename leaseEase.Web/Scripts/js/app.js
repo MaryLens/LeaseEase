@@ -632,6 +632,116 @@ $(document).ready(function () {
         }
     });
 });
+//accept booking 
+$(document).ready(function () {
+    $('.accept-link').on('click', function () {
+        var bookingId = $(this).data('id');
+            $.ajax({
+                type: 'POST',
+                url: '/Office/AcceptBooking',
+                data: { id: bookingId },
+                success: function (response) {
+                    if (response.success) {
+                        alert('The booking has just been accepted');
+                        location.reload();
+                    } else {
+                        alert('An error occured while accepting this booking');
+                    }
+                },
+                error: function () {
+                    alert('Error while accepting booking');
+                }
+            });
+    });
+});
+//decline booking 
+$(document).ready(function () {
+    $('.decline-link').on('click', function () {
+        var bookingId = $(this).data('id');
+        $.ajax({
+            type: 'POST',
+            url: '/Office/DeclineBooking',
+            data: { id: bookingId },
+            success: function (response) {
+                if (response.success) {
+                    alert('The booking has just been declined');
+                    location.reload();
+                } else {
+                    alert('An error occured while declining this booking');
+                }
+            },
+            error: function () {
+                alert('Error while declining booking');
+            }
+        });
+    });
+});
+//cancell booking 
+$(document).ready(function () {
+    $('.cancell-link').on('click', function () {
+        var bookingId = $(this).data('id');
+        $.ajax({
+            type: 'POST',
+            url: '/Office/CancellBooking',
+            data: { id: bookingId },
+            success: function (response) {
+                if (response.success) {
+                    alert('The booking has just been cancelled');
+                    location.reload();
+                } else {
+                    alert('An error occured while cancelling this booking');
+                }
+            },
+            error: function () {
+                alert('Error while cancelling booking');
+            }
+        });
+    });
+});
+//block user 
+$(document).ready(function () {
+    $('.block-link').on('click', function () {
+        var userId = $(this).data('id');
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/BlockUser',
+            data: { id: userId },
+            success: function (response) {
+                if (response.success) {
+                    alert('This user has been blocked');
+                    location.reload();
+                } else {
+                    alert('An error occured while blocking user');
+                }
+            },
+            error: function () {
+                alert('Error while blocking user');
+            }
+        });
+    });
+});
+//unblock user 
+$(document).ready(function () {
+    $('.unblock-link').on('click', function () {
+        var userId = $(this).data('id');
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/UnblockUser',
+            data: { id: userId },
+            success: function (response) {
+                if (response.success) {
+                    alert('This user has been unblocked');
+                    location.reload();
+                } else {
+                    alert('An error occured while unblocking user');
+                }
+            },
+            error: function () {
+                alert('Error while unblocking user');
+            }
+        });
+    });
+});
 
 $(document).ready(function () {
     $('#locationFilter').on('keyup', function () {
@@ -765,5 +875,31 @@ function validateAndSubmitBecomeCreator() {
     }
 }
 //beome creator
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const officeTab = document.getElementById("office-tab");
+    const bookingTab = document.getElementById("booking-tab");
+    const officeList = document.getElementById("office-list-landlord");
+    const bookingList = document.getElementById("booking-list-landlord");
+
+    // Initial state
+    officeTab.classList.add("active-tab");
+    bookingList.classList.add("hidden");
+
+    officeTab.addEventListener("click", function() {
+        officeTab.classList.add("active-tab");
+    bookingTab.classList.remove("active-tab");
+    officeList.classList.remove("hidden");
+    bookingList.classList.add("hidden");
+        });
+
+    bookingTab.addEventListener("click", function() {
+        bookingTab.classList.add("active-tab");
+    officeTab.classList.remove("active-tab");
+    bookingList.classList.remove("hidden");
+    officeList.classList.add("hidden");
+        });
+    });
+
 
 

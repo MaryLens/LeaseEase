@@ -38,13 +38,17 @@ namespace leaseEase.Web.Controllers
             {
                 office.Views += 1;
             }
+            if (currentUser!=null&&currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
+            }
             await _repo.UpdateOfficeAsync(office);
             officeDetailsModel model = new officeDetailsModel {
                 Office = office,
                 Review = new Review()
 
         };
-            return office == null ? NotFound() : View(model);
+            return View(model);
         }
 
         [HttpPost]
@@ -60,6 +64,10 @@ namespace leaseEase.Web.Controllers
             else
             {
                 currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            }
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
             }
             model.Review.Office = await _repo.GetOfficeByIdAsync(model.Review.OfficeId);
             model.Office = model.Review.Office;
@@ -83,9 +91,23 @@ namespace leaseEase.Web.Controllers
             return RedirectToAction("Details", new { id = model.Review.OfficeId });
         }
 
-        public ActionResult NotFound()
+        public async Task<ActionResult> NotFound()
         {
             currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            User currentUser;
+            if (user == null)
+            {
+                currentUser = null;
+            }
+            else
+            {
+                currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            }
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
+            }
             return View();
         }
         public async Task<ActionResult> CreateNew()
@@ -103,6 +125,11 @@ namespace leaseEase.Web.Controllers
             else if (user.Role != Domain.Enum.User.Roles.Landlord)
             {
                 return RedirectToAction("BecomeCreator", "User");
+            }
+            User currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
             }
             var model = new newOfficeModel
             {
@@ -126,6 +153,10 @@ namespace leaseEase.Web.Controllers
             else
             {
                 currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            }
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
             }
             if (user == null)
             {
@@ -175,7 +206,6 @@ namespace leaseEase.Web.Controllers
 
         public async Task<ActionResult> LandlordDb()
         {
-
             currentSessionStatus();
             var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
             if (user == null)
@@ -189,7 +219,18 @@ namespace leaseEase.Web.Controllers
             {
                 return RedirectToAction("BecomeCreator", "User");
             }
-            return View(await _repo.GetAllOfficesAsync());
+            var currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
+            }
+            var offices = await _repo.GetAllOfficesAsync();
+            var bookings = await _repo.GetAllBookinsAsync();
+            LandloredDBViewModel model = new LandloredDBViewModel {
+            Offices = offices.Where(o=>o.Creator==currentUser.creatorData).ToList(),
+            Bookings = bookings.Where(b=>b.Office.CreatorId==currentUser.creatorData.Id).ToList()
+            };
+            return View(model);
         }
 
         public async Task<ActionResult> Edit(int id)
@@ -205,6 +246,10 @@ namespace leaseEase.Web.Controllers
             else
             {
                 currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            }
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
             }
             if (user == null)
             {
@@ -238,6 +283,10 @@ namespace leaseEase.Web.Controllers
             else
             {
                 currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            }
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
             }
             var oldOff = await _repo.GetOfficeByIdAsync(model.Office.Id);
             if (user == null)
@@ -321,6 +370,10 @@ namespace leaseEase.Web.Controllers
             {
                 currentUser = await _repo.GetUserByEmailAsync(user.Email);
             }
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
+            }
             if (user == null)
             {
                 return RedirectToAction("Index", "Login");
@@ -335,7 +388,7 @@ namespace leaseEase.Web.Controllers
                 Booking = new Booking()
 
             };
-            return office == null ? NotFound() : View(model);
+            return View(model);
         }
 
         [HttpPost]
@@ -351,6 +404,10 @@ namespace leaseEase.Web.Controllers
             else
             {
                 currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            }
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
             }
             model.Office = await _repo.GetOfficeByIdAsync(model.Booking.OfficeId);
             if (user == null)
@@ -383,17 +440,126 @@ namespace leaseEase.Web.Controllers
             {
                 currentUser = await _repo.GetUserByEmailAsync(user.Email);
             }
-            if (user == null)
+            if (currentUser != null && currentUser.Blocked)
             {
-                return RedirectToAction("Index", "Login");
-            }
-            else if (office.Creator != currentUser.creatorData)
-            {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Blocked", "User");
             }
             if (office != null)
             {
+                if (user == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else if (office.Creator != currentUser.creatorData && user.Role!= Domain.Enum.User.Roles.Admin)
+            {
+                return RedirectToAction("Index", "Home");
+            }
                 await _repo.RemoveOfficeAsync(office.Id);
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+        [HttpPost]
+        public async Task<ActionResult> AcceptBooking(int id)
+        {
+            currentSessionStatus();
+            var booking = await _repo.GetBookingByIdAsync(id);
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            User currentUser;
+            if (user == null)
+            {
+                currentUser = null;
+            }
+            else
+            {
+                currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            }
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
+            }
+            if (booking != null)
+            {
+                if (user == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else if (booking.Office.CreatorId != currentUser.creatorData.Id)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+                booking.statusBooking = Domain.Enum.Off.statusBooking.ACCEPTED;
+                await _repo.UpdateBookingAsync(booking);
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+        [HttpPost]
+        public async Task<ActionResult> DeclineBooking(int id)
+        {
+            currentSessionStatus();
+            var booking = await _repo.GetBookingByIdAsync(id);
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            User currentUser;
+            if (user == null)
+            {
+                currentUser = null;
+            }
+            else
+            {
+                currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            }
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
+            }
+            if (booking != null)
+            {
+                if (user == null)
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+                else if (booking.Office.CreatorId != currentUser.creatorData.Id)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                booking.statusBooking = Domain.Enum.Off.statusBooking.DECLINED;
+                await _repo.UpdateBookingAsync(booking);
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+        [HttpPost]
+        public async Task<ActionResult> CancellBooking(int id)
+        {
+            currentSessionStatus();
+            var booking = await _repo.GetBookingByIdAsync(id);
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            User currentUser;
+            if (user == null)
+            {
+                currentUser = null;
+            }
+            else
+            {
+                currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            }
+            if (currentUser != null && currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
+            }
+            if (booking != null)
+            {
+                if (user == null)
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+                else if (booking.Creator != currentUser)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                booking.statusBooking = Domain.Enum.Off.statusBooking.CANCELLED;
+                await _repo.UpdateBookingAsync(booking);
                 return Json(new { success = true });
             }
             return Json(new { success = false });

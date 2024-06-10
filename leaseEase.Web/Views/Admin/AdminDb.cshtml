@@ -1,7 +1,95 @@
-﻿
+﻿@using leaseEase.Domain.Models.Off
+@model leaseEase.Domain.Models.helpers.AdminDBViewModel
 @{
-    ViewBag.Title = "AdminDb";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home";
 }
+@using System.Web.Optimization
 
-<h2>AdminDb</h2>
+<!-- Landlord db -->
+<p class="ind-t3">My Dashboard</p>
 
+<div class="tab-container">
+    <p id="office-tab" class="tab">Offices</p>
+    <p id="booking-tab" class="tab">Users</p>
+</div>
+<!-- Offices -->
+<div class="office-list" id="office-list-landlord">
+    @if (Model.Offices == null || Model.Offices.Count == 0)
+    {
+        <div class="ind-t3">No offices yet</div>
+    }
+    @foreach (Office office in Model.Offices)
+    {
+        <!-- Office card!!! -->
+        @*<a href="@Url.Action("Details", "Office", new { id = office.Id })">*@
+        <div class="office-card">
+            <div style="background-image: url('data:image/png;base64,@Convert.ToBase64String(office.Image)');" class="office-image"></div>
+            <div class="office-inf">
+                <div class="off-name-actions">
+                    <p class="office-name">@Html.DisplayFor(modelItem => office.Name)</p>
+                    <div class="off-actions">
+                        <img src="~/Content/images/Delete.svg" alt="" class="extra-img delete-link" width="18" data-id="@office.Id" />
+                    </div>
+                </div>
+                <div class="price-rating">
+                    <p class="office-price">$@Html.DisplayFor(modelItem => office.Price)</p>
+                    <p class="office-mo">/mo</p>
+                    <div class="rating" data-rating="@Html.DisplayFor(modelItem => office.Rating)">
+                        <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                    </div>
+                </div>
+                <p class="office-desc">@Html.DisplayFor(modelItem => office.Description)</p>
+                <div class="office-extra">
+                    <img src="~/Content/images/max-persons.svg" alt="" class="extra-img" width="18" />
+                    <p class="extra">max @Html.DisplayFor(modelItem => office.TeamSize) persons</p>
+                </div>
+                <div class="office-extra">
+                    <img src="~/Content/images/Location.svg" alt="" class="extra-img" width="18" />
+                    <p class="extra">@Html.DisplayFor(modelItem => office.Location)</p>
+                </div>
+                <div class="office-extra">
+                    <img src="~/Content/images/office-type.svg" alt="" class="extra-img" width="18" />
+                    <p class="extra">@Html.DisplayFor(modelItem => office.Type.Name)</p>
+                </div>
+            </div>
+        </div>
+        @*     </a>*@
+        <!-- Office card!!! -->
+    }
+</div>
+
+<div class="booking-list" id="booking-list-landlord">
+    @foreach (leaseEase.Domain.Models.User.User user in Model.Users)
+    {
+        <!-- User card!!! -->
+    <div class="booking-card">
+        @if (!user.Blocked)
+        {
+            <div class="booking-t">NOT BLOCKED</div>
+        }
+        @if (user.Blocked)
+        {
+            <div class="booking-t">BLOCKED</div>
+        }
+        <div class="booking-t">@Html.DisplayFor(modelItem => user.Name)</div>
+        <div class="booking-t">@Html.DisplayFor(modelItem => user.Role)</div>
+        <div class="booking-t">@Html.DisplayFor(modelItem => user.Email)</div>
+        @if (!user.Blocked)
+        {
+            <div class="block-link" data-id="@user.Id">Block</div>
+        }
+        @if (user.Blocked)
+        {
+            <div class="unblock-link" data-id="@user.Id">Unblock</div>
+        }
+    </div>
+        <!-- User card!!! -->
+    }
+    @if (Model.Users == null || Model.Users.Count == 0)
+    {
+        <div class="ind-t3">No users yet</div>
+    }
+</div>
+<!-- Offices -->
+<!-- Landlord db -->

@@ -11,9 +11,18 @@
                 <p class="logo-title">LeaseEase</p>
             </div>
         </a>
-        <a href="@Url.Action("LandlordDb", "Office")" class="db-link-cont">
-            <p class="db-link">Dashboard</p>
-        </a>
+        @if (user != null && user.Role == leaseEase.Domain.Enum.User.Roles.Landlord)
+        {
+            <a href="@Url.Action("LandlordDb", "Office")" class="db-link-cont">
+                <p class="db-link">Dashboard</p>
+            </a>
+        }
+        @if (user != null && user.Role == leaseEase.Domain.Enum.User.Roles.Admin)
+        {
+            <a href="@Url.Action("AdminDb", "Admin")" class="db-link-cont">
+                <p class="db-link">Dashboard</p>
+            </a>
+        }
         @if (user == null)
         {
             <div class="autori-buttons">
@@ -23,17 +32,18 @@
         }
         else
         {
-            <div class="autori-buttons">
-                <p class="login">@user.Username</p>
-                @if (user.Image != null)
-                {
-                    <img src='data:image/png;base64,@Convert.ToBase64String(user.Image)' alt="" class="logo-dark" height="45" width="45" style="border-radius: 1000px;" />
-                }
-                else
-                {
-                    <img src='~/Content/images/prof-pic.svg' alt="" class="logo-dark" height="45" width="45" style="border-radius: 1000px;" />
-                }
-            </div>
+    <div class="autori-logged">
+        <a class="logged-cont"><p class="login">@user.Username</p></a>
+        @if (user.Image != null)
+        {
+            <img src='data:image/png;base64,@Convert.ToBase64String(user.Image)' alt="" class="logo-dark" height="45" width="45" style="border-radius: 1000px;" />
+        }
+        else
+        {
+            <img src='~/Content/images/prof-pic.svg' alt="" class="logo-dark" height="45" width="45" style="border-radius: 1000px;" />
+        }
+        <a href="@Url.Action("Logout", "Base")" class="login-cont"><p class="login">logout</p></a>
+    </div>
         }
     </div>
 

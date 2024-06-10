@@ -1,5 +1,5 @@
 ﻿@using leaseEase.Domain.Models.Off
-@model IEnumerable<leaseEase.Domain.Models.Off.Office>
+@model leaseEase.Domain.Models.helpers.LandloredDBViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home";
@@ -7,49 +7,99 @@
 @using System.Web.Optimization
 
 <!-- Landlord db -->
+<p class="ind-t3">My Dashboard</p>
+
+<div class="tab-container">
+    <p id="office-tab" class="tab">My offices</p>
+    <p id="booking-tab" class="tab">Bookings</p>
+</div>
 <!-- Offices -->
-<div class="office-list">
-    @foreach (Office office in Model!)
+<div class="office-list" id="office-list-landlord">
+    @if (Model.Offices == null || Model.Offices.Count == 0)
+    {
+        <div class="ind-t3">No offices yet</div>
+    }
+    @foreach (Office office in Model.Offices)
     {
         <!-- Office card!!! -->
         @*<a href="@Url.Action("Details", "Office", new { id = office.Id })">*@
-            <div class="office-card">
-                <div style="background-image: url('data:image/png;base64,@Convert.ToBase64String(office.Image)');" class="office-image"></div>
-                <div class="office-inf">
-                    <div class="off-name-actions">
-                        <p class="office-name">@Html.DisplayFor(modelItem => office.Name)</p>
-                        <div class="off-actions">
-                            <a class ="edit-link"href="@Url.Action("Edit", "Office", new { id = office.Id })">
-                                <img src="~/Content/images/Edit.svg" alt="" class="extra-img" width="18" />
-                                </a>
-                                <img src="~/Content/images/Delete.svg" alt="" class="extra-img delete-link" width="18" data-id="@office.Id" />
-                        </div>
-                    </div>
-                        <div class="price-rating">
-                            <p class="office-price">$@Html.DisplayFor(modelItem => office.Price)</p>
-                            <p class="office-mo">/mo</p>
-                            <div class="rating" data-rating="@Html.DisplayFor(modelItem => office.Rating)">
-                                <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-                            </div>
-                        </div>
-                        <p class="office-desc">@Html.DisplayFor(modelItem => office.Description)</p>
-                        <div class="office-extra">
-                            <img src="~/Content/images/max-persons.svg" alt="" class="extra-img" width="18" />
-                            <p class="extra">max @Html.DisplayFor(modelItem => office.TeamSize) persons</p>
-                        </div>
-                        <div class="office-extra">
-                            <img src="~/Content/images/Location.svg" alt="" class="extra-img" width="18" />
-                            <p class="extra">@Html.DisplayFor(modelItem => office.Location)</p>
-                        </div>
-                        <div class="office-extra">
-                            <img src="~/Content/images/office-type.svg" alt="" class="extra-img" width="18" />
-                            <p class="extra">@Html.DisplayFor(modelItem => office.Type.Name)</p>
-                        </div>
+        <div class="office-card">
+            <div style="background-image: url('data:image/png;base64,@Convert.ToBase64String(office.Image)');" class="office-image"></div>
+            <div class="office-inf">
+                <div class="off-name-actions">
+                    <p class="office-name">@Html.DisplayFor(modelItem => office.Name)</p>
+                    <div class="off-actions">
+                        <a class="edit-link" href="@Url.Action("Edit", "Office", new { id = office.Id })">
+                            <img src="~/Content/images/Edit.svg" alt="" class="extra-img" width="18" />
+                        </a>
+                        <img src="~/Content/images/Delete.svg" alt="" class="extra-img delete-link" width="18" data-id="@office.Id" />
                     </div>
                 </div>
-   @*     </a>*@
+                <div class="price-rating">
+                    <p class="office-price">$@Html.DisplayFor(modelItem => office.Price)</p>
+                    <p class="office-mo">/mo</p>
+                    <div class="rating" data-rating="@Html.DisplayFor(modelItem => office.Rating)">
+                        <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                    </div>
+                </div>
+                <p class="office-desc">@Html.DisplayFor(modelItem => office.Description)</p>
+                <div class="office-extra">
+                    <img src="~/Content/images/max-persons.svg" alt="" class="extra-img" width="18" />
+                    <p class="extra">max @Html.DisplayFor(modelItem => office.TeamSize) persons</p>
+                </div>
+                <div class="office-extra">
+                    <img src="~/Content/images/Location.svg" alt="" class="extra-img" width="18" />
+                    <p class="extra">@Html.DisplayFor(modelItem => office.Location)</p>
+                </div>
+                <div class="office-extra">
+                    <img src="~/Content/images/office-type.svg" alt="" class="extra-img" width="18" />
+                    <p class="extra">@Html.DisplayFor(modelItem => office.Type.Name)</p>
+                </div>
+            </div>
+        </div>
+        @*     </a>*@
         <!-- Office card!!! -->
     }
+</div>
+
+<div class="booking-list" id="booking-list-landlord">
+    @foreach (Booking booking in Model.Bookings)
+    {
+        <!-- Booking card!!! -->
+    <div class="booking-card">
+        <div class="booking-t">@Html.DisplayFor(modelItem => booking.statusBooking)</div>
+        @if (booking.statusBooking == leaseEase.Domain.Enum.Off.statusBooking.NEW)
+        {
+            <div class="booking-t">@Html.DisplayFor(modelItem => booking.Creator.Name) Wants to book </div>
+        }
+        else if (booking.statusBooking == leaseEase.Domain.Enum.Off.statusBooking.ACCEPTED || booking.statusBooking == leaseEase.Domain.Enum.Off.statusBooking.PAST)
+        {
+            <div class="booking-t"> @Html.DisplayFor(modelItem => booking.Creator.Name) Booked </div>
+        }
+        else if (booking.statusBooking == leaseEase.Domain.Enum.Off.statusBooking.CANCELLED)
+        {
+            <div class="booking-t"> @Html.DisplayFor(modelItem => booking.Creator.Name) cancelled booking of </div>
+        }
+        else if (booking.statusBooking == leaseEase.Domain.Enum.Off.statusBooking.DECLINED)
+        {
+            <div class="booking-t"> you declined @Html.DisplayFor(modelItem => booking.Creator.Name)'s booking of </div>
+        }
+    <img src='data:image/png;base64,@Convert.ToBase64String(booking.Office.Image)' alt="" class="logo-dark" height="40" width="50" style="border-radius: 5px;" />
+        <div class="booking-t">@Html.DisplayFor(modelItem => booking.Office.Name)</div>
+        <div class="booking-t">@Html.DisplayFor(modelItem => booking.DateStart) - @Html.DisplayFor(modelItem => booking.DateEnd)</div>
+        <div class="booking-t">price: $@Html.DisplayFor(modelItem => booking.summ)</div>
+        @if (booking.statusBooking == leaseEase.Domain.Enum.Off.statusBooking.NEW)
+        {
+            <div class="accept-link" data-id="@booking.Id">Accept</div>
+            <div class="decline-link" data-id="@booking.Id">Decline</div>
+            }
+        </div>
+        <!-- Booking card!!! -->
+    }
+    @if(Model.Bookings==null||Model.Bookings.Count == 0)
+            {
+                <div class="ind-t3">No bookings yet</div>
+            }
 </div>
 <!-- Offices -->
 <!-- Landlord db -->

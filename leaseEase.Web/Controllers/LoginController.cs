@@ -22,18 +22,35 @@ namespace leaseEase.Web.Controllers
         }
         public ActionResult Index()
         {
+
             currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            if (user != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(new UActionLogin());
         }
         public ActionResult Signup()
         {
+
             currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            if (user != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(new UActionSignup());
         }
         [HttpPost]
         public ActionResult Signup(UActionSignup data)
         {
             currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            if (user != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (ModelState.IsValid)
             {
                 var urData = new UserRegisterData
@@ -61,6 +78,11 @@ namespace leaseEase.Web.Controllers
         public ActionResult LogIn(UActionLogin data)
         {
             currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            if (user != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             if (ModelState.IsValid)
             {
                 var ulData = new UserLoginData

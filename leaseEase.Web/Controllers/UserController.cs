@@ -18,7 +18,7 @@ namespace leaseEase.Web.Controllers
             _repo = repo;
         }
             // GET: User
-            public ActionResult BecomeCreator(){
+            public async Task<ActionResult> BecomeCreator(){
             currentSessionStatus();
             var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
             if (user == null)
@@ -32,6 +32,11 @@ namespace leaseEase.Web.Controllers
             else if (user.Role == Domain.Enum.User.Roles.Landlord)
             {
                 return RedirectToAction("LandlordDb", "Office");
+            }
+            var currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            if (currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
             }
             return View(new TobeCreatorData());
         }
@@ -54,6 +59,10 @@ namespace leaseEase.Web.Controllers
             }
 
             var currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            if (currentUser.Blocked)
+            {
+                return RedirectToAction("Blocked", "User");
+            }
             currentUser.Role = Domain.Enum.User.Roles.Landlord;
 
             if (creatorData.ImageFile != null && creatorData.ImageFile.ContentLength > 0)
@@ -71,9 +80,31 @@ namespace leaseEase.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        public async Task<ActionResult> Blocked()
+        {
+            currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            User currentUser;
+            if (user == null)
+            {
+                currentUser = null;
+            }
+            else
+            {
+                currentUser = await _repo.GetUserByEmailAsync(user.Email);
+            }
+                if (currentUser == null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else if (!currentUser.Blocked)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            return View(); 
+        }
 
-
-        private byte[] ConvertToBytes(HttpPostedFileBase file)
+            private byte[] ConvertToBytes(HttpPostedFileBase file)
         {
             byte[] data = null;
             using (var binaryReader = new BinaryReader(file.InputStream))

@@ -31,7 +31,7 @@
                 <option value="PriceDesc">Sort by: Price high to low</option>
             </select>
         </div>
-     </div>
+    </div>
     <div class="list-filters">
         <div class="list-filters-in">
             <div class="list-filters-in" id="filters-adv">
@@ -55,13 +55,13 @@
                 </div>
             </div>
             <img onclick="toggleFilters()" id="filters-closed" style="display: none;" src="~/Content/images/faq-arr-closed.svg" alt="" class="fil-arr-closed" height="12" />
-            <img onclick="toggleFilters()" id="filters-opened"  src="~/Content/images/faq-arr-opened.svg" alt="" class="fil-arr-opened" height="12" />
-            </div>
+            <img onclick="toggleFilters()" id="filters-opened" src="~/Content/images/faq-arr-opened.svg" alt="" class="fil-arr-opened" height="12" />
         </div>
     </div>
-    <!-- Offices -->
-    <div class="office-list">
-        @{ Html.RenderPartial("_OfficeList", Model); }
-    </div>
-    <!-- Offices -->
-    <!-- Search -->
+</div>
+<!-- Offices -->
+<div class="office-list">
+    @{ Html.RenderPartial("_OfficeList", Model); }
+</div>
+<!-- Offices -->
+<!-- Search -->

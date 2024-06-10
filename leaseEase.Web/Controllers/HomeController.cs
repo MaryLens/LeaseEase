@@ -6,6 +6,7 @@ using leaseEase.Domain.Models.helpers;
 using leaseEase.BL.Repos;
 using System.Threading.Tasks;
 using System.Globalization;
+using leaseEase.Domain.Models.User;
 
 
 namespace leaseEase.Web.Controllers
@@ -22,6 +23,15 @@ namespace leaseEase.Web.Controllers
         public async Task<ActionResult> Index()
         {
             currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            if (user != null)
+            {
+                var currentUser = await _repo.GetUserByEmailAsync(user.Email);
+                if (currentUser.Blocked)
+                {
+                    return RedirectToAction("Blocked", "User");
+                }
+            }
             List <Office> office = await _repo.GetAllOfficesAsync();
             List<Office> finalOffice = office.OrderByDescending(o => o.Views).Take(4).ToList();
             var model = new IndexViewModel
@@ -37,6 +47,15 @@ namespace leaseEase.Web.Controllers
         public async Task<ActionResult> Search(string locationFilter, decimal? priceFilter, string sortFilter, List<int> typeFilters, List<int> faciFilters)
         {
             currentSessionStatus();
+            var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
+            if (user != null)
+            {
+                var currentUser = await _repo.GetUserByEmailAsync(user.Email);
+                if (currentUser.Blocked)
+                {
+                    return RedirectToAction("Blocked", "User");
+                }
+            }
             var model = new SearchViewModel
             {
                 Offices = await _repo.GetAllOfficesAsync(),

@@ -237,6 +237,9 @@
     <Content Include="Views\Shared\_OfficeList.cshtml" />
     <Content Include="Views\User\BecomeCreator.cshtml" />
     <Content Include="Views\Admin\AdminDb.cshtml" />
+    <Content Include="Views\User\MyBookings.cshtml" />
+    <Content Include="Views\User\Favourites.cshtml" />
+    <Content Include="Views\User\Blocked.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

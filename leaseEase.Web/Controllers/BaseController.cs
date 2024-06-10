@@ -48,5 +48,20 @@ namespace leaseEase.Web.Controllers
             }
             System.Web.HttpContext.Current.Session["SessionStatus"] = "logout";
         }
+        public ActionResult Logout()
+        {
+            System.Web.HttpContext.Current.Session.Clear();
+            if (ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("LEASEEASE"))
+            {
+                var cookie = ControllerContext.HttpContext.Request.Cookies["LEASEEASE"];
+                if (cookie != null)
+                {
+                    cookie.Expires = DateTime.Now.AddDays(-1);
+                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+                }
+            }
+            System.Web.HttpContext.Current.Session["SessionStatus"] = "logout";
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
