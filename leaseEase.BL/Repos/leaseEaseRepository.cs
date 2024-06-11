@@ -93,7 +93,6 @@ namespace leaseEase.BL.Repos
         {
             _context.Reviews.Add(review);
             Office office = await GetOfficeByIdAsync(review.OfficeId);
-            office.Reviews.Add(review);
             office.Rating = office.Reviews.Average(r => r.Rating);
             await UpdateOfficeAsync(office);
             await _context.SaveChangesAsync();

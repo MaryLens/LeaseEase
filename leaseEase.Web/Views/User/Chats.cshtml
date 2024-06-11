@@ -2,25 +2,28 @@
 @using System.Web.Mvc
 @using System.Web.Mvc.Html
 
-
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home";
 }
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 chat-list-container">
         <h3>Your chats:</h3>
         <ul class="list-group">
             @foreach (var chat in Model.User.Chats)
             {
-                <li class="list-group-item">
-                    <a href="@Url.Action("Chats", "User", new { chatId = chat.Id })">@chat.Id</a>
+                var lastMessage = chat.Messages.LastOrDefault();
+                <li class="list-group-item @(Model.SelectedChat != null && chat.Id == Model.SelectedChat.Id ? "active" : "")">
+                    <a href="@Url.Action("Chats", "User", new { chatId = chat.Id })">
+                        <strong>@chat.Users.FirstOrDefault()?.Name</strong><br />
+                        <small>@lastMessage?.content</small>
+                    </a>
                 </li>
             }
         </ul>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-9 chat-messages-container">
         <h3>Сообщения</h3>
         @if (Model.SelectedChat != null)
         {

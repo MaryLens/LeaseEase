@@ -1,53 +1,90 @@
-﻿@model leaseEase.Domain.Models.helpers.officeDetailsModel
+﻿@using leaseEase.Domain.Enum.Off
+@model leaseEase.Domain.Models.helpers.officeDetailsModel
 @{
     ViewBag.Title = "Office Details";
 }
 @{
     var user = (leaseEase.Domain.Models.User.UserMinData)System.Web.HttpContext.Current.Session["SessionUser"];
 }
-<div>
-    <h1 class="ind-t3">@Html.DisplayFor(model => model.Office.Name)</h1>
-    @if (user != null && user.Favourites.Contains(Model.Office))
-    {
-        <div class="remove-fav-link" data-id="@Model.Office.Id">
-            <img src='~/Content/images/Heart.svg' alt="" height="20" />
-            <p>Remove from favourites</p>
-        </div>
-    }
-    else
-    {
-        <div class="add-fav-link" data-id="@Model.Office.Id">
-            <img src='~/Content/images/Heart-empty.svg' alt="" height="20" />
-            <p>Add to favourites</p>
-        </div>
-    }
-    @if (user != null)
-    {
-        <div class="start-chat" data-id="@Model.Office.Id">
-            <p>Start chat with creator</p>
-        </div>
-    }
-    <div class="details-photo" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(Model.Office.Image)');">
-    </div>
-</div>
-<div>
-    <h3>Views: @Html.DisplayFor(model => model.Office.Views)</h3>
-    <h3>Office Amenities</h3>
-    <div class="amenities-container">
-        @{
-            foreach (var amenity in Model.Office.Facilities)
-            {
-                <div class="amenity-item">
-                    <div>@amenity.Name</div>
-                </div>
-            }
+<div class="details-office-book">
+    <div class="details-office-box">
+        <p class="details-title">@Html.DisplayFor(model => model.Office.Name)</p>
+        @if (user == null)
+        {
+
         }
+        else if (user.Favourites.Contains(Model.Office))
+        {
+            <div class="remove-fav-link" data-id="@Model.Office.Id">
+                <img src='~/Content/images/Heart.svg' alt="" height="20" />
+                <p>Remove from favourites</p>
+            </div>
+        }
+        else
+        {
+            <div class="add-fav-link" data-id="@Model.Office.Id">
+                <img src='~/Content/images/Heart-empty.svg' alt="" height="20" />
+                <p>Add to favourites</p>
+            </div>
+        }
+        @if (user != null)
+        {
+            <div class="start-chat" data-id="@Model.Office.Id">
+                Start chat with creator
+            </div>
+        }
+        <div class="details-photo" style="background-image: url('data:image/png;base64,@Convert.ToBase64String(Model.Office.Image)');">
+        </div>
+        <p class="details-desc">@Html.DisplayFor(model => model.Office.Description)</p>
+    </div>
+    <div class="details-office-box-2">
+        <div class="rating" data-rating="@Html.DisplayFor(model => model.Office.Rating)">
+            <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+        </div>
+        <p class="details-desc">Office type: @Html.DisplayFor(model => model.Office.Type.Name)</p>
+        <p class="details-desc">$@Html.DisplayFor(model => model.Office.Price)/Day</p>
+        <p class="details-desc">Location: @Html.DisplayFor(model => model.Office.Location)</p>
+        <p class="details-desc">Max. people in team: @Html.DisplayFor(model => model.Office.TeamSize)</p>
+        <p class="details-desc">Area: @Html.DisplayFor(model => model.Office.Size)sqm</p>
+        <p class="details-desc">Rooms number: @Html.DisplayFor(model => model.Office.Rooms)</p>
+        <p class="details-desc">Minimal rental period: @Html.DisplayFor(model => model.Office.MinimalRentalPeriod)</p>
+        <a href="@Url.Action("NewBooking", "Office", new { id = Model.Office.Id })"><button type="button" class="signup">Book Now</button></a>
+
     </div>
 </div>
-
-<a href="@Url.Action("NewBooking", "Office", new { id = Model.Office.Id })"><button type="button" class="signup">Book Now</button></a>
-
-
+@if (Model.Office.Facilities != null && Model.Office.Facilities.Count > 0)
+{
+    <div class="faci-det">
+        <div class="faci-text">Office Facilities:</div>
+        <div class="faci-container">
+            @{
+                foreach (var amenity in Model.Office.Facilities)
+                {
+                    <div class="amenity-item">
+                        <div class="faci-item-text">@amenity.Name</div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}
+@if (Model.Office.Reviews != null && Model.Office.Reviews.Count > 0)
+{
+    <div class="faci-det">
+        <div class="faci-text">Office Reviews:</div>
+        <div class="booking-list">
+            @{
+                foreach (var review in Model.Office.Reviews)
+                {
+                            <div class="rating" data-rating=@review.Rating>
+                                <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+                            </div>
+                            <div class="faci-item-text">@review.Text</div>
+                }
+            }
+        </div>
+    </div>
+}
 @using (Html.BeginForm("NewReview", "Office", FormMethod.Post, new { @id = "reviewForm", enctype = "multipart/form-data" }))
 {
     <div class="login-column" id="login-column">
